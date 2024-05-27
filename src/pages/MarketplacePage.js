@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ClientCard from '../components/ClientCard';
 import DatePicker from '../components/DatePicker';
@@ -71,21 +72,63 @@ const MarketplacePage = () => {
     },
   ];
 
+  const [clientData, setClientData] = useState([
+    {
+      first_name: '',
+      last_name: '',
+      title: '',
+      location: '',
+      cost: '',
+      avaliability: '',
+      profile_picture: '',
+    },
+  ]);
+
+  useEffect(() => {
+    const fetchClientCardData = async () => {
+      const config = {
+        params: {},
+      };
+
+      try {
+        const { data } = await axios.get(
+          '/api/marketplace/client-search',
+          config
+        );
+        setClientData(data.data);
+      } catch (error) {
+        console.error('Error fetching client data', error);
+      }
+    };
+
+    fetchClientCardData();
+  }, []);
+
   // Renders the cards when the state changes
   // array of objects
   const renderCards = () => {
-    const clientCards = clientArray.map((clientObj) => {
-      const { name, title, location, price, avaliability, picture } = clientObj;
+    const clientCards = clientData.map((clientObj) => {
+      const {
+        first_name,
+        last_name,
+        title,
+        location,
+        cost,
+        avaliability = 'MWF',
+        profile_picture,
+      } = clientObj;
+      const name = `${first_name} ${last_name}`;
+      // const { name, title, location, price, avaliability, picture } = clientObj;
       return (
         <div className='m-3'>
           <Link to='/client-info'>
             <ClientCard
               name={name}
               title={title}
-              location={location}
-              price={price}
+              location={'NW'}
+              price={cost}
               avaliability={avaliability}
-              picture={picture}
+              picture={profile_picture}
             />
           </Link>
         </div>
@@ -104,12 +147,15 @@ const MarketplacePage = () => {
           <h2 className='mb-10 font-bold text-5xl font-alexandria text-black'>
             Explore <span className='text-primary'>Marketplace</span>
           </h2>
-          <div className='mb-4 flex justify-between w-[90px]'>
+          <div className='mb-4 flex space-x-4'>
             <button className='box-sizing border-b-2 border-b-white hover:text-primary hover:border-b-2 hover:border-b-primary'>
               Map
             </button>
             <button className='box-sizing border-b-2 border-b-white hover:text-primary hover:border-b-2 hover:border-b-primary'>
-              Client
+              Professional
+            </button>
+            <button className='box-sizing border-b-2 border-b-white hover:text-primary hover:border-b-2 hover:border-b-primary'>
+              Service
             </button>
           </div>
           <div className='flex space-x-4'>

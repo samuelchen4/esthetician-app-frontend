@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import CircleImage from '../components/CircleImage';
 import ServiceCard from '../components/ServiceCard';
 
@@ -27,16 +27,20 @@ const ClientInfoPage = () => {
   ];
 
   // Renders service cards
-  const renderServiceCards = () => {
-    const serviceCardsArr = serviceInfoArr.map((info) => {
+  const renderServiceCards = useMemo(() => {
+    const serviceCardsArr = serviceInfoArr.map((info, index) => {
       const { title, price, description = '' } = info;
       return (
-        <ServiceCard title={title} price={price} description={description} />
+        <ServiceCard
+          key={index}
+          title={title}
+          price={price}
+          description={description}
+        />
       );
     });
-
     return serviceCardsArr;
-  };
+  }, [serviceInfoArr]);
 
   return (
     <div
@@ -82,7 +86,7 @@ const ClientInfoPage = () => {
         id='example-work-container'
         className=' grid grid-cols-[repeat(2,minmax(300px,350px))] gap-4 mx-auto'
       >
-        {renderServiceCards()}
+        {renderServiceCards}
       </div>
     </div>
   );
