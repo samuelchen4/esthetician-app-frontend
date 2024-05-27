@@ -5,84 +5,7 @@ import ClientCard from '../components/ClientCard';
 import DatePicker from '../components/DatePicker';
 
 const MarketplacePage = () => {
-  const clientArray = [
-    {
-      picture: '/static/client-card-profile-picture.png',
-      name: 'Teevian Tang',
-      title: 'Esthetician',
-      price: '$$',
-      location: 'NW',
-      avaliability: 'MWF',
-    },
-    {
-      picture: '/static/client-card-profile-picture-2.png',
-      name: 'Samuel Chen',
-      title: 'Pro Gamer',
-      price: '$$',
-      location: 'NW',
-      avaliability: 'MWF',
-    },
-    {
-      picture: '/static/client-card-profile-picture-3.png',
-      name: 'Crystal Yu',
-      title: 'Esthetician',
-      price: '$$',
-      location: 'NW',
-      avaliability: 'MWF',
-    },
-    {
-      picture: '/static/client-card-profile-picture.png',
-      name: 'Teevian Tang',
-      title: 'Esthetician',
-      price: '$$',
-      location: 'NW',
-      avaliability: 'MWF',
-    },
-    {
-      picture: '/static/client-card-profile-picture-2.png',
-      name: 'Samuel Chen',
-      title: 'Pro Gamer',
-      price: '$$',
-      location: 'NW',
-      avaliability: 'MWF',
-    },
-    {
-      picture: '/static/client-card-profile-picture-3.png',
-      name: 'Crystal Yu',
-      title: 'Esthetician',
-      price: '$$',
-      location: 'NW',
-      avaliability: 'MWF',
-    },
-    {
-      picture: '/static/client-card-profile-picture-2.png',
-      name: 'Samuel Chen',
-      title: 'Pro Gamer',
-      price: '$$',
-      location: 'NW',
-      avaliability: 'MWF',
-    },
-    {
-      picture: '/static/client-card-profile-picture-3.png',
-      name: 'Crystal Yu',
-      title: 'Esthetician',
-      price: '$$',
-      location: 'NW',
-      avaliability: 'MWF',
-    },
-  ];
-
-  const [clientData, setClientData] = useState([
-    {
-      first_name: '',
-      last_name: '',
-      title: '',
-      location: '',
-      cost: '',
-      avaliability: '',
-      profile_picture: '',
-    },
-  ]);
+  const [clientData, setClientData] = useState([]);
 
   useEffect(() => {
     const fetchClientCardData = async () => {
@@ -107,6 +30,10 @@ const MarketplacePage = () => {
   // Renders the cards when the state changes
   // array of objects
   const renderCards = () => {
+    if (clientData.length === 0) {
+      return <p>Add loading skeleton here</p>;
+    }
+
     const clientCards = clientData.map((clientObj) => {
       const {
         first_name,
