@@ -1,0 +1,9 @@
+import axios from 'axios';
+
+const baseURL = process.env.REACT_APP_PROXY || 'http://localhost:5000';
+// creates a custom instance of axios
+const api = axios.create({
+  baseURL,
+});
+
+export default api;

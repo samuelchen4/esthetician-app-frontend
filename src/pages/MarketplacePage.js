@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/api-config';
 import { Link } from 'react-router-dom';
 import ClientCard from '../components/ClientCard';
 import DatePicker from '../components/DatePicker';
@@ -14,7 +14,7 @@ const MarketplacePage = () => {
       };
 
       try {
-        const { data } = await axios.get(
+        const { data } = await api.get(
           '/api/marketplace/client-search',
           config
         );
