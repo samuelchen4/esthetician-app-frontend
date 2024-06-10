@@ -1,35 +1,38 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
+import api from '../api/api-config';
 import CircleImage from '../components/CircleImage';
 import ServiceCard from '../components/ServiceCard';
 
 const ClientInfoPage = () => {
-  const serviceInfoArr = [
-    {
-      title: 'Full Foils',
-      price: 95,
-      description:
-        'Traditional full head of foils, for those wanting an overall lighter or darker (lowlight) look.',
-    },
-    {
-      title: 'Partial Foil',
-      price: 75,
-      description:
-        'Traditional half head of foils, for those wanting to refresh their highlights or lowlights.',
-    },
-    {
-      title: 'Money piece',
-      price: 50,
-      description:
-        'Face framing highlights, for those wanting a pop of brightness around the face.',
-    },
-    { title: 'Shampoo Blowout', price: 30 },
-    { title: "Men's Haircut", price: 22 },
-  ];
+  const { clientId } = useParams(); // Extract clientId from URL
+  const locationRouter = useLocation();
+  const {
+    first_name,
+    last_name,
+    title,
+    location,
+    cost,
+    avaliability,
+    profile_picture,
+  } = locationRouter.state || {};
+  console.log(locationRouter);
+  useEffect(() => {
+    async function getClientInfo() {
+      const { data } = await api.get(`/api/client-info/${clientId}`);
+      console.log(data.data);
+      setServiceInfo(data.data);
+    }
+
+    getClientInfo();
+  }, []);
+
+  const [serviceInfo, setServiceInfo] = useState([]);
 
   // Renders service cards
   const renderServiceCards = useMemo(() => {
-    const serviceCardsArr = serviceInfoArr.map((info, index) => {
-      const { title, price, description = '' } = info;
+    const serviceCardsArr = serviceInfo.map((info, index) => {
+      const { name: title, price, description = '' } = info;
       return (
         <ServiceCard
           key={index}
@@ -40,7 +43,7 @@ const ClientInfoPage = () => {
       );
     });
     return serviceCardsArr;
-  }, [serviceInfoArr]);
+  }, [serviceInfo]);
 
   return (
     <div
@@ -55,14 +58,17 @@ const ClientInfoPage = () => {
           <div className='mb-4 flex'>
             <div className='mr-8'>
               <CircleImage
-                src='/static/client-card-profile-picture.png'
+                // src='/static/client-card-profile-picture.png'
+                src={profile_picture}
                 alt='client-profile-picture'
                 size='150'
               />
             </div>
             <div className='flex flex-col my-auto'>
-              <p className='mb-2 text-2xl font-bold'>Teevian Tang</p>
-              <p className='mb-8'>Estetician</p>
+              <p className='mb-2 text-2xl font-bold'>
+                {first_name} {last_name}
+              </p>
+              <p className='mb-8'>{title}</p>
               <p>facebook</p>
             </div>
           </div>

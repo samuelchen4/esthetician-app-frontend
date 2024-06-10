@@ -18,6 +18,7 @@ const MarketplacePage = () => {
           '/api/marketplace/client-search',
           config
         );
+        console.log(data.data);
         setClientData(data.data);
       } catch (error) {
         console.error('Error fetching client data', error);
@@ -36,6 +37,7 @@ const MarketplacePage = () => {
 
     const clientCards = clientData.map((clientObj) => {
       const {
+        user_id: clientId,
         first_name,
         last_name,
         title,
@@ -48,7 +50,31 @@ const MarketplacePage = () => {
       // const { name, title, location, price, avaliability, picture } = clientObj;
       return (
         <div className='m-3'>
-          <Link to='/client-info'>
+          <Link
+            // to={{
+            //   pathname: `/client-info/${clientId}`,
+            //   state: {
+            //     clientId,
+            //     name,
+            //     title,
+            //     location,
+            //     cost,
+            //     avaliability,
+            //     profile_picture,
+            //   },
+            // }}
+            to={`/client-info/${clientId}`}
+            state={{
+              clientId,
+              first_name,
+              last_name,
+              title,
+              location,
+              cost,
+              avaliability,
+              profile_picture,
+            }}
+          >
             <ClientCard
               name={name}
               title={title}

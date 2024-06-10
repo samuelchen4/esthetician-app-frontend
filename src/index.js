@@ -15,7 +15,7 @@ root.render(
         <Routes>
           <Route path='/' element={<MarketplacePage />} />
           <Route path='/home' element={<MarketplacePage />} />
-          <Route path='/client-info' element={<ClientInfoPage />} />
+          <Route path='/client-info/:clientId' element={<ClientInfoPage />} />
         </Routes>
       </Router>
     </div>
