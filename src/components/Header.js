@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import Modal from './Modal';
+import useAuthStore from '../stores/useAuthStore';
 
 const Header = () => {
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  // From Zustand store
+  const user = useAuthStore((state) => state.user);
+  const login = useAuthStore((state) => state.login);
+  const loading = useAuthStore((state) => state.loading);
+  const error = useAuthStore((state) => state.error);
+
+  useEffect(() => {
+    console.log('user', user);
+  }, [user]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -17,11 +27,17 @@ const Header = () => {
     setIsModalOpen(false);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     // Handle login logic here
     console.log('Username:', username);
     console.log('Password:', password);
+    try {
+      await login(username, password);
+      setIsModalOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -42,12 +58,19 @@ const Header = () => {
       {/* <button>
         <CgProfile size={26} />
       </button> */}
-      <button
-        onClick={openModal}
-        className='px-7 py-1 border rounded-lg bg-primary border-primary text-white'
-      >
-        Sign in
-      </button>
+      {user ? (
+        <button>
+          <CgProfile size={32} />
+        </button>
+      ) : (
+        <button
+          onClick={openModal}
+          className='px-7 py-1 border rounded-lg bg-primary border-primary text-white'
+        >
+          Sign in
+        </button>
+      )}
+
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <h2 className='text-2xl font-semibold mb-4'>Login</h2>
         <form onSubmit={handleLogin}>

@@ -6,7 +6,6 @@ import DatePicker from '../components/DatePicker';
 
 const MarketplacePage = () => {
   const [clientData, setClientData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchClientCardData = async () => {
