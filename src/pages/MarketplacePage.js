@@ -6,6 +6,7 @@ import DatePicker from '../components/DatePicker';
 
 const MarketplacePage = () => {
   const [clientData, setClientData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchClientCardData = async () => {
@@ -51,18 +52,6 @@ const MarketplacePage = () => {
       return (
         <div className='m-3'>
           <Link
-            // to={{
-            //   pathname: `/client-info/${clientId}`,
-            //   state: {
-            //     clientId,
-            //     name,
-            //     title,
-            //     location,
-            //     cost,
-            //     avaliability,
-            //     profile_picture,
-            //   },
-            // }}
             to={`/client-info/${clientId}`}
             state={{
               clientId,
