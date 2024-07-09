@@ -9,7 +9,7 @@ import Header from './components/Header';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div className='min-w-[430px] text-[16px] font-inter'>
+    <div className='min-w-[300px] text-[16px] font-inter'>
       <Router>
         <Header />
         <Routes>
