@@ -18,8 +18,10 @@ const ClientCard = ({
   price,
   avaliability,
   picture,
-  width = '350',
-  height = '400',
+  width = '375',
+  height = '450',
+  // width = '400',
+  // height = '500',
 }) => {
   const size = {
     width: `${width}px`,
@@ -30,9 +32,9 @@ const ClientCard = ({
     <div
       id='card-container'
       style={size}
-      className='flex flex-col border rounded-lg text-xs shadow-sm'
+      className='w-full h-auto flex flex-col border rounded-lg text-xs shadow-sm'
     >
-      <div id='title-picture-container' className=''>
+      <div id='title-picture-container' className='w-full h-1/3'>
         <Carousel images={images} size={120} />
       </div>
       <div
@@ -56,7 +58,10 @@ const ClientCard = ({
         </div>
         <p className=''>
           Sint aliquip nulla ad cillum ex eiusmod proident cupidatat aliqua sit
-          minim
+          minim Sint aliquip nulla ad cillum ex eiusmod proident cupidatat
+          aliqua sit minim Sint aliquip nulla ad cillum ex eiusmod proident
+          cupidatat aliqua sit minim Sint aliquip nulla ad cillum ex eiusmod
+          proident cupidatat aliqua sit minim
         </p>
       </div>
     </div>

@@ -17,7 +17,10 @@ module.exports = {
         'background-grey-500': '#F3F4F6FF',
         'background-grey-400': '#FAFAFBFF',
       },
+      aspectRatio: {
+        '2/3': [3, 2], // Custom aspect ratio (width/height)
+      },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/aspect-ratio')],
 };

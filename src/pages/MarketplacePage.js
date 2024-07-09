@@ -50,7 +50,7 @@ const MarketplacePage = () => {
       const name = `${first_name} ${last_name}`;
       // const { name, title, location, price, avaliability, picture } = clientObj;
       return (
-        <div className='m-3'>
+        <div className='my-3'>
           {/* <Link
             to={`/client-info/${clientId}`}
             state={{
@@ -83,7 +83,7 @@ const MarketplacePage = () => {
     <>
       <div
         id='page-container'
-        className='mx-auto flex flex-col items-center text-neutral-600'
+        className='mx-4 flex flex-col items-center text-neutral-600'
       >
         <div id='search-container' className='flex flex-col my-10 items-center'>
           <h2 className='text-center mb-10 font-bold text-5xl font-alexandria text-black'>
@@ -124,7 +124,7 @@ const MarketplacePage = () => {
         </div>
         <div
           id='client-container'
-          className='flex flex-col md:flex-row md:flex-wrap justify-center'
+          className='flex flex-col md:flex-row md:flex-wrap md:space-x-4 justify-center'
         >
           {renderCards()}
         </div>
