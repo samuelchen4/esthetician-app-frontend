@@ -1,5 +1,15 @@
 import React from 'react';
 import CircleImage from './CircleImage';
+import Carousel from './Carousel';
+
+const images = [
+  '/static/client-card-title-picture-1.png',
+  '/static/client-card-title-picture-2.png',
+  '/static/client-card-profile-picture-2.png',
+  '/static/client-card-profile-picture.png',
+  '/static/beauty_connect_logo_2_compressed.png',
+  '/static/client-card-profile-picture-3.png',
+];
 
 const ClientCard = ({
   name,
@@ -20,19 +30,10 @@ const ClientCard = ({
     <div
       id='card-container'
       style={size}
-      className='flex flex-col border rounded-lg text-xs shadow-sm transform transition hover:scale-[102%]'
+      className='flex flex-col border rounded-lg text-xs shadow-sm'
     >
-      <div id='title-picture-container' className='w-1/2 h-3/5 flex'>
-        <img
-          src='/static/client-card-title-picture-1.png'
-          alt='example work 1'
-          className='rounded-tl-lg object-cover'
-        />
-        <img
-          src='/static/client-card-title-picture-2.png'
-          alt='example work 2'
-          className='rounded-tr-lg object-cover'
-        />
+      <div id='title-picture-container' className=''>
+        <Carousel images={images} size={120} />
       </div>
       <div
         id='card-details-container'

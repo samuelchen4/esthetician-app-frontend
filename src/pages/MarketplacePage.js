@@ -20,6 +20,7 @@ const MarketplacePage = () => {
         );
         console.log(data.data);
         setClientData(data.data);
+        // setClientData([data.data[0]]); // Testing to get one card
       } catch (error) {
         console.error('Error fetching client data', error);
       }
@@ -50,7 +51,7 @@ const MarketplacePage = () => {
       // const { name, title, location, price, avaliability, picture } = clientObj;
       return (
         <div className='m-3'>
-          <Link
+          {/* <Link
             to={`/client-info/${clientId}`}
             state={{
               clientId,
@@ -62,16 +63,16 @@ const MarketplacePage = () => {
               avaliability,
               profile_picture,
             }}
-          >
-            <ClientCard
-              name={name}
-              title={title}
-              location={'NW'}
-              price={cost}
-              avaliability={avaliability}
-              picture={profile_picture}
-            />
-          </Link>
+          > */}
+          <ClientCard
+            name={name}
+            title={title}
+            location={'NW'}
+            price={cost}
+            avaliability={avaliability}
+            picture={profile_picture}
+          />
+          {/* </Link> */}
         </div>
       );
     });
@@ -82,13 +83,16 @@ const MarketplacePage = () => {
     <>
       <div
         id='page-container'
-        className='my-4 mx-20 flex flex-col items-center text-neutral-600'
+        className='mx-auto flex flex-col items-center text-neutral-600'
       >
         <div id='search-container' className='flex flex-col my-10 items-center'>
-          <h2 className='mb-10 font-bold text-5xl font-alexandria text-black'>
-            Explore <span className='text-primary'>Marketplace</span>
+          <h2 className='text-center mb-10 font-bold text-5xl font-alexandria text-black'>
+            Explore
+            <span className='text-primary block md:inline-block md:ml-4'>
+              Marketplace
+            </span>
           </h2>
-          <div className='mb-4 flex space-x-4'>
+          <div className='flex space-x-4'>
             <button className='box-sizing border-b-2 border-b-white hover:text-primary hover:border-b-2 hover:border-b-primary'>
               Map
             </button>
@@ -99,7 +103,7 @@ const MarketplacePage = () => {
               Service
             </button>
           </div>
-          <div className='flex space-x-4'>
+          {/* <div className='flex space-x-4'>
             <div id='marketplace-search' className='flex space-x-4'>
               <input
                 type='text'
@@ -116,11 +120,11 @@ const MarketplacePage = () => {
                 <option>Oldest</option>
               </select>
             </div>
-          </div>
+          </div> */}
         </div>
         <div
           id='client-container'
-          className='flex flex-wrap justify-center min-w-[1200px]'
+          className='flex flex-col md:flex-row md:flex-wrap justify-center'
         >
           {renderCards()}
         </div>

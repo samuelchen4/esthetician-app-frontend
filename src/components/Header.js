@@ -46,7 +46,11 @@ const Header = () => {
       className='sticky top-0 bg-white shadow-sm z-50 w-full flex justify-between p-2'
     >
       <Link to='/home'>
-        <img src='/static/esthetician-app-logo.png' alt='logo' />
+        <img
+          src='/static/beauty_connect_logo_2_compressed.png'
+          alt='logo'
+          className='h-12'
+        />
       </Link>
       {/* <input type='text' className='w-[35%] border rounded-md' /> */}
       {/* <div className='w-[30%] flex justify-between items-center border'>
