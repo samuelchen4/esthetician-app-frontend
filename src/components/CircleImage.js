@@ -11,7 +11,7 @@ const CircleImage = ({ src, alt, size = '40' }) => {
       style={style}
       className='rounded-full overflow-hidden flex justify-center items-center'
     >
-      <img src={src} alt={alt} className='w-full h-auto object-none' />
+      <img src={src} alt={alt} className='w-full h-auto object-fit' />
     </div>
   );
 };

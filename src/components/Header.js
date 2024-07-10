@@ -43,13 +43,13 @@ const Header = () => {
   return (
     <div
       id='header-container'
-      className='sticky top-0 bg-white shadow-sm z-50 w-full flex justify-between p-2'
+      className='sticky top-0 bg-white shadow-sm w-full flex justify-between p-2'
     >
       <Link to='/home'>
         <img
           src='/static/beauty_connect_logo_2_compressed.png'
           alt='logo'
-          className='h-12'
+          className='h-8 w-auto'
         />
       </Link>
       {/* <input type='text' className='w-[35%] border rounded-md' /> */}
@@ -69,7 +69,7 @@ const Header = () => {
       ) : (
         <button
           onClick={openModal}
-          className='px-7 py-1 border rounded-lg bg-primary border-primary text-white'
+          className='px-4 py-1 text-xs border rounded-lg bg-primary border-primary text-white'
         >
           Sign in
         </button>

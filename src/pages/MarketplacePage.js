@@ -81,7 +81,7 @@ const MarketplacePage = () => {
     <>
       <div
         id='page-container'
-        className='h-full mx-2 flex flex-col items-center text-neutral-600'
+        className='h-full mx-4 flex flex-col items-center text-neutral-600'
       >
         <div id='search-container' className='flex flex-col my-10 items-center'>
           <h2 className='text-center mb-10 font-bold text-5xl font-alexandria text-black'>

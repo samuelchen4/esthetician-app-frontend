@@ -35,7 +35,7 @@ const ClientCard = ({
           id='card-title'
           className='flex justify-between border-b pb-4 mb-2'
         >
-          <CircleImage src={picture} alt='profile picture' size='90' />
+          <CircleImage src={picture} alt='profile picture' size='70' />
           <div
             id='client-title-details'
             className='grow ml-3 flex flex-col justify-between'
