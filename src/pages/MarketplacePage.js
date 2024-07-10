@@ -10,7 +10,9 @@ const MarketplacePage = () => {
   useEffect(() => {
     const fetchClientCardData = async () => {
       const config = {
-        params: {},
+        params: {
+          limit: 2,
+        },
       };
 
       try {
@@ -50,7 +52,7 @@ const MarketplacePage = () => {
       const name = `${first_name} ${last_name}`;
       // const { name, title, location, price, avaliability, picture } = clientObj;
       return (
-        <div className='my-3'>
+        <div className='my-1 max-w-[450px]'>
           {/* <Link
             to={`/client-info/${clientId}`}
             state={{
@@ -83,7 +85,7 @@ const MarketplacePage = () => {
     <>
       <div
         id='page-container'
-        className='mx-4 flex flex-col items-center text-neutral-600'
+        className='h-full mx-2 flex flex-col items-center text-neutral-600'
       >
         <div id='search-container' className='flex flex-col my-10 items-center'>
           <h2 className='text-center mb-10 font-bold text-5xl font-alexandria text-black'>
@@ -124,7 +126,8 @@ const MarketplacePage = () => {
         </div>
         <div
           id='client-container'
-          className='flex flex-col md:flex-row md:flex-wrap md:space-x-4 justify-center'
+          className=' grow flex flex-col sm:flex-row sm:space-x-4 '
+          // className='border-4 border-orange-100 flex flex-col'
         >
           {renderCards()}
         </div>

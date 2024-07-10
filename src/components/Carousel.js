@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDrag } from '@use-gesture/react';
 
 const Carousel = ({ images, size }) => {
-  const style = {
-    width: `${size}px`,
-    height: `${size}px`,
-  };
+  // const style = {
+  //   width: `${size}px`,
+  //   height: `${size}px`,
+  //   width: '33%',
+  // };
 
   const [index, setIndex] = useState(0);
   const bind = useDrag((state) => {
@@ -44,8 +45,12 @@ const Carousel = ({ images, size }) => {
   };
 
   return (
-    <div id='carousel-container' {...bind()} className='p-2 touch-none'>
-      <div className='overflow-x-hidden touch-none'>
+    <div
+      id='carousel-container'
+      {...bind()}
+      className='w-full h-full p-2 touch-none flex'
+    >
+      <div className='overflow-x-hidden touch-none flex'>
         <div
           className='flex transition-transform duration-500 ease-in-out space-x-2'
           style={{
@@ -53,13 +58,18 @@ const Carousel = ({ images, size }) => {
           }}
         >
           {images.map((image, index) => (
+            // <div
+            //   className='w-full h-auto'
+            //   // style={{ 'min-width': '33%', 'max-height': '100%' }}
+            // >
             <img
               key={index}
               src={image}
               alt={`image ${index}`}
-              style={style}
-              className='inline-block touch-none rounded-md border object-fill'
+              // style={style}
+              className='w-[40%] h-full aspect-1 object-cover rounded-md border'
             />
+            // </div>
           ))}
         </div>
       </div>
