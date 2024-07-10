@@ -9,11 +9,7 @@ const MarketplacePage = () => {
 
   useEffect(() => {
     const fetchClientCardData = async () => {
-      const config = {
-        params: {
-          limit: 2,
-        },
-      };
+      const config = {};
 
       try {
         const { data } = await api.get(
@@ -52,7 +48,7 @@ const MarketplacePage = () => {
       const name = `${first_name} ${last_name}`;
       // const { name, title, location, price, avaliability, picture } = clientObj;
       return (
-        <div className='my-1 max-w-[450px]'>
+        <div className='my-1 min-w-[350px] max-w-[450px]'>
           {/* <Link
             to={`/client-info/${clientId}`}
             state={{
@@ -126,8 +122,7 @@ const MarketplacePage = () => {
         </div>
         <div
           id='client-container'
-          className=' grow flex flex-col sm:flex-row sm:space-x-4 '
-          // className='border-4 border-orange-100 flex flex-col'
+          className='flex flex-col sm:flex-row sm:space-x-4'
         >
           {renderCards()}
         </div>

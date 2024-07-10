@@ -45,11 +45,7 @@ const Carousel = ({ images, size }) => {
   };
 
   return (
-    <div
-      id='carousel-container'
-      {...bind()}
-      className='w-full h-full p-2 touch-none flex'
-    >
+    <div id='carousel-container' {...bind()} className='p-2 touch-none flex'>
       <div className='overflow-x-hidden touch-none flex'>
         <div
           className='flex transition-transform duration-500 ease-in-out space-x-2'
@@ -67,7 +63,7 @@ const Carousel = ({ images, size }) => {
               src={image}
               alt={`image ${index}`}
               // style={style}
-              className='w-[40%] h-full aspect-1 object-cover rounded-md border'
+              className='w-[40%] aspect-1 object-cover rounded-md border'
             />
             // </div>
           ))}
