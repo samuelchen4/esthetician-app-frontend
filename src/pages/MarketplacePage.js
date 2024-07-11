@@ -6,6 +6,7 @@ import DatePicker from '../components/DatePicker';
 
 const MarketplacePage = () => {
   const [clientData, setClientData] = useState([]);
+  const [serviceModel, setServiceModal] = useState(false);
 
   useEffect(() => {
     const fetchClientCardData = async () => {
@@ -46,10 +47,9 @@ const MarketplacePage = () => {
         profile_picture,
       } = clientObj;
       const name = `${first_name} ${last_name}`;
-      // const { name, title, location, price, avaliability, picture } = clientObj;
       return (
         <div className='my-1 min-w-[300px] max-w-[400px] sm'>
-          {/* <Link
+          <Link
             to={`/client-info/${clientId}`}
             state={{
               clientId,
@@ -61,16 +61,16 @@ const MarketplacePage = () => {
               avaliability,
               profile_picture,
             }}
-          > */}
-          <ClientCard
-            name={name}
-            title={title}
-            location={'NW'}
-            price={cost}
-            avaliability={avaliability}
-            picture={profile_picture}
-          />
-          {/* </Link> */}
+          >
+            <ClientCard
+              name={name}
+              title={title}
+              location={'NW'}
+              price={cost}
+              avaliability={avaliability}
+              picture={profile_picture}
+            />
+          </Link>
         </div>
       );
     });
@@ -78,56 +78,34 @@ const MarketplacePage = () => {
   };
 
   return (
-    <>
-      <div
-        id='page-container'
-        className='h-full mx-4 flex flex-col items-center text-neutral-600'
-      >
-        <div id='search-container' className='flex flex-col my-10 items-center'>
-          <h2 className='text-center mb-10 font-bold text-5xl font-alexandria text-black'>
-            Explore
-            <span className='text-primary block md:inline-block md:ml-4'>
-              Marketplace
-            </span>
-          </h2>
-          <div className='flex space-x-4'>
-            <button className='box-sizing border-b-2 border-b-white hover:text-primary hover:border-b-2 hover:border-b-primary'>
-              Map
-            </button>
-            <button className='box-sizing border-b-2 border-b-white hover:text-primary hover:border-b-2 hover:border-b-primary'>
-              Professional
-            </button>
-            <button className='box-sizing border-b-2 border-b-white hover:text-primary hover:border-b-2 hover:border-b-primary'>
-              Service
-            </button>
-          </div>
-          {/* <div className='flex space-x-4'>
-            <div id='marketplace-search' className='flex space-x-4'>
-              <input
-                type='text'
-                placeholder='Search'
-                className='border bg-background-grey-500 px-4 py-1 rounded-lg w-[600px]'
-              />
-              <DatePicker />
-            </div>
-
-            <div id='marketplace-sort' className='flex items-center'>
-              <p className='mr-1'>Sort By:</p>
-              <select className='border px-4 py-1 rounded-lg'>
-                <option>Newest</option>
-                <option>Oldest</option>
-              </select>
-            </div>
-          </div> */}
-        </div>
-        <div
-          id='client-container'
-          className='flex flex-col sm:flex-row sm:space-x-4'
-        >
-          {renderCards()}
-        </div>
+    <div
+      id='page-container'
+      className='h-full mx-4 flex flex-col text-neutral-600'
+    >
+      <h2 className='text-center my-5 font-bold text-5xl font-alexandria text-black'>
+        Explore
+        <span className='text-primary block md:inline-block md:ml-4'>
+          Marketplace
+        </span>
+      </h2>
+      <div id='search-container' className='flex my-3 space-x-2 justify-center'>
+        <button className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'>
+          Map
+        </button>
+        <button className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'>
+          Professional
+        </button>
+        <button className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'>
+          Service
+        </button>
       </div>
-    </>
+      <div
+        id='client-container'
+        className='flex flex-col sm:flex-row sm:space-x-4'
+      >
+        {renderCards()}
+      </div>
+    </div>
   );
 };
 
