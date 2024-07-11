@@ -48,7 +48,7 @@ const MarketplacePage = () => {
       const name = `${first_name} ${last_name}`;
       // const { name, title, location, price, avaliability, picture } = clientObj;
       return (
-        <div className='my-1 min-w-[350px] max-w-[450px]'>
+        <div className='my-1 min-w-[300px] max-w-[400px] sm'>
           {/* <Link
             to={`/client-info/${clientId}`}
             state={{
