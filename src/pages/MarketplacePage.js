@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import api from '../api/api-config';
 import { Link } from 'react-router-dom';
 import ClientCard from '../components/ClientCard';
-import DatePicker from '../components/DatePicker';
+import Modal from '../components/Modal';
+import { categories } from '../constants/categories';
 
 const MarketplacePage = () => {
   const [clientData, setClientData] = useState([]);
-  const [serviceModel, setServiceModal] = useState(false);
+  const [isServiceOpen, setIsServiceOpen] = useState(false);
+
+  const handleServiceModal = () => {
+    setIsServiceOpen(!isServiceOpen);
+  };
+
+  useEffect(() => {
+    console.log(isServiceOpen);
+  }, [isServiceOpen]);
 
   useEffect(() => {
     const fetchClientCardData = async () => {
@@ -48,7 +57,7 @@ const MarketplacePage = () => {
       } = clientObj;
       const name = `${first_name} ${last_name}`;
       return (
-        <div className='my-1 min-w-[300px] max-w-[400px] sm'>
+        <div className='my-1 min-w-[200px] sm:max-w-[350px]'>
           <Link
             to={`/client-info/${clientId}`}
             state={{
@@ -88,20 +97,38 @@ const MarketplacePage = () => {
           Marketplace
         </span>
       </h2>
-      <div id='search-container' className='flex my-3 space-x-2 justify-center'>
+      <div
+        id='search-container'
+        className='text-sm flex my-3 space-x-2 justify-center'
+      >
         <button className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'>
           Map
         </button>
         <button className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'>
           Professional
         </button>
-        <button className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'>
+        <button
+          onClick={handleServiceModal}
+          className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'
+        >
           Service
         </button>
       </div>
+      {isServiceOpen && (
+        <Modal isOpen={isServiceOpen} onClose={handleServiceModal}>
+          <h4 className='font-bold'>Category types</h4>
+          <div className='flex flex-wrap space-x-3 items-center'>
+            {categories.map((category) => (
+              <button className='px-4 py-1 my-1.5 rounded-2xl border border-black'>
+                {category}
+              </button>
+            ))}
+          </div>
+        </Modal>
+      )}
       <div
         id='client-container'
-        className='flex flex-col sm:flex-row sm:space-x-4'
+        className='flex flex-col items-center sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center'
       >
         {renderCards()}
       </div>
