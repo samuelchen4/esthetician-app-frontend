@@ -14,10 +14,10 @@ const Modal = ({ isOpen, onClose, children }) => {
 
   return ReactDOM.createPortal(
     <div
-      className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50'
+      className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end z-50 pt-safe-top'
       onClick={handleOverlayClick}
     >
-      <div className='animate-slideInUp bg-white h-screen p-8 max-w-md w-full relative'>
+      <div className='animate-slideInUp bg-white h-[100vh] p-8 max-w-md w-full relative bottom-0'>
         <button
           className='text-xl absolute top-2 right-3 text-gray-600 hover:text-gray-800'
           onClick={onClose}

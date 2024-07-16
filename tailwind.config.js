@@ -17,6 +17,9 @@ module.exports = {
         'background-grey-500': '#F3F4F6FF',
         'background-grey-400': '#FAFAFBFF',
       },
+      spacing: {
+        'safe-top': 'env(safe-area-inset-top)',
+      },
       keyframes: {
         slideInUp: {
           '0%': { transform: 'translateY(100%)', opacity: '0' },
@@ -24,7 +27,7 @@ module.exports = {
         },
       },
       animation: {
-        slideInUp: 'slideInUp 0.5s forwards',
+        slideInUp: 'slideInUp 0.3s forwards',
       },
     },
   },
