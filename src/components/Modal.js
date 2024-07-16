@@ -19,7 +19,7 @@ const Modal = ({ isOpen, onClose, children }) => {
     >
       <div className='animate-slideInUp bg-white h-full p-8 max-w-md w-full relative'>
         <button
-          className='text-xl absolute top-2 right-3 text-gray-600 hover:text-gray-800'
+          className='text-3xl absolute top-5 right-6 text-gray-600 hover:text-gray-800'
           onClick={onClose}
         >
           &times;

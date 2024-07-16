@@ -43,7 +43,7 @@ const Header = () => {
   return (
     <div
       id='header-container'
-      className='sticky top-0 z-100 bg-white shadow-sm w-full flex justify-between p-2'
+      className='sticky top-0 z-100 bg-white shadow-sm w-full flex justify-between py-4 px-6'
     >
       <Link to='/home'>
         <img
