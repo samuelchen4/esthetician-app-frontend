@@ -126,7 +126,7 @@ const MarketplacePage = () => {
       </div>
       {isDateOpen && (
         <Modal isOpen={isDateOpen} onClose={handleDatePickerModal}>
-          <p className='font-bold self-start'>Calendar</p>
+          <p className='mb-4 font-bold self-start'>Calendar</p>
           <Calendar
             mode='range'
             disabled={{ before: new Date() }}
@@ -135,7 +135,7 @@ const MarketplacePage = () => {
             pagedNavigation
             selected={date}
             onSelect={setDate}
-            className='rounded-md border-2 w-full overflow-y-scroll no-scrollbar'
+            className='rounded-md w-full overflow-y-scroll no-scrollbar'
           />
         </Modal>
       )}

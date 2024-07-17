@@ -12,8 +12,8 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
       className={cn('', className)}
       classNames={{
         months:
-          'w-[80%] mx-auto flex flex-col sm:flex-row sm:space-y-0 sm:space-x-6',
-        month: 'border-2 space-y-4 sm:grow',
+          'w-full mx-auto flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6',
+        month: ' space-y-2 sm:grow',
         caption: 'flex justify-center pt-1 relative items-center',
         caption_label: 'text-sm font-medium',
         nav: 'space-x-1 flex items-center',
@@ -21,10 +21,10 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
           buttonVariants({ variant: 'outline' }),
           'h-8 w-8 bg-transparent p-0 opacity-50 hover:opacity-100'
         ),
-        nav_button_previous: 'absolute left-1',
-        nav_button_next: 'absolute right-1',
+        nav_button_previous: 'hidden absolute left-1 sm:block ',
+        nav_button_next: 'hidden  absolute right-1 sm:block',
         table: 'w-full border-collapse space-y-1',
-        head_row: 'flex',
+        head_row: 'flex pb-2 border-b',
         head_cell:
           'w-full text-gray-500 rounded-md font-normal text-[0.8rem] dark:text-gray-400',
         row: 'flex w-full mt-2',
