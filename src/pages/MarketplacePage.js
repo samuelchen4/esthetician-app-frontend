@@ -4,13 +4,20 @@ import { Link } from 'react-router-dom';
 import ClientCard from '../components/ClientCard';
 import Modal from '../components/Modal';
 import { categories } from '../constants/categories';
+import { Calendar } from 'src/components/ui/calendar';
 
 const MarketplacePage = () => {
   const [clientData, setClientData] = useState([]);
   const [isServiceOpen, setIsServiceOpen] = useState(false);
+  const [isDateOpen, setIsDateOpen] = useState(false);
+  const [date, setDate] = useState(new Date());
 
   const handleServiceModal = () => {
     setIsServiceOpen(!isServiceOpen);
+  };
+
+  const handleDatePickerModal = () => {
+    setIsDateOpen(!isDateOpen);
   };
 
   useEffect(() => {
@@ -101,11 +108,14 @@ const MarketplacePage = () => {
         id='search-container'
         className='text-sm flex my-3 space-x-2 justify-center'
       >
-        <button className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'>
+        {/* <button className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'>
           Map
-        </button>
-        <button className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'>
-          Professional
+        </button> */}
+        <button
+          onClick={handleDatePickerModal}
+          className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'
+        >
+          DatePicker
         </button>
         <button
           onClick={handleServiceModal}
@@ -114,6 +124,21 @@ const MarketplacePage = () => {
           Service
         </button>
       </div>
+      {isDateOpen && (
+        <Modal isOpen={isDateOpen} onClose={handleDatePickerModal}>
+          <Calendar
+            mode='range'
+            disabled={{ before: new Date() }}
+            showOutsideDays={false}
+            numberOfMonths={2}
+            pagedNavigation
+            selected={date}
+            onSelect={setDate}
+            className='rounded-md border'
+          />
+        </Modal>
+      )}
+
       {isServiceOpen && (
         <Modal isOpen={isServiceOpen} onClose={handleServiceModal}>
           <h4 className='font-bold'>Category types</h4>

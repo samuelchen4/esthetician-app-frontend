@@ -10,7 +10,7 @@ const Carousel = ({ images }) => {
           key={idx}
           src={image}
           alt={`image ${idx}`}
-          className='w-[40%] aspect-1 object-cover rounded-md border'
+          className='w-[35%] aspect-1 object-cover rounded-md border'
         />
       ))}
     </div>
