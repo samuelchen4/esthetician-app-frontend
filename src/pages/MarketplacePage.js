@@ -96,7 +96,7 @@ const MarketplacePage = () => {
   return (
     <div
       id='page-container'
-      className='h-full mx-6 flex flex-col text-neutral-600'
+      className='grow mx-6 flex flex-col text-neutral-600'
     >
       <h2 className='text-center my-5 font-bold text-5xl font-alexandria text-black'>
         Explore
@@ -126,6 +126,7 @@ const MarketplacePage = () => {
       </div>
       {isDateOpen && (
         <Modal isOpen={isDateOpen} onClose={handleDatePickerModal}>
+          {/* <p className='font-bold self-start'>Calendar</p> */}
           <Calendar
             mode='range'
             disabled={{ before: new Date() }}
@@ -134,7 +135,7 @@ const MarketplacePage = () => {
             pagedNavigation
             selected={date}
             onSelect={setDate}
-            className='rounded-md border'
+            className='rounded-md w-full'
           />
         </Modal>
       )}
