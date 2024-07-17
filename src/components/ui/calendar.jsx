@@ -12,8 +12,8 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
       className={cn('', className)}
       classNames={{
         months:
-          'w-full flex flex-col space-y-8 sm:flex-row sm:space-y-0 sm:space-x-6',
-        month: 'space-y-4 sm:grow',
+          'w-[80%] mx-auto flex flex-col sm:flex-row sm:space-y-0 sm:space-x-6',
+        month: 'border-2 space-y-4 sm:grow',
         caption: 'flex justify-center pt-1 relative items-center',
         caption_label: 'text-sm font-medium',
         nav: 'space-x-1 flex items-center',

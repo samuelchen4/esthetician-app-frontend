@@ -126,16 +126,16 @@ const MarketplacePage = () => {
       </div>
       {isDateOpen && (
         <Modal isOpen={isDateOpen} onClose={handleDatePickerModal}>
-          {/* <p className='font-bold self-start'>Calendar</p> */}
+          <p className='font-bold self-start'>Calendar</p>
           <Calendar
             mode='range'
             disabled={{ before: new Date() }}
             showOutsideDays={false}
-            numberOfMonths={2}
+            numberOfMonths={12}
             pagedNavigation
             selected={date}
             onSelect={setDate}
-            className='rounded-md w-full'
+            className='rounded-md border-2 w-full overflow-y-scroll no-scrollbar'
           />
         </Modal>
       )}
