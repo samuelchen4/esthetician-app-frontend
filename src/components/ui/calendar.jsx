@@ -9,11 +9,11 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn('p-3', className)}
+      className={cn('', className)}
       classNames={{
         months:
-          'flex flex-col items-center sm:flex-row space-y-12 sm:space-x-4 sm:space-y-0',
-        month: 'space-y-4',
+          'w-full flex flex-col space-y-8 sm:flex-row sm:space-y-0 sm:space-x-6',
+        month: 'space-y-4 sm:grow',
         caption: 'flex justify-center pt-1 relative items-center',
         caption_label: 'text-sm font-medium',
         nav: 'space-x-1 flex items-center',
@@ -26,21 +26,16 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
         table: 'w-full border-collapse space-y-1',
         head_row: 'flex',
         head_cell:
-          'text-gray-500 rounded-md w-12 font-normal text-[0.8rem] dark:text-gray-400',
+          'w-full text-gray-500 rounded-md font-normal text-[0.8rem] dark:text-gray-400',
         row: 'flex w-full mt-2',
-        // cell: 'h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-gray-100/50 [&:has([aria-selected])]:bg-gray-100 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20 dark:[&:has([aria-selected].day-outside)]:bg-gray-800/50 dark:[&:has([aria-selected])]:bg-gray-800',
-        cell: 'h-12 w-12 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-gray-100/50 [&:has([aria-selected])]:bg-gray-100 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20 dark:[&:has([aria-selected].day-outside)]:bg-gray-800/50 dark:[&:has([aria-selected])]:bg-gray-800',
+        cell: 'w-full aspect-1 rounded-md text-center text-sm p-auto relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-gray-100/50 [&:has([aria-selected])]:bg-gray-100 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20 dark:[&:has([aria-selected].day-outside)]:bg-gray-800/50 dark:[&:has([aria-selected])]:bg-gray-800',
         day: cn(
           buttonVariants({ variant: 'ghost' }),
-          'h-12 w-12 p-0 font-normal aria-selected:opacity-100'
-        ),
-        day: cn(
-          buttonVariants({ variant: 'ghost' }),
-          'h-12 w-12 p-0 font-normal aria-selected:opacity-100'
+          'w-full h-full aspect-1 p-0 font-normal aria-selected:opacity-100'
         ),
         day_range_end: 'day-range-end',
         day_selected:
-          'bg-gray-900 text-gray-50 hover:bg-gray-900 hover:text-gray-50 focus:bg-gray-900 focus:text-gray-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50 dark:hover:text-gray-900 dark:focus:bg-gray-50 dark:focus:text-gray-900',
+          ' bg-gray-900 text-gray-50 hover:bg-gray-900 hover:text-gray-50 focus:bg-gray-900 focus:text-gray-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50 dark:hover:text-gray-900 dark:focus:bg-gray-50 dark:focus:text-gray-900',
         day_today:
           'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50',
         day_outside:

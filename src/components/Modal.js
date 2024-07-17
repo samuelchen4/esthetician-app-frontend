@@ -29,7 +29,7 @@ const Modal = ({ isOpen, onClose, children }) => {
       className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end z-50 pt-safe-top'
       onClick={handleOverlayClick}
     >
-      <div className='h-full animate-slideInUp bg-white p-6 max-w-md w-full relative'>
+      <div className='h-full w-full relative animate-slideInUp bg-white p-6'>
         <button
           className='text-3xl absolute top-5 right-6 text-gray-600 hover:text-gray-800'
           onClick={onClose}
