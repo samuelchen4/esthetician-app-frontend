@@ -9,12 +9,12 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn('', className)}
+      className={cn(className)}
       classNames={{
         months:
           'w-full mx-auto flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-6',
         month: ' space-y-2 sm:grow',
-        caption: 'flex justify-center pt-1 relative items-center',
+        caption: 'flex justify-center py-1 relative items-center',
         caption_label: 'text-sm font-medium',
         nav: 'space-x-1 flex items-center',
         nav_button: cn(

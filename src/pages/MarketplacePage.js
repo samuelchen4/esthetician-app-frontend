@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/api-config';
 import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
+import { Calendar as CalendarIcon } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import ClientCard from '../components/ClientCard';
 import Modal from '../components/Modal';
 import { categories } from '../constants/categories';
+import { cn } from 'src/lib/utils';
+import { Button } from 'src/components/ui/button';
 import { Calendar } from 'src/components/ui/calendar';
 
 const MarketplacePage = () => {
   const [clientData, setClientData] = useState([]);
   const [isServiceOpen, setIsServiceOpen] = useState(false);
+  const [service, setService] = useState(null);
   const [isDateOpen, setIsDateOpen] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
 
   const handleServiceModal = () => {
     setIsServiceOpen(!isServiceOpen);
@@ -19,6 +25,16 @@ const MarketplacePage = () => {
   const handleDatePickerModal = () => {
     setIsDateOpen(!isDateOpen);
   };
+
+  // Close modal when service is selected
+  useEffect(() => {
+    setIsServiceOpen(false);
+  }, [service]);
+
+  // Close modal when date is selected
+  useEffect(() => {
+    setIsDateOpen(false);
+  }, [date]);
 
   useEffect(() => {
     console.log(isServiceOpen);
@@ -108,27 +124,31 @@ const MarketplacePage = () => {
         id='search-container'
         className='text-sm flex my-3 space-x-2 justify-center'
       >
-        {/* <button className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'>
-          Map
-        </button> */}
-        <button
+        <Button
+          variant={'outline'}
           onClick={handleDatePickerModal}
-          className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'
+          className={cn(
+            'w-[225px] justify-start text-left font-normal rounded-2xl',
+            !date && 'text-muted-foreground'
+          )}
         >
-          DatePicker
-        </button>
-        <button
+          <CalendarIcon className='mr-2 h-4 w-4' />
+          {date ? format(date, 'PPP') : <span>Pick a date</span>}
+        </Button>
+        <Button
+          variant={'outline'}
           onClick={handleServiceModal}
-          className='text-black border border-black py-1 px-5 rounded-3xl hover:text-white hover:border-primary hover:bg-primary'
+          className='font-normal rounded-2xl'
         >
-          Service
-        </button>
+          {service ? service : <span>Pick a service</span>}
+          <ChevronDown className='ml-1 w-4 h-4' />
+        </Button>
       </div>
       {isDateOpen && (
         <Modal isOpen={isDateOpen} onClose={handleDatePickerModal}>
           <p className='mb-4 font-bold self-start'>Calendar</p>
           <Calendar
-            mode='range'
+            mode='single'
             disabled={{ before: new Date() }}
             showOutsideDays={false}
             numberOfMonths={12}
@@ -145,13 +165,24 @@ const MarketplacePage = () => {
           <h4 className='font-bold'>Category types</h4>
           <div className='flex flex-wrap space-x-3 items-center'>
             {categories.map((category) => (
-              <button className='px-4 py-1 my-1.5 rounded-2xl border border-black'>
+              <button
+                onClick={() => {
+                  setService(category);
+                }}
+                className={cn(
+                  'px-4 py-1 my-1.5 rounded-2xl border border-black',
+                  service === category && 'disabled bg-black text-white'
+                )}
+              >
                 {category}
               </button>
             ))}
           </div>
         </Modal>
       )}
+      <p className='my-1 self-start sm:self-center text-xs text-black font-semibold'>
+        {`We found ${clientData.length} clients who specialize in ${service}!`}
+      </p>
       <div
         id='client-container'
         className='flex flex-col items-center sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center'

@@ -1,1 +1,1 @@
-export const categories = ['nails', 'hair', 'eyebrows', 'botox'];
+export const categories = ['Nails', 'Hair', 'Eyebrows', 'Botox'];

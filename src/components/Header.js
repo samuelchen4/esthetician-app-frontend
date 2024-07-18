@@ -43,25 +43,16 @@ const Header = () => {
   return (
     <div
       id='header-container'
-      className='sticky top-0 z-100 bg-white shadow-sm w-full flex justify-between py-4 px-6'
+      className='sticky top-0 z-100 bg-white shadow-sm w-full flex items-center justify-between py-2 px-6'
     >
       <Link to='/home'>
         <img
           src='/static/beauty_connect_logo_2_compressed.png'
           alt='logo'
-          className='h-8 w-auto'
+          className='h-6 w-auto'
         />
       </Link>
-      {/* <input type='text' className='w-[35%] border rounded-md' /> */}
-      {/* <div className='w-[30%] flex justify-between items-center border'>
-        <h3>Explore</h3>
-        <h3>Stats</h3>
-        <h3>Resource</h3>
-        <h3>Create</h3>
-      </div> */}
-      {/* <button>
-        <CgProfile size={26} />
-      </button> */}
+
       {user ? (
         <button>
           <CgProfile size={32} />
@@ -69,7 +60,7 @@ const Header = () => {
       ) : (
         <button
           onClick={openModal}
-          className='px-4 py-1 text-xs border rounded-lg bg-primary border-primary text-white'
+          className='px-2 py-1 text-xs border rounded-lg bg-primary border-primary text-white'
         >
           Sign in
         </button>
