@@ -14,7 +14,7 @@ import { Calendar } from 'src/components/ui/calendar';
 const MarketplacePage = () => {
   const [clientData, setClientData] = useState([]);
   const [isServiceOpen, setIsServiceOpen] = useState(false);
-  const [service, setService] = useState(null);
+  const [service, setService] = useState('Nails');
   const [isDateOpen, setIsDateOpen] = useState(false);
   const [date, setDate] = useState(null);
 
