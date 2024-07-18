@@ -128,7 +128,7 @@ const MarketplacePage = () => {
           variant={'outline'}
           onClick={handleDatePickerModal}
           className={cn(
-            'dark:none w-[225px] h-[30px] justify-start text-left font-normal rounded-2xl',
+            'dark:none w-[225px] h-[40px] justify-start text-left font-normal rounded-2xl',
             !date && 'text-muted-foreground'
           )}
         >
@@ -138,7 +138,7 @@ const MarketplacePage = () => {
         <Button
           variant={'outline'}
           onClick={handleServiceModal}
-          className='h-[30px] font-normal rounded-2xl'
+          className='h-[40px] font-normal rounded-2xl'
         >
           {service ? service : <span>Pick a service</span>}
           <ChevronDown className='ml-1 w-5 h-auto' />
