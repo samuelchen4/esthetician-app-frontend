@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import Modal from './Modal';
 import useAuthStore from '../stores/useAuthStore';
 import { Button } from 'src/components/ui/button';
+import useHeaderStore from '../stores/useHeaderStore';
 
 const Header = () => {
   // Modal state
@@ -15,6 +16,25 @@ const Header = () => {
   const login = useAuthStore((state) => state.login);
   const loading = useAuthStore((state) => state.loading);
   const error = useAuthStore((state) => state.error);
+
+  // header height store
+  const headerRef = useRef(null);
+  const setHeaderHeight = useHeaderStore((state) => state.setHeaderHeight);
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeaderHeight);
+    };
+  }, [setHeaderHeight]);
 
   useEffect(() => {
     console.log('user', user);
@@ -45,8 +65,9 @@ const Header = () => {
     <div
       id='header-container'
       className='sticky top-0 z-100 bg-white shadow-sm flex items-center justify-between py-2 px-6 w-full'
+      ref={headerRef}
     >
-      <Link to='/home'>
+      <Link to='/'>
         <img
           src='/static/beauty_connect_logo_2_compressed.png'
           alt='logo'

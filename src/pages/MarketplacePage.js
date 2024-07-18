@@ -10,6 +10,7 @@ import { categories } from '../constants/categories';
 import { cn } from 'src/lib/utils';
 import { Button } from 'src/components/ui/button';
 import { Calendar } from 'src/components/ui/calendar';
+import useHeaderStore from 'src/stores/useHeaderStore';
 
 const MarketplacePage = () => {
   const [clientData, setClientData] = useState([]);
@@ -17,6 +18,9 @@ const MarketplacePage = () => {
   const [service, setService] = useState('Nails');
   const [isDateOpen, setIsDateOpen] = useState(false);
   const [date, setDate] = useState(null);
+
+  // header height store
+  const headerHeight = useHeaderStore((state) => state.headerHeight);
 
   const handleServiceModal = () => {
     setIsServiceOpen(!isServiceOpen);
@@ -122,7 +126,10 @@ const MarketplacePage = () => {
       </h2>
       <div
         id='search-container'
-        className='text-sm flex mb-5 space-x-2 justify-center'
+        className={cn(
+          'text-sm flex mb-5 space-x-2 justify-center sticky',
+          `top-[${headerHeight}px] py-2`
+        )}
       >
         <Button
           variant={'outline'}
