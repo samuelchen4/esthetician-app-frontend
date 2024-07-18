@@ -122,13 +122,13 @@ const MarketplacePage = () => {
       </h2>
       <div
         id='search-container'
-        className='text-sm flex my-3 space-x-2 justify-center'
+        className='text-sm flex mb-5 space-x-2 justify-center'
       >
         <Button
           variant={'outline'}
           onClick={handleDatePickerModal}
           className={cn(
-            'w-[225px] justify-start text-left font-normal rounded-2xl',
+            'dark:none w-[225px] h-[30px] justify-start text-left font-normal rounded-2xl',
             !date && 'text-muted-foreground'
           )}
         >
@@ -138,10 +138,10 @@ const MarketplacePage = () => {
         <Button
           variant={'outline'}
           onClick={handleServiceModal}
-          className='font-normal rounded-2xl'
+          className='h-[30px] font-normal rounded-2xl'
         >
           {service ? service : <span>Pick a service</span>}
-          <ChevronDown className='ml-1 w-4 h-4' />
+          <ChevronDown className='ml-1 w-5 h-auto' />
         </Button>
       </div>
       {isDateOpen && (
@@ -162,7 +162,7 @@ const MarketplacePage = () => {
 
       {isServiceOpen && (
         <Modal isOpen={isServiceOpen} onClose={handleServiceModal}>
-          <h4 className='font-bold'>Category types</h4>
+          <p className='mb-4 font-bold self-start'>Pick a service!</p>
           <div className='flex flex-wrap space-x-3 items-center'>
             {categories.map((category) => (
               <button
@@ -171,7 +171,8 @@ const MarketplacePage = () => {
                 }}
                 className={cn(
                   'px-4 py-1 my-1.5 rounded-2xl border border-black',
-                  service === category && 'disabled bg-black text-white'
+                  service === category &&
+                    'disabled bg-black text-white cursor-default'
                 )}
               >
                 {category}

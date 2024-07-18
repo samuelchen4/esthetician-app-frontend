@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import Modal from './Modal';
 import useAuthStore from '../stores/useAuthStore';
+import { Button } from 'src/components/ui/button';
 
 const Header = () => {
   // Modal state
@@ -43,28 +44,40 @@ const Header = () => {
   return (
     <div
       id='header-container'
-      className='sticky top-0 z-100 bg-white shadow-sm w-full flex items-center justify-between py-2 px-6'
+      className='sticky top-0 z-100 bg-white shadow-sm flex items-center justify-between py-2 px-6 w-full'
     >
       <Link to='/home'>
         <img
           src='/static/beauty_connect_logo_2_compressed.png'
           alt='logo'
-          className='h-6 w-auto'
+          className='w-12 h-full'
         />
       </Link>
 
-      {user ? (
-        <button>
-          <CgProfile size={32} />
-        </button>
-      ) : (
-        <button
-          onClick={openModal}
-          className='px-2 py-1 text-xs border rounded-lg bg-primary border-primary text-white'
-        >
-          Sign in
-        </button>
-      )}
+      {
+        user ? (
+          <Button>
+            <CgProfile size={32} />
+          </Button>
+        ) : (
+          <Button
+            onClick={openModal}
+            className='h-full text-xs border rounded-lg bg-primary border-primary text-white'
+          >
+            Sign in
+          </Button>
+        )
+        //   <button>
+        //     <CgProfile size={32} />
+        //   </button>
+        // ) : (
+        //   <button
+        //     onClick={openModal}
+        //     className='px-2 py-1 text-xs border rounded-lg bg-primary border-primary text-white'
+        //   >
+        //     Sign in
+        //   </button>
+      }
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <h2 className='text-2xl font-semibold mb-4'>Login</h2>

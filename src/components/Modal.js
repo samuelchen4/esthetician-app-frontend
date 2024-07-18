@@ -36,9 +36,7 @@ const Modal = ({ isOpen, onClose, children }) => {
         >
           &times;
         </button>
-        <div className='h-full flex flex-col items-center justify-center'>
-          {children}
-        </div>
+        <div className='h-full flex flex-col'>{children}</div>
       </div>
     </div>,
     document.body
