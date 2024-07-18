@@ -61,8 +61,9 @@ const Header = () => {
           </Button>
         ) : (
           <Button
+            variant={'outline'}
             onClick={openModal}
-            className='h-full text-xs border rounded-lg bg-primary border-primary text-white'
+            className='h-full text-xs'
           >
             Sign in
           </Button>
