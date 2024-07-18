@@ -17,10 +17,13 @@ const MarketplacePage = () => {
   const [isServiceOpen, setIsServiceOpen] = useState(false);
   const [service, setService] = useState('Nails');
   const [isDateOpen, setIsDateOpen] = useState(false);
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState(new Date());
 
   // header height store
   const headerHeight = useHeaderStore((state) => state.headerHeight);
+  useEffect(() => {
+    console.log(headerHeight);
+  }, [headerHeight]);
 
   const handleServiceModal = () => {
     setIsServiceOpen(!isServiceOpen);
@@ -126,10 +129,8 @@ const MarketplacePage = () => {
       </h2>
       <div
         id='search-container'
-        className={cn(
-          'text-sm flex mb-5 space-x-2 justify-center sticky',
-          `top-[${headerHeight}px] py-2`
-        )}
+        className='text-sm flex mb-5 space-x-2 justify-center sticky z-90 py-2'
+        style={{ top: headerHeight ? `${headerHeight}px` : 'auto' }}
       >
         <Button
           variant={'outline'}
@@ -189,7 +190,9 @@ const MarketplacePage = () => {
         </Modal>
       )}
       <p className='my-1 self-start sm:self-center text-xs text-black font-semibold'>
-        {`We found ${clientData.length} clients who specialize in ${service}!`}
+        {`We found ${
+          clientData.length
+        } clients who specialize in ${service} for ${format(date, 'PPP')}!`}
       </p>
       <div
         id='client-container'

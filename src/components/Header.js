@@ -27,7 +27,6 @@ const Header = () => {
         setHeaderHeight(headerRef.current.offsetHeight);
       }
     };
-
     updateHeaderHeight();
     window.addEventListener('resize', updateHeaderHeight);
 
