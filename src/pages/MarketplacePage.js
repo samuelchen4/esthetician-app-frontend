@@ -129,14 +129,14 @@ const MarketplacePage = () => {
       </h2>
       <div
         id='search-container'
-        className='text-sm flex mb-5 space-x-2 justify-center sticky z-90 py-2'
+        className='text-sm flex mb-5 space-x-2 justify-center sticky z-90 py-2 '
         style={{ top: headerHeight ? `${headerHeight}px` : 'auto' }}
       >
         <Button
           variant={'outline'}
           onClick={handleDatePickerModal}
           className={cn(
-            'dark:none w-[225px] h-[40px] justify-start text-left font-normal rounded-2xl',
+            'dark:none w-[225px] h-[40px] justify-start text-left font-normal rounded-2xl border-gray-500',
             !date && 'text-muted-foreground'
           )}
         >
@@ -146,7 +146,7 @@ const MarketplacePage = () => {
         <Button
           variant={'outline'}
           onClick={handleServiceModal}
-          className='h-[40px] font-normal rounded-2xl'
+          className='h-[40px] font-normal rounded-2xl border-gray-500'
         >
           {service ? service : <span>Pick a service</span>}
           <ChevronDown className='ml-1 w-5 h-auto' />
