@@ -7,32 +7,25 @@ import ServiceCard from '../components/ServiceCard';
 const ClientInfoPage = () => {
   const { clientId } = useParams(); // Extract clientId from URL
   const locationRouter = useLocation();
-  const {
-    first_name,
-    last_name,
-    title,
-    location,
-    cost,
-    avaliability,
-    profile_picture,
-  } = locationRouter.state || {};
+  const { first_name, last_name, services, profile_picture } =
+    locationRouter.state || {};
   console.log(locationRouter);
   useEffect(() => {
     async function getClientInfo() {
       const { data } = await api.get(`/api/client-info/${clientId}`);
       console.log(data.data);
-      setServiceInfo(data.data);
+      setProducts(data.data);
     }
 
     getClientInfo();
   }, []);
 
-  const [serviceInfo, setServiceInfo] = useState([]);
+  const [products, setProducts] = useState([]);
 
   // Renders service cards
-  const renderServiceCards = useMemo(() => {
-    const serviceCardsArr = serviceInfo.map((info, index) => {
-      const { name: title, price, description = '' } = info;
+  const renderProductCards = useMemo(() => {
+    const productCardsArr = products.map((product, index) => {
+      const { name: title, price, description = '' } = product;
       return (
         <ServiceCard
           key={index}
@@ -42,8 +35,8 @@ const ClientInfoPage = () => {
         />
       );
     });
-    return serviceCardsArr;
-  }, [serviceInfo]);
+    return productCardsArr;
+  }, [products]);
 
   return (
     <div
@@ -63,7 +56,7 @@ const ClientInfoPage = () => {
             <h3 className='mb-2 text-2xl font-bold tracking-wide'>
               {first_name} {last_name}
             </h3>
-            <p className='text-blue-500'>{title}</p>
+            <p className='text-blue-500'>{services}</p>
           </div>
         </div>
         {/* <button className=' border rounded-lg bg-primary border-primary text-white'>
@@ -89,7 +82,7 @@ const ClientInfoPage = () => {
         id='example-work-container'
         className='grid grid-cols-[repeat(1,minmax(300px,350px))] sm:grid-cols-[repeat(2,minmax(300px,350px))] lg:grid-cols-[repeat(3,minmax(300px,350px))] gap-4 mx-auto'
       >
-        {renderServiceCards}
+        {renderProductCards}
       </div>
     </div>
   );

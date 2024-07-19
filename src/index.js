@@ -9,7 +9,7 @@ import Header from './components/Header';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div className='box-border h-screen min-w-[350px] text-[16px] font-inter'>
+    <div className='box-border h-screen min-w-[350px] text-[16px] font-inter overflow-auto'>
       <Router>
         <Header />
         <Routes>

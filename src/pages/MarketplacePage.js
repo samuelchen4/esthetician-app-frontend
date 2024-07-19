@@ -83,14 +83,16 @@ const MarketplacePage = () => {
 
     const clientCards = clientData.map((clientObj) => {
       const {
-        user_id: clientId,
+        _id: clientId,
         first_name,
         last_name,
-        title,
-        location,
+        email,
+        role,
+        services,
         cost,
         avaliability = 'MWF',
         profile_picture,
+        price_range: priceRange,
       } = clientObj;
       const name = `${first_name} ${last_name}`;
       return (
@@ -101,8 +103,7 @@ const MarketplacePage = () => {
               clientId,
               first_name,
               last_name,
-              title,
-              location,
+              services,
               cost,
               avaliability,
               profile_picture,
@@ -110,11 +111,12 @@ const MarketplacePage = () => {
           >
             <ClientCard
               name={name}
-              title={title}
+              services={services}
               location={'NW'}
               price={cost}
               avaliability={avaliability}
               picture={profile_picture}
+              priceRange={priceRange}
             />
           </Link>
         </div>

@@ -13,11 +13,11 @@ const images = [
 
 const ClientCard = ({
   name,
-  title,
+  services,
   location,
-  price,
   avaliability,
   picture,
+  priceRange,
 }) => {
   return (
     <div
@@ -41,10 +41,10 @@ const ClientCard = ({
             className='grow ml-3 flex flex-col justify-between'
           >
             <p className='text-lg font-bold text-black'>{name}</p>
-            <p className=' text-blue-500'>{title}</p>
+            <p className=' text-blue-500'>{services}</p>
             <div className='flex justify-between text-xs'>
               <p>Location: {location}</p>
-              <p>Cost: {price}</p>
+              <p>Cost: {priceRange}</p>
               <p>Avaliability: {avaliability}</p>
             </div>
           </div>
