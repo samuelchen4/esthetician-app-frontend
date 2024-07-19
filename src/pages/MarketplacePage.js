@@ -48,14 +48,21 @@ const MarketplacePage = () => {
   }, [isServiceOpen]);
 
   useEffect(() => {
+    console.log(service);
+  }, [service]);
+
+  useEffect(() => {
     const fetchClientCardData = async () => {
-      const config = {};
+      const config = {
+        params: { service },
+      };
 
       try {
         const { data } = await api.get(
           '/api/marketplace/client-search',
           config
         );
+        console.log('api call completed!');
         console.log(data.data);
         setClientData(data.data);
         // setClientData([data.data[0]]); // Testing to get one card
@@ -65,7 +72,7 @@ const MarketplacePage = () => {
     };
 
     fetchClientCardData();
-  }, []);
+  }, [service]);
 
   // Renders the cards when the state changes
   // array of objects
@@ -192,7 +199,10 @@ const MarketplacePage = () => {
       <p className='my-1 self-start sm:self-center text-xs text-black font-semibold'>
         {`We found ${
           clientData.length
-        } clients who specialize in ${service} for ${format(date, 'PPP')}!`}
+        } clients who specialize in ${service?.toLowerCase()} for ${format(
+          date,
+          'PPP'
+        )}!`}
       </p>
       <div
         id='client-container'
