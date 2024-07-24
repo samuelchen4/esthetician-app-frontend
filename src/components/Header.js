@@ -1,4 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import Modal from './Modal';
@@ -73,32 +79,25 @@ const Header = () => {
           className='w-12 h-full'
         />
       </Link>
-
-      {
-        user ? (
-          <Button>
-            <CgProfile size={32} />
-          </Button>
-        ) : (
-          <Button
-            variant={'outline'}
-            onClick={openModal}
-            className='h-full text-xs'
-          >
-            Sign in
-          </Button>
-        )
-        //   <button>
-        //     <CgProfile size={32} />
-        //   </button>
-        // ) : (
-        //   <button
-        //     onClick={openModal}
-        //     className='px-2 py-1 text-xs border rounded-lg bg-primary border-primary text-white'
-        //   >
-        //     Sign in
-        //   </button>
-      }
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
+      {/* {user ? (
+        <Button>
+          <CgProfile size={32} />
+        </Button>
+      ) : (
+        <Button
+          variant={'outline'}
+          onClick={openModal}
+          className='h-full text-xs'
+        >
+          Sign in
+        </Button>
+      )} */}
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <h2 className='text-2xl font-semibold mb-4'>Login</h2>
