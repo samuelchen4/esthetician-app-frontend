@@ -7,7 +7,7 @@ import ClientInfoPage from './pages/ClientInfoPage';
 import Header from './components/Header';
 import { ClerkProvider } from '@clerk/clerk-react';
 
-const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
+const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY || null;
 
 if (!PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key');
