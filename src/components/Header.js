@@ -1,9 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import {
+  RedirectToSignUp,
   SignedIn,
   SignedOut,
   SignInButton,
   UserButton,
+  useUser,
 } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
@@ -66,6 +68,17 @@ const Header = () => {
     }
   };
 
+  // user_2jnJyPavuUfz6OQ4WRyzf5JOL03
+
+  const { user: userObj } = useUser();
+  console.log(userObj);
+  useEffect(() => {
+    if (userObj) {
+      const userId = userObj.id;
+      console.log(userId);
+    }
+  }, [userObj]);
+
   return (
     <div
       id='header-container'
@@ -81,23 +94,11 @@ const Header = () => {
       </Link>
       <SignedOut>
         <SignInButton />
+        {/* <RedirectToSignUp /> */}
       </SignedOut>
       <SignedIn>
         <UserButton />
       </SignedIn>
-      {/* {user ? (
-        <Button>
-          <CgProfile size={32} />
-        </Button>
-      ) : (
-        <Button
-          variant={'outline'}
-          onClick={openModal}
-          className='h-full text-xs'
-        >
-          Sign in
-        </Button>
-      )} */}
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <h2 className='text-2xl font-semibold mb-4'>Login</h2>
