@@ -20,10 +20,11 @@ const MarketplacePage = () => {
   const [date, setDate] = useState(new Date());
 
   // header height store
-  const headerHeight = useHeaderStore((state) => state.headerHeight);
-  useEffect(() => {
-    console.log(headerHeight);
-  }, [headerHeight]);
+  // const headerHeight = useHeaderStore((state) => state.headerHeight);
+  const headerHeight = 50;
+  // useEffect(() => {
+  //   console.log(headerHeight);
+  // }, [headerHeight]);
 
   const handleServiceModal = () => {
     setIsServiceOpen(!isServiceOpen);
@@ -43,13 +44,13 @@ const MarketplacePage = () => {
     setIsDateOpen(false);
   }, [date]);
 
-  useEffect(() => {
-    console.log(isServiceOpen);
-  }, [isServiceOpen]);
+  // useEffect(() => {
+  //   console.log(isServiceOpen);
+  // }, [isServiceOpen]);
 
-  useEffect(() => {
-    console.log(service);
-  }, [service]);
+  // useEffect(() => {
+  //   console.log(service);
+  // }, [service]);
 
   useEffect(() => {
     const fetchClientCardData = async () => {
@@ -62,8 +63,8 @@ const MarketplacePage = () => {
           '/api/marketplace/client-search',
           config
         );
-        console.log('api call completed!');
-        console.log(data.data);
+        // console.log('api call completed!');
+        // console.log(data.data);
         setClientData(data.data);
         // setClientData([data.data[0]]); // Testing to get one card
       } catch (error) {
@@ -138,7 +139,7 @@ const MarketplacePage = () => {
       </h2>
       <div
         id='search-container'
-        className='text-sm flex mb-5 space-x-2 justify-center sticky z-90 py-2 '
+        className='text-sm flex mb-5 space-x-2 justify-center sticky z-90 py-2'
         style={{ top: headerHeight ? `${headerHeight}px` : 'auto' }}
       >
         <Button
