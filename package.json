@@ -11,7 +11,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@use-gesture/react": "^10.3.1",
-    "axios": "^1.7.2",
+    "axios": "^1.7.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
@@ -31,11 +31,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "all": "concurrently \"npm run start:react\" \"npm run start:browsersync\"",
-    "start:react": "react-scripts start",
-    "start:browsersync": "browser-sync start --config bs-config.js",
-    "serve": "browser-sync start --config bs-config.js",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "postinstall": "npm prune --production",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -58,8 +55,6 @@
     ]
   },
   "devDependencies": {
-    "browser-sync": "^3.0.2",
-    "concurrently": "^8.2.2",
     "tailwindcss": "^3.4.3"
   }
 }
