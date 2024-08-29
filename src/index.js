@@ -16,11 +16,11 @@ if (!PUBLISHABLE_KEY) {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <div className='relative h-screen overflow-y-auto flex flex-col pt-safe-top'>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl='/'>
-      <div className='box-border h-screen min-w-[350px] text-[16px] font-inter pt-safe-top overflow-y-auto'>
-        <Router>
-          <Header />
+      <Router>
+        <Header />
+        <div className='box-border pt-[50px] flex flex-col h-full'>
           <Routes>
             <Route path='/' element={<MarketplacePage />} />
             <Route path='/home' element={<MarketplacePage />} />
@@ -30,8 +30,8 @@ root.render(
               element={<SignUpQuestionnairePage />}
             />
           </Routes>
-        </Router>
-      </div>
+        </div>
+      </Router>
     </ClerkProvider>
-  </React.StrictMode>
+  </div>
 );

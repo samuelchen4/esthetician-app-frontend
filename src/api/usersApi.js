@@ -4,8 +4,8 @@ import api from './api-config';
 export const getUserByClerkId = async (clerkUserId) => {
   try {
     const response = await api.get(`/api/clerk-users/${clerkUserId}`);
-    // console.log('getUserByClerkId response: ', response);
-    const data = response.data === null ? null : response.data.data[0];
+    console.log('getUserByClerkId response: ', response);
+    const data = response.data.data === null ? null : response.data.data[0];
     return data;
   } catch (error) {
     throw new Error(
@@ -31,6 +31,62 @@ export const postUserByClerkId = async (
     throw new Error(
       error.response?.data?.message ||
         'Frontend error in postUserByClerkId method'
+    );
+  }
+};
+
+export const patchRoleById = async () => {
+  try {
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || 'Frontend error in patchRoleById method'
+    );
+  }
+};
+
+// DESC: POSTS the schedule and services of a client and updates the basic info
+// METHOD: POST
+export const postClientInfo = async (userId, clientInfoArray) => {
+  try {
+    const response = await api.post(`/api/users/${userId}/clients`);
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || 'Frontend error in postClientInfo method'
+    );
+  }
+};
+// DESC: PATCH basic info for user by _id
+// METHOD: PATCH
+export const patchNameUserById = async () => {
+  try {
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        'Frontend error in patchNameUserById method'
+    );
+  }
+};
+
+// DESC: Post services for a user by _id
+// METHOD: POST
+export const postServicesForUserById = async () => {
+  try {
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        'Frontend error in postServicesForUserById method'
+    );
+  }
+};
+
+// DESC: Post days availiable for a user by _id
+// METHOD: POST
+export const postScheduleForUserById = async () => {
+  try {
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        'Frontend error in postScheduleForUserById method'
     );
   }
 };

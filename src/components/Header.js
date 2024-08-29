@@ -6,13 +6,15 @@ import {
   UserButton,
   useUser,
 } from '@clerk/clerk-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useUserStore from '../stores/useUserStore';
 import { Loader } from 'lucide-react';
 
 const Header = () => {
   // Clerk auth
   const { user: clerkUserObj } = useUser();
+  // router
+  const navigate = useNavigate();
   // From Zustand store
   const user = useUserStore((state) => state.user);
   const getUserInfo = useUserStore((state) => state.getUserInfo);
@@ -44,6 +46,13 @@ const Header = () => {
     }
   }, [clerkUserObj]);
 
+  useEffect(() => {
+    // if user is not null and doesnt have the role property
+    if (user !== null && user?.role === null) {
+      navigate('/sign-up/questionnaire');
+    }
+  }, [user]);
+
   // useEffect(() => {
   //   console.log('user', user);
   // }, [user]);
@@ -51,7 +60,7 @@ const Header = () => {
   return (
     <div
       id='header-container'
-      className='sticky top-0 z-100 bg-white shadow-sm flex items-center justify-between py-2 px-6 w-full h-[50px]'
+      className='fixed top-0 z-100 bg-white shadow-sm flex items-center justify-between py-2 px-6 w-full h-[50px]'
     >
       <Link to='/'>
         <img
