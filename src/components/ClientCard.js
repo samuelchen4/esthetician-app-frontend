@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import CircleImage from './CircleImage';
 import Carousel from './Carousel';
+import { ClientCardSkeleton } from './ClientCardSkeleton';
 
 const images = [
   '/static/client-card-title-picture-1.png',
@@ -20,9 +21,10 @@ const ClientCard = ({
   priceRange,
 }) => {
   return (
+    // <div className='my-1 min-w-[200px] sm:max-w-[350px]'>
     <div
       id='card-container'
-      className='w-full flex flex-col flex-auto border rounded-lg text-xs shadow-md my-2'
+      className=' min-w-[200px] sm:max-w-[350px] w-full flex flex-col flex-auto border rounded-lg text-xs shadow-md my-2'
     >
       <div id='title-picture-container' className='w-full'>
         <Carousel images={images} />
@@ -58,6 +60,7 @@ const ClientCard = ({
         </p>
       </div>
     </div>
+    // </div>
   );
 };
 

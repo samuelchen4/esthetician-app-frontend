@@ -160,7 +160,7 @@ const SignUpQuestionnairePage = () => {
     <div className='grow border-2 m-4 flex flex-col items-center'>
       <Progress value={(index / (questionsArray.length - 1)) * 100} />
       <h2 className='text-3xl font-semibold'>{question}</h2>
-      <div className='grow max-h-[600px] overflow-y-auto'>{actionJsx}</div>
+      <div className='grow max-h-[600px]'>{actionJsx}</div>
       <div className='mt-auto flex flex-col'>
         <button onClick={handleSubmit}>
           {index === questionsArray.length - 1 ? 'Submit' : 'Continue'}

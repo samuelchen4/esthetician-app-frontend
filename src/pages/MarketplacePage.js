@@ -10,7 +10,7 @@ import { categories } from '../constants/categories';
 import { cn } from 'src/lib/utils';
 import { Button } from 'src/components/ui/button';
 import { Calendar } from 'src/components/ui/calendar';
-import useHeaderStore from 'src/stores/useHeaderStore';
+import { ClientCardSkeleton } from 'src/components/ClientCardSkeleton';
 
 const MarketplacePage = () => {
   const [clientData, setClientData] = useState([]);
@@ -78,8 +78,9 @@ const MarketplacePage = () => {
   // Renders the cards when the state changes
   // array of objects
   const renderCards = () => {
+    // if loading, display skeleton
     if (clientData.length === 0) {
-      return <p>Add loading skeleton here</p>;
+      return new Array(5).fill(null).map((item) => <ClientCardSkeleton />);
     }
 
     const clientCards = clientData.map((clientObj) => {
@@ -87,8 +88,6 @@ const MarketplacePage = () => {
         _id: clientId,
         first_name,
         last_name,
-        email,
-        role,
         services,
         cost,
         avaliability = 'MWF',
@@ -97,30 +96,28 @@ const MarketplacePage = () => {
       } = clientObj;
       const name = `${first_name} ${last_name}`;
       return (
-        <div className='my-1 min-w-[200px] sm:max-w-[350px]'>
-          <Link
-            to={`/client-info/${clientId}`}
-            state={{
-              clientId,
-              first_name,
-              last_name,
-              services,
-              cost,
-              avaliability,
-              profile_picture,
-            }}
-          >
-            <ClientCard
-              name={name}
-              services={services}
-              location={'NW'}
-              price={cost}
-              avaliability={avaliability}
-              picture={profile_picture}
-              priceRange={priceRange}
-            />
-          </Link>
-        </div>
+        <Link
+          to={`/client-info/${clientId}`}
+          state={{
+            clientId,
+            first_name,
+            last_name,
+            services,
+            cost,
+            avaliability,
+            profile_picture,
+          }}
+        >
+          <ClientCard
+            name={name}
+            services={services}
+            location={'NW'}
+            price={cost}
+            avaliability={avaliability}
+            picture={profile_picture}
+            priceRange={priceRange}
+          />
+        </Link>
       );
     });
     return clientCards;
