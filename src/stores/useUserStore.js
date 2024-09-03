@@ -1,11 +1,21 @@
 // useAuthStore.js
 import { create } from 'zustand';
-import { getUserByClerkId, postUserByClerkId } from '../api/usersApi';
+import {
+  getUserByClerkId,
+  patchRoleById,
+  postClientInfo,
+  postUserByClerkId,
+} from '../api/usersApi';
 
 const useUserStore = create((set) => ({
   isLoggedIn: false,
   user: null,
   isLoading: false,
+  patchUserRole: async (userId) => {
+    set({ isLoading: true });
+    const userInfo = await patchRoleById(userId);
+    set({ userInfo, isLoading: false });
+  },
   getUserInfo: async (clerkUserId) => {
     set({ isLoading: true });
     const userInfo = await getUserByClerkId(clerkUserId);
@@ -20,6 +30,11 @@ const useUserStore = create((set) => ({
       email
     );
     set({ user: userInfo, isLoading: false });
+  },
+  postUserClientInfo: async (userId, clientInfoArray) => {
+    set({ isloading: true });
+    const updatedUserInfo = await postClientInfo(userId, clientInfoArray);
+    set({ user: updatedUserInfo, isLoading: false });
   },
 }));
 

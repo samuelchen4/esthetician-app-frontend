@@ -1,10 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Progress } from 'src/components/ui/progress';
 import { categories } from 'src/constants/categories';
 import { days } from 'src/constants/days';
+import useUserStore from 'src/stores/useUserStore';
+import { Switch } from 'src/components/ui/switch';
+import { Label } from 'src/components/ui/label';
+import Toggle from 'src/components/Toggle';
+
 // import EventCalendar from 'src/components/EventCalendar';
 
 const SignUpQuestionnairePage = () => {
+  const navigate = useNavigate();
+  const user = useUserStore((state) => state.user);
+  const postUserClientInfo = useUserStore((state) => state.postUserClientInfo);
   // Pass in an array of objects to this component which will contain:
   // progress value, question, inputs,
   const [index, setIndex] = useState(0);
@@ -14,9 +23,10 @@ const SignUpQuestionnairePage = () => {
   }, [index]);
 
   const [basicInfo, setBasicInfo] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
+    firstName: user?.first_name,
+    lastName: user?.last_name,
+    email: user?.email,
+    isClient: false,
   });
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedDays, setSelectedDays] = useState([]);
@@ -46,11 +56,13 @@ const SignUpQuestionnairePage = () => {
     answersRef.current[index] = answer;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     saveAnswer();
     // If index === questionsArray.length - 1 then submit
     if (index === questionsArray.length - 1) {
       console.log('Submit to API');
+      await postUserClientInfo(user._id, answersRef.current);
+      navigate('/');
     } else {
       incrementIndex();
     }
@@ -88,39 +100,6 @@ const SignUpQuestionnairePage = () => {
     });
 
     return renderState;
-  };
-
-  const BasicInfoComponent = ({ state, setter }) => {
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setter({ ...state, [name]: value });
-    };
-
-    return (
-      <div>
-        <label>First Name:</label>
-        <input
-          type='text'
-          name='firstName'
-          value={state.firstName}
-          onChange={handleChange}
-        />
-        <label>Last Name:</label>
-        <input
-          type='text'
-          name='lastName'
-          value={state.lastName}
-          onChange={handleChange}
-        />
-        <label>Email:</label>
-        <input
-          type='text'
-          name='email'
-          value={state.email}
-          onChange={handleChange}
-        />
-      </div>
-    );
   };
 
   const questionsArray = [
@@ -172,3 +151,54 @@ const SignUpQuestionnairePage = () => {
 };
 
 export default SignUpQuestionnairePage;
+
+const BasicInfoComponent = ({ state, setter }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setter((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleToggleChange = (e) => {
+    const isChecked = e.target.checked;
+    console.log(isChecked);
+
+    setter((prevState) => ({
+      ...prevState,
+      isClient: isChecked, // Set isClient to true if checked, false if not
+    }));
+  };
+
+  return (
+    <div>
+      <label>First Name:</label>
+      <input
+        type='text'
+        name='firstName'
+        value={state.firstName}
+        onChange={handleChange}
+      />
+      <label>Last Name:</label>
+      <input
+        type='text'
+        name='lastName'
+        value={state.lastName}
+        onChange={handleChange}
+      />
+      <label>Email:</label>
+      <input
+        type='email'
+        name='email'
+        value={state.email}
+        onChange={handleChange}
+      />
+      <div className='flex items-center space-x-2'>
+        <Toggle checked={state.isClient} onChange={handleToggleChange} />
+        <Label>I am selling services!</Label>
+      </div>
+    </div>
+  );
+};

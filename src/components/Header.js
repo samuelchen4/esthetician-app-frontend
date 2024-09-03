@@ -14,7 +14,7 @@ const Header = () => {
   // Clerk auth
   const { user: clerkUserObj } = useUser();
   // router
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // From Zustand store
   const user = useUserStore((state) => state.user);
   const getUserInfo = useUserStore((state) => state.getUserInfo);
@@ -46,16 +46,16 @@ const Header = () => {
     }
   }, [clerkUserObj]);
 
-  useEffect(() => {
-    // if user is not null and doesnt have the role property
-    if (user !== null && user?.role === null) {
-      navigate('/sign-up/questionnaire');
-    }
-  }, [user]);
-
   // useEffect(() => {
-  //   console.log('user', user);
+  //   // if user is not null and doesnt have the role property
+  //   if (user !== null && user?.role === null) {
+  //     navigate('/sign-up/questionnaire');
+  //   }
   // }, [user]);
+
+  useEffect(() => {
+    console.log('user', user);
+  }, [user]);
 
   return (
     <div

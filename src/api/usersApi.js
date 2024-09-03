@@ -48,45 +48,55 @@ export const patchRoleById = async () => {
 // METHOD: POST
 export const postClientInfo = async (userId, clientInfoArray) => {
   try {
-    const response = await api.post(`/api/users/${userId}/clients`);
+    const body = { clientInfoArray };
+    console.log('clientInfoArray: ', clientInfoArray);
+    const response = await api.post(`/api/users/${userId}/clients`, body);
+    console.log('response:', response);
+    if (!response.data.success) {
+      throw new Error(response.data.message);
+    }
+    // returns the new userInfo
+    const userInfo = response.data.data.userInfo;
+    return userInfo;
   } catch (error) {
     throw new Error(
       error.response?.data?.message || 'Frontend error in postClientInfo method'
     );
   }
 };
-// DESC: PATCH basic info for user by _id
-// METHOD: PATCH
-export const patchNameUserById = async () => {
-  try {
-  } catch (error) {
-    throw new Error(
-      error.response?.data?.message ||
-        'Frontend error in patchNameUserById method'
-    );
-  }
-};
 
-// DESC: Post services for a user by _id
-// METHOD: POST
-export const postServicesForUserById = async () => {
-  try {
-  } catch (error) {
-    throw new Error(
-      error.response?.data?.message ||
-        'Frontend error in postServicesForUserById method'
-    );
-  }
-};
+// // DESC: PATCH basic info for user by _id
+// // METHOD: PATCH
+// export const patchNameUserById = async () => {
+//   try {
+//   } catch (error) {
+//     throw new Error(
+//       error.response?.data?.message ||
+//         'Frontend error in patchNameUserById method'
+//     );
+//   }
+// };
 
-// DESC: Post days availiable for a user by _id
-// METHOD: POST
-export const postScheduleForUserById = async () => {
-  try {
-  } catch (error) {
-    throw new Error(
-      error.response?.data?.message ||
-        'Frontend error in postScheduleForUserById method'
-    );
-  }
-};
+// // DESC: Post services for a user by _id
+// // METHOD: POST
+// export const postServicesForUserById = async () => {
+//   try {
+//   } catch (error) {
+//     throw new Error(
+//       error.response?.data?.message ||
+//         'Frontend error in postServicesForUserById method'
+//     );
+//   }
+// };
+
+// // DESC: Post days availiable for a user by _id
+// // METHOD: POST
+// export const postScheduleForUserById = async () => {
+//   try {
+//   } catch (error) {
+//     throw new Error(
+//       error.response?.data?.message ||
+//         'Frontend error in postScheduleForUserById method'
+//     );
+//   }
+// };

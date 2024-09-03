@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/api-config';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
@@ -11,8 +11,20 @@ import { cn } from 'src/lib/utils';
 import { Button } from 'src/components/ui/button';
 import { Calendar } from 'src/components/ui/calendar';
 import { ClientCardSkeleton } from 'src/components/ClientCardSkeleton';
+import useUserStore from 'src/stores/useUserStore';
 
 const MarketplacePage = () => {
+  // useNavigate
+  const navigate = useNavigate();
+  // userStore
+  const user = useUserStore((state) => state.user);
+  useEffect(() => {
+    // if user is not null and doesnt have the role property
+    if (user !== null && user?.role === null) {
+      navigate('/sign-up/questionnaire');
+    }
+  }, [user]);
+
   const [clientData, setClientData] = useState([]);
   const [isServiceOpen, setIsServiceOpen] = useState(false);
   const [service, setService] = useState('Nails');
