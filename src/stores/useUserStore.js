@@ -11,10 +11,11 @@ const useUserStore = create((set) => ({
   isLoggedIn: false,
   user: null,
   isLoading: false,
-  patchUserRole: async (userId) => {
+  patchUserRole: async (userId, isClient) => {
     set({ isLoading: true });
-    const userInfo = await patchRoleById(userId);
-    set({ userInfo, isLoading: false });
+    const role = isClient ? 'client' : 'user';
+    const userInfo = await patchRoleById(userId, role);
+    set({ user: userInfo, isLoading: false });
   },
   getUserInfo: async (clerkUserId) => {
     set({ isLoading: true });

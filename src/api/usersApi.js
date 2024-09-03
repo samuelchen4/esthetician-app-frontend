@@ -35,8 +35,15 @@ export const postUserByClerkId = async (
   }
 };
 
-export const patchRoleById = async () => {
+export const patchRoleById = async (userId, role) => {
   try {
+    const body = {
+      role,
+    };
+    const response = await api.patch(`/api/users/${userId}/roles`, body);
+    console.log('poatchROleId executed successfully!');
+    console.log(response.data.data);
+    return response.data.data;
   } catch (error) {
     throw new Error(
       error.response?.data?.message || 'Frontend error in patchRoleById method'

@@ -14,6 +14,7 @@ const SignUpQuestionnairePage = () => {
   const navigate = useNavigate();
   const user = useUserStore((state) => state.user);
   const postUserClientInfo = useUserStore((state) => state.postUserClientInfo);
+  const patchUserRole = useUserStore((state) => state.patchUserRole);
   // Pass in an array of objects to this component which will contain:
   // progress value, question, inputs,
   const [index, setIndex] = useState(0);
@@ -58,6 +59,12 @@ const SignUpQuestionnairePage = () => {
 
   const handleSubmit = async () => {
     saveAnswer();
+    // if users is not a client redirect and submit right away
+    const isClient = answersRef.current[index].isClient;
+    if (index === 0 && isClient === false) {
+      await patchUserRole(user._id, isClient);
+      navigate('/');
+    }
     // If index === questionsArray.length - 1 then submit
     if (index === questionsArray.length - 1) {
       console.log('Submit to API');
