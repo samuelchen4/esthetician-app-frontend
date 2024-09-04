@@ -10,17 +10,17 @@ const ClientInfoPage = () => {
   const { first_name, last_name, services, profile_picture } =
     locationRouter.state || {};
   console.log(locationRouter);
-  useEffect(() => {
-    async function getClientInfo() {
-      const { data } = await api.get(`/api/client-info/${clientId}`);
-      console.log(data.data);
-      setProducts(data.data);
-    }
-
-    getClientInfo();
-  }, []);
-
   const [products, setProducts] = useState([]);
+
+  // useEffect(() => {
+  //   async function getClientInfo() {
+  //     const { data } = await api.get(`/api/users/client-info/${clientId}`);
+  //     console.log('api response: ', data.data);
+  //     setProducts(data.data);
+  //   }
+
+  //   getClientInfo();
+  // }, []);
 
   // Renders service cards
   const renderProductCards = useMemo(() => {
