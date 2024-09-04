@@ -140,7 +140,7 @@ const SignUpQuestionnairePage = () => {
   const { question, actionJsx } = questionsArray[index];
 
   return (
-    <div className='grow border-2 m-4 flex flex-col items-center'>
+    <div className='max-h-[calc(100vh-50px)] grow border-2 m-4 flex flex-col items-center'>
       <Progress value={(index / (questionsArray.length - 1)) * 100} />
       <h2 className='text-3xl font-semibold'>{question}</h2>
       <div className='grow'>{actionJsx}</div>
