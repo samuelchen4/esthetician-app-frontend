@@ -16,7 +16,7 @@ if (!PUBLISHABLE_KEY) {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <div className='border-box relative h-screen flex flex-col pt-safe-top'>
+  <div className='border-box relative h-[100dvh] flex flex-col pt-safe-top'>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl='/'>
       <Router>
         <Header />
