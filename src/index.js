@@ -20,7 +20,7 @@ root.render(
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl='/'>
       <Router>
         <Header />
-        <div className='box-border pt-[50px] flex flex-col grow min-h-0'>
+        <div className='box-border pt-[50px] flex flex-col grow min-h-0 border-4'>
           <Routes>
             <Route path='/' element={<MarketplacePage />} />
             <Route path='/home' element={<MarketplacePage />} />
