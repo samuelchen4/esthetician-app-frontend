@@ -1,5 +1,6 @@
 import React from 'react';
-const Carousel = ({ images }) => {
+import { cn } from 'src/lib/utils';
+const Carousel = ({ images, aspect = 1, width = 35 }) => {
   return (
     <div
       id='carousel-container'
@@ -10,7 +11,11 @@ const Carousel = ({ images }) => {
           key={idx}
           src={image}
           alt={`image ${idx}`}
-          className='w-[35%] aspect-1 object-cover rounded-md border'
+          className={'object-cover rounded-md border'}
+          style={{
+            width: `${width}px`, // Set width using inline style in pixels
+            aspectRatio: aspect, // Set the aspect ratio using inline style
+          }}
         />
       ))}
     </div>

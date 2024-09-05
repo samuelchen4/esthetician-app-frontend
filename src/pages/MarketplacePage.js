@@ -138,7 +138,7 @@ const MarketplacePage = () => {
   return (
     <div
       id='page-container'
-      className='grow mx-6 flex flex-col text-neutral-600'
+      className='grow mx-4 flex flex-col text-neutral-600'
     >
       <h2 className='text-center my-5 font-bold text-5xl font-alexandria text-black'>
         Explore

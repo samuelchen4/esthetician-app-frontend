@@ -60,7 +60,7 @@ const Header = () => {
   return (
     <div
       id='header-container'
-      className='fixed top-0 z-100 bg-white shadow-sm flex items-center justify-between py-2 px-6 w-full h-[50px]'
+      className='fixed top-0 bg-white shadow-sm flex items-center justify-between py-2 px-6 w-full h-[50px]'
     >
       <Link to='/'>
         <img

@@ -16,11 +16,13 @@ if (!PUBLISHABLE_KEY) {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <div className='border-box relative h-[100dvh] flex flex-col pt-safe-top'>
+  <div className='border-box h-[100dvh] flex flex-col pt-safe-top'>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl='/'>
       <Router>
-        <Header />
-        <div className='box-border pt-[50px] flex flex-col grow min-h-0 border-4'>
+        <div className='z-10'>
+          <Header />
+        </div>
+        <div className='relative z-0 mt-[50px] box-border border'>
           <Routes>
             <Route path='/' element={<MarketplacePage />} />
             <Route path='/home' element={<MarketplacePage />} />
