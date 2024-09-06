@@ -1,8 +1,6 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
-import api from '../api/api-config';
+import React, { useState, useEffect } from 'react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import CircleImage from '../components/CircleImage';
-import ServiceCard from '../components/ServiceCard';
 import Carousel from 'src/components/Carousel';
 import {
   getPhotosById,
@@ -10,6 +8,7 @@ import {
   getServicesById,
   getUserInfoById,
 } from 'src/api/usersApi';
+import { Skeleton } from 'src/components/ui/skeleton';
 
 // STEPS FOR FINISHING CLIENT INFO PAGE
 // 1) Fetch all relevent data on render
@@ -44,12 +43,22 @@ const ClientInfoPage = () => {
   const { userId } = useParams(); // Extract clientId from URL
   const locationRouter = useLocation();
   const { first_name, last_name, profile_picture } = locationRouter.state || {};
-  console.log(locationRouter);
+
+  const navigate = useNavigate();
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
   const [userInfo, setUserInfo] = useState(null);
   const [schedules, setSchedules] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [services, setServices] = useState([]);
+
+  // Add loading states
+  const [loadingUserInfo, setLoadingUserInfo] = useState(true);
+  const [loadingSchedules, setLoadingSchedules] = useState(true);
+  const [loadingPhotos, setLoadingPhotos] = useState(true);
+  const [loadingServices, setLoadingServices] = useState(true);
 
   // testing, delete when done
   useEffect(() => {
@@ -70,18 +79,30 @@ const ClientInfoPage = () => {
         ]);
 
       // Update state only if the promise is fulfilled
-      if (userInfoApi.status === 'fulfilled') setUserInfo(userInfoApi.value);
-      if (photosApi.status === 'fulfilled') setPhotos(photosApi.value);
-      if (schedulesApi.status === 'fulfilled') setSchedules(schedulesApi.value);
-      if (servicesApi.status === 'fulfilled') setServices(servicesApi.value);
+      if (userInfoApi.status === 'fulfilled') {
+        setUserInfo(userInfoApi.value);
+        setLoadingUserInfo(false);
+      }
+      if (photosApi.status === 'fulfilled') {
+        setPhotos(photosApi.value);
+        setLoadingPhotos(false);
+      }
+      if (schedulesApi.status === 'fulfilled') {
+        setSchedules(schedulesApi.value);
+        setLoadingSchedules(false);
+      }
+      if (servicesApi.status === 'fulfilled') {
+        setServices(servicesApi.value);
+        setLoadingServices(false);
+      }
     }
 
     fetchData();
   }, [userId]);
 
   const {
-    first_name: firstName = '',
-    last_name: lastName = '',
+    first_name: firstName = first_name,
+    last_name: lastName = last_name,
     phone_number: phone = '',
     email = '',
     location = '',
@@ -98,7 +119,7 @@ const ClientInfoPage = () => {
       <div className=' absolute top-0 left-0 right-0 w-full h-32 rounded-b-[50%] bg-blue-200 p-4'>
         <div id='client-info-header' className=' border'>
           <div className=' flex justify-between'>
-            <p>back</p>
+            <button onClick={handleBackClick}>back</button>
             <p>
               {city || 'Calgary'}, {province || 'AB'}
             </p>
@@ -109,7 +130,11 @@ const ClientInfoPage = () => {
               {firstName} {lastName}
             </h3>
             <p className='text-blue-400 text-xs mt-0.5'>
-              {services.map((serviceObj) => `${serviceObj.name}`)}
+              {services !== null
+                ? services
+                    .map((serviceObj) => serviceObj.service_name)
+                    .join(', ')
+                : 'Specialist'}
             </p>
             <div id='client-info-action-buttons' className='mt-10 space-x-3'>
               <button className='border rounded-full py-2 px-4 bg-blue-200'>
@@ -124,43 +149,57 @@ const ClientInfoPage = () => {
               className='w-full mt-10 flex flex-col'
             >
               <h3 className='font-bold self-start mb-1'>My Availability</h3>
-              <div className='flex justify-between border rounded-md py-1 px-4'>
-                {daysOfWeek.map((day) => (
-                  <p
-                    key={day}
-                    className={
-                      schedules?.some(
-                        (schedulesObj) => schedulesObj.day === day
-                      ) // Check if day exists in schedule array
-                        ? 'text-blue-500 bold underline' // Apply this class if day is in the schedule array
-                        : 'text-gray-400' // Apply no additional class otherwise
-                    }
-                  >
-                    {day.charAt(0)} {/* Display the first letter of the day */}
-                  </p>
-                ))}
-              </div>
+              {loadingSchedules ? (
+                <Skeleton className='h-5 w-full' />
+              ) : (
+                <div className='flex justify-between border rounded-md py-1 px-4'>
+                  {daysOfWeek.map((day) => (
+                    <p
+                      key={day}
+                      className={
+                        schedules?.some(
+                          (schedulesObj) => schedulesObj.day === day
+                        ) // Check if day exists in schedule array
+                          ? 'text-blue-500 bold underline' // Apply this class if day is in the schedule array
+                          : 'text-gray-400' // Apply no additional class otherwise
+                      }
+                    >
+                      {day.charAt(0)}
+                      {/* Display the first letter of the day */}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
             <div
               id='client-info-my-work'
               className='w-full mt-10 flex flex-col'
             >
               <h3 className='font-bold self-start mb-1'>My Work</h3>
-              <Carousel images={images} aspect={'3/4'} width={'150'} />
+              {loadingPhotos ? (
+                <Skeleton className='h-44 w-full' />
+              ) : (
+                <Carousel images={images} aspect={'3/4'} width={'150'} />
+              )}
             </div>
             <div
               id='client-info-my-story'
               className='w-full mt-10 flex flex-col'
             >
               <h3 className='font-bold self-start mb-1'>My Story</h3>
-              <div className='border rounded-md py-1 px-4 text-start'>
-                {userStory == false ||
-                  `Sint aliquip nulla ad cillum ex eiusmod proident cupidatat
-                aliqua sit minim Sint aliquip nulla ad cillum ex eiusmod
-                proident cupidatat aliqua sit minim Sint aliquip nulla ad cillum
-                ex eiusmod proident cupidatat aliqua sit minim Sint aliquip
-                nulla ad cillum ex eiusmod proident cupidatat aliqua sit minim`}
-              </div>
+              {loadingUserInfo ? (
+                <Skeleton className='h-36 w-full' />
+              ) : (
+                <div className='border rounded-md py-1 px-4 text-start'>
+                  {userStory == false ||
+                    `Sint aliquip nulla ad cillum ex eiusmod
+                  proident cupidatat aliqua sit minim Sint aliquip nulla ad
+                  cillum ex eiusmod proident cupidatat aliqua sit minim Sint
+                  aliquip nulla ad cillum ex eiusmod proident cupidatat aliqua
+                  sit minim Sint aliquip nulla ad cillum ex eiusmod proident
+                  cupidatat aliqua sit minim`}
+                </div>
+              )}
               <div
                 id='client-info-my-contact'
                 className='w-full mt-10 flex flex-col'
@@ -168,20 +207,24 @@ const ClientInfoPage = () => {
                 <h3 className='font-bold self-start mb-1'>
                   My Contact Information
                 </h3>
-                <div className='border rounded-md py-1 px-4 flex flex-col items-start'>
-                  <p>
-                    <span className='font-semibold mr-1'>Phone:</span>
-                    {phone || `403-xxx-xxxx`}
-                  </p>
-                  <p>
-                    <span className='font-semibold mr-1'>Email:</span>
-                    {email || `test@gmail.com`}
-                  </p>
-                  <p>
-                    <span className='font-semibold mr-1'>Location:</span>
-                    {location || `Calgary, AB`}
-                  </p>
-                </div>
+                {loadingUserInfo ? (
+                  <Skeleton className='h-20 w-full' />
+                ) : (
+                  <div className='border rounded-md py-1 px-4 flex flex-col items-start'>
+                    <p>
+                      <span className='font-semibold mr-1'>Phone:</span>
+                      {phone || `403-xxx-xxxx`}
+                    </p>
+                    <p>
+                      <span className='font-semibold mr-1'>Email:</span>
+                      {email || `test@gmail.com`}
+                    </p>
+                    <p>
+                      <span className='font-semibold mr-1'>Location:</span>
+                      {location || `Calgary, AB`}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

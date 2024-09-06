@@ -13,12 +13,15 @@ const images = [
 ];
 
 const ClientCard = ({
-  name,
-  services,
+  firstName,
+  lastName,
+  userStory,
   location,
-  avaliability,
+  city,
+  province,
+  services,
+  schedules,
   picture,
-  priceRange,
 }) => {
   return (
     // <div className='my-1 min-w-[200px] sm:max-w-[350px]'>
@@ -27,7 +30,7 @@ const ClientCard = ({
       className=' min-w-[200px] sm:max-w-[350px] w-full flex flex-col flex-auto border rounded-lg text-xs shadow-md my-2'
     >
       <div id='title-picture-container' className='w-full'>
-        <Carousel images={images} width={'110'} />
+        <Carousel images={images} width={'120'} />
       </div>
       <div
         id='card-details-container'
@@ -42,21 +45,27 @@ const ClientCard = ({
             id='client-title-details'
             className='grow ml-3 flex flex-col justify-between'
           >
-            <p className='text-lg font-bold text-black'>{name}</p>
-            <p className=' text-blue-500'>{services}</p>
+            <p className='text-lg font-bold text-black'>
+              {firstName} {lastName}
+            </p>
+            <p className=' text-blue-500'>
+              {services !== null ? services.join(', ') : 'Specialist'}
+            </p>
             <div className='flex justify-between text-xs'>
-              <p>Location: {location}</p>
-              <p>Cost: {priceRange}</p>
-              <p>Avaliability: {avaliability}</p>
+              <p>Location: {location === null ? 'Calgary, AB' : location}</p>
+              <p>
+                Avaliability: {schedules !== null ? schedules.join(' ') : 'Mon'}
+              </p>
             </div>
           </div>
         </div>
-        <p className='pt-4'>
-          Sint aliquip nulla ad cillum ex eiusmod proident cupidatat aliqua sit
+        <p className='pt-4 h-[120px]'>
+          {userStory == false ||
+            `Sint aliquip nulla ad cillum ex eiusmod proident cupidatat aliqua sit
           minim Sint aliquip nulla ad cillum ex eiusmod proident cupidatat
           aliqua sit minim Sint aliquip nulla ad cillum ex eiusmod proident
           cupidatat aliqua sit minim Sint aliquip nulla ad cillum ex eiusmod
-          proident cupidatat aliqua sit minim
+          proident cupidatat aliqua sit minim`}
         </p>
       </div>
     </div>

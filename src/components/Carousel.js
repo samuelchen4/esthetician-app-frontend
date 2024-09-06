@@ -1,12 +1,14 @@
 import React from 'react';
-import { cn } from 'src/lib/utils';
-const Carousel = ({ images, aspect = 1, width = 35 }) => {
+// import Image from 'src/components/Image';
+
+const Carousel = ({ images = null, aspect = 1, width = 35 }) => {
   return (
     <div
       id='carousel-container'
       className='p-2 flex overflow-x-scroll space-x-2 no-scrollbar'
     >
       {images.map((image, idx) => (
+        // <Image src={image} alt={`image ${idx}`} width={width} aspect={aspect} />
         <img
           key={idx}
           src={image}

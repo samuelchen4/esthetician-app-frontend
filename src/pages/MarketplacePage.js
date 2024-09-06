@@ -13,6 +13,8 @@ import { Calendar } from 'src/components/ui/calendar';
 import { ClientCardSkeleton } from 'src/components/ClientCardSkeleton';
 import useUserStore from 'src/stores/useUserStore';
 
+const headerHeight = '50';
+
 const MarketplacePage = () => {
   // useNavigate
   const navigate = useNavigate();
@@ -31,13 +33,6 @@ const MarketplacePage = () => {
   const [isDateOpen, setIsDateOpen] = useState(false);
   const [date, setDate] = useState(new Date());
 
-  // header height store
-  // const headerHeight = useHeaderStore((state) => state.headerHeight);
-  const headerHeight = 50;
-  // useEffect(() => {
-  //   console.log(headerHeight);
-  // }, [headerHeight]);
-
   const handleServiceModal = () => {
     setIsServiceOpen(!isServiceOpen);
   };
@@ -55,14 +50,6 @@ const MarketplacePage = () => {
   useEffect(() => {
     setIsDateOpen(false);
   }, [date]);
-
-  // useEffect(() => {
-  //   console.log(isServiceOpen);
-  // }, [isServiceOpen]);
-
-  // useEffect(() => {
-  //   console.log(service);
-  // }, [service]);
 
   useEffect(() => {
     const fetchClientCardData = async () => {
@@ -92,42 +79,45 @@ const MarketplacePage = () => {
   const renderCards = () => {
     // if loading, display skeleton
     if (clientData.length === 0) {
-      return new Array(5).fill(null).map((item) => <ClientCardSkeleton />);
+      return new Array(10).fill(null).map((item) => <ClientCardSkeleton />);
     }
 
     const clientCards = clientData.map((clientObj) => {
       const {
         _id: clientId,
-        first_name,
-        last_name,
+        first_name: firstName,
+        last_name: lastName,
+        user_story: userStory,
+        location,
+        city,
+        province,
         services,
-        cost,
-        avaliability = 'MWF',
+        schedules,
         profile_picture,
-        price_range: priceRange,
       } = clientObj;
-      const name = `${first_name} ${last_name}`;
       return (
         <Link
           to={`/client-info/${clientId}`}
           state={{
             clientId,
-            first_name,
-            last_name,
+            firstName,
+            lastName,
+            userStory,
             services,
-            cost,
-            avaliability,
+            schedules,
             profile_picture,
           }}
         >
           <ClientCard
-            name={name}
+            firstName={firstName}
+            lastName={lastName}
+            userStory={userStory}
             services={services}
-            location={'NW'}
-            price={cost}
-            avaliability={avaliability}
+            location={location}
+            city={city}
+            province={province}
+            schedules={schedules}
             picture={profile_picture}
-            priceRange={priceRange}
           />
         </Link>
       );
@@ -173,7 +163,7 @@ const MarketplacePage = () => {
       </div>
       {isDateOpen && (
         <Modal isOpen={isDateOpen} onClose={handleDatePickerModal}>
-          <p className='mb-4 font-bold self-start'>Calendar</p>
+          <p className='mb-4 font-bold self-start'>Pick a date!</p>
           <Calendar
             mode='single'
             disabled={{ before: new Date() }}

@@ -134,26 +134,3 @@ export const getServicesById = async (userId) => {
     );
   }
 };
-// // DESC: Post services for a user by _id
-// // METHOD: POST
-// export const postServicesForUserById = async () => {
-//   try {
-//   } catch (error) {
-//     throw new Error(
-//       error.response?.data?.message ||
-//         'Frontend error in postServicesForUserById method'
-//     );
-//   }
-// };
-
-// // DESC: Post days availiable for a user by _id
-// // METHOD: POST
-// export const postScheduleForUserById = async () => {
-//   try {
-//   } catch (error) {
-//     throw new Error(
-//       error.response?.data?.message ||
-//         'Frontend error in postScheduleForUserById method'
-//     );
-//   }
-// };
