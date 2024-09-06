@@ -72,18 +72,68 @@ export const postClientInfo = async (userId, clientInfoArray) => {
   }
 };
 
-// // DESC: PATCH basic info for user by _id
-// // METHOD: PATCH
-// export const patchNameUserById = async () => {
-//   try {
-//   } catch (error) {
-//     throw new Error(
-//       error.response?.data?.message ||
-//         'Frontend error in patchNameUserById method'
-//     );
-//   }
-// };
+// DESC: get user info by _id
+// METHOD: GET
+export const getUserInfoById = async (userId) => {
+  try {
+    const { data } = await api.get(`/api/users/${userId}`);
+    const userInfo = data.data;
+    // console.log('userInfo: ', userInfo);
+    return userInfo;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        'Frontend error in getUserInfoById method'
+    );
+  }
+};
 
+// DESC: get schedules by _id
+// METHOD: GET
+export const getSchedulesById = async (userId) => {
+  try {
+    const { data } = await api.get(`/api/users/${userId}/schedules`);
+    const schedules = data.data;
+    // console.log('schedules: ', schedules);
+    return schedules;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        'Frontend error in getSchedulesById method'
+    );
+  }
+};
+
+// DESC: get photos by _id
+// METHOD: GET
+export const getPhotosById = async (userId) => {
+  try {
+    const { data } = await api.get(`/api/users/${userId}/photos`);
+    const photos = data.data;
+    // console.log('photos: ', photos);
+    return photos;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || 'Frontend error in getPhotosById method'
+    );
+  }
+};
+
+// DESC: Get services by _id
+// METHOD: GET
+export const getServicesById = async (userId) => {
+  try {
+    const { data } = await api.get(`/api/users/${userId}/services`);
+    const services = data.data;
+    // console.log('services: ', services);
+    return services;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        'Frontend error in getServicesById method'
+    );
+  }
+};
 // // DESC: Post services for a user by _id
 // // METHOD: POST
 // export const postServicesForUserById = async () => {

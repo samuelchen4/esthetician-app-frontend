@@ -26,7 +26,7 @@ root.render(
           <Routes>
             <Route path='/' element={<MarketplacePage />} />
             <Route path='/home' element={<MarketplacePage />} />
-            <Route path='/client-info/:clientId' element={<ClientInfoPage />} />
+            <Route path='/client-info/:userId' element={<ClientInfoPage />} />
             <Route
               path='/sign-up/questionnaire'
               element={<SignUpQuestionnairePage />}
