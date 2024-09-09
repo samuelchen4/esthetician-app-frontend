@@ -3,11 +3,12 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
-  UserButton,
+  // UserButton,
   useUser,
 } from '@clerk/clerk-react';
 import { Link, useNavigate } from 'react-router-dom';
 import useUserStore from '../stores/useUserStore';
+import UserButton from './UserButton';
 import { Loader } from 'lucide-react';
 
 const Header = () => {
@@ -73,7 +74,9 @@ const Header = () => {
         <SignInButton />
       </SignedOut>
       <SignedIn>
-        <UserButton />
+        <UserButton
+          profilePicture={user !== null ? user.profile_picture : null}
+        />
       </SignedIn>
     </div>
   );

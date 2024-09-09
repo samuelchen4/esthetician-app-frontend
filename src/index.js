@@ -7,6 +7,8 @@ import ClientInfoPage from './pages/ClientInfoPage';
 import Header from './components/Header';
 import { ClerkProvider } from '@clerk/clerk-react';
 import SignUpQuestionnairePage from './pages/SignUpQuestionnairePage';
+import LikesPage from './pages/LikesPage';
+import ManageAccountPage from './pages/ManageAccountPage';
 
 const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY || null;
 
@@ -30,6 +32,11 @@ root.render(
             <Route
               path='/sign-up/questionnaire'
               element={<SignUpQuestionnairePage />}
+            />
+            <Route path='/users/:userId/likes' element={<LikesPage />} />
+            <Route
+              path='/users/:userId/manage-account'
+              element={<ManageAccountPage />}
             />
           </Routes>
         </div>
