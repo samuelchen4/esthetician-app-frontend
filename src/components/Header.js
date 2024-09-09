@@ -6,7 +6,7 @@ import {
   // UserButton,
   useUser,
 } from '@clerk/clerk-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useUserStore from '../stores/useUserStore';
 import UserButton from './UserButton';
 import { Loader } from 'lucide-react';
@@ -14,8 +14,6 @@ import { Loader } from 'lucide-react';
 const Header = () => {
   // Clerk auth
   const { user: clerkUserObj } = useUser();
-  // router
-  // const navigate = useNavigate();
   // From Zustand store
   const user = useUserStore((state) => state.user);
   const getUserInfo = useUserStore((state) => state.getUserInfo);

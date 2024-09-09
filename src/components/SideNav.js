@@ -12,7 +12,7 @@ const SideNav = ({ setter, userId, firstName, lastName, email }) => {
 
   return (
     <div className='fixed w-full h-[calc(100dvh-50px)] text-neutral-600 top-[50px] left-0 right-0 flex text-sm'>
-      <div className='grow border-4 bg-gray-400 opacity-20'></div>
+      <div className='grow bg-gray-400 opacity-20' onClick={setFalse}></div>
       <div className='w-60 h-full opacity-100 bg-white ml-auto p-2 flex flex-col'>
         <div className=' text-black font-semibold bg-blue-200 p-2 rounded-md mb-1'>
           <p>
@@ -37,7 +37,7 @@ const SideNav = ({ setter, userId, firstName, lastName, email }) => {
         <div className='p-1 my-1 flex items-center space-x-1'>
           <LogOut size='18' /> <SignOutButton />
         </div>
-        <div className='p-1 mt-auto text-center font-semibold text-black tracking-wide'>
+        <div className='p-1 mt-auto text-center font-medium text-black tracking-wide'>
           <p>@BeautyConnect</p>
         </div>
       </div>
