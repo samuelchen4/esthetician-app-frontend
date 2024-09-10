@@ -9,6 +9,7 @@ import { ClerkProvider } from '@clerk/clerk-react';
 import SignUpQuestionnairePage from './pages/SignUpQuestionnairePage';
 import LikesPage from './pages/LikesPage';
 import ManageAccountPage from './pages/ManageAccountPage';
+import PersonalInfoPage from './pages/PersonalInfoPage';
 
 const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY || null;
 
@@ -24,7 +25,7 @@ root.render(
         <div className='z-10'>
           <Header />
         </div>
-        <div className='relative z-0 mt-[50px] h-full box-border border'>
+        <div className='relative z-0 mt-[50px] h-full box-border'>
           <Routes>
             <Route path='/' element={<MarketplacePage />} />
             <Route path='/home' element={<MarketplacePage />} />
@@ -37,6 +38,10 @@ root.render(
             <Route
               path='/users/:userId/manage-account'
               element={<ManageAccountPage />}
+            />
+            <Route
+              path='/users/:userId/personal-info'
+              element={<PersonalInfoPage />}
             />
           </Routes>
         </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import CircleImage from 'src/components/CircleImage';
 import { ChevronRight, UserPen, PiggyBank } from 'lucide-react';
 import useUserStore from 'src/stores/useUserStore';
@@ -6,6 +7,7 @@ import useUserStore from 'src/stores/useUserStore';
 const ManageAccountPage = () => {
   const user = useUserStore((state) => state.user);
   const {
+    _id,
     first_name: firstName = 'First',
     last_name: lastName = 'Last',
     profile_picture: profilePicture,
@@ -36,16 +38,20 @@ const ManageAccountPage = () => {
 
       <div id='account-settings' className='space-y-2'>
         <h3 className='text-black font-semibold text-lg'>Account settings</h3>
-        <div
-          id='personal-information'
-          className='py-1 px-2 flex items-center justify-between border-b rounded-lg'
-        >
-          <div className='flex items-center space-x-1'>
-            <UserPen size='15' />
-            <p>Personal information</p>
+
+        <Link to={`/users/${_id}/personal-info`}>
+          <div
+            id='personal-information'
+            className='py-1 px-2 flex items-center justify-between border-b rounded-lg'
+          >
+            <div className='flex items-center space-x-1'>
+              <UserPen size='15' />
+              <p>Personal information</p>
+            </div>
+            <ChevronRight size='15' />
           </div>
-          <ChevronRight size='15' />
-        </div>
+        </Link>
+
         {role === 'client' && (
           <div
             id='personal-information'
@@ -59,7 +65,7 @@ const ManageAccountPage = () => {
           </div>
         )}
       </div>
-      {role === 'client' && (
+      {role !== 'client' && (
         <div
           id='switch-to-client-container'
           className='mt-auto mb-8 border rounded-lg mx-4 py-2 px-4 shadow-md flex justify-between '
