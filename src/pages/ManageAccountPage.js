@@ -53,16 +53,18 @@ const ManageAccountPage = () => {
         </Link>
 
         {role === 'client' && (
-          <div
-            id='personal-information'
-            className='py-1 px-2 flex items-center justify-between border-b rounded-lg'
-          >
-            <div className='flex items-center space-x-1'>
-              <UserPen size='15' />
-              <p>Client Information</p>
+          <Link to={`/users/${_id}/provider-info`}>
+            <div
+              id='personal-information'
+              className='py-1 px-2 flex items-center justify-between border-b rounded-lg'
+            >
+              <div className='flex items-center space-x-1'>
+                <UserPen size='15' />
+                <p>Client Information</p>
+              </div>
+              <ChevronRight size='15' />
             </div>
-            <ChevronRight size='15' />
-          </div>
+          </Link>
         )}
       </div>
       {role !== 'client' && (

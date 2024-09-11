@@ -7,7 +7,10 @@ import {
   useUser,
 } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
-import useUserStore from '../stores/useUserStore';
+import useUserStore from 'src/stores/useUserStore';
+import useServicesStore from 'src/stores/useServicesStore';
+import useSchedulesStore from 'src/stores/useSchedulesStore';
+import usePhotosStore from 'src/stores/usePhotosStore';
 import UserButton from './UserButton';
 import { Loader } from 'lucide-react';
 
@@ -18,8 +21,15 @@ const Header = () => {
   const user = useUserStore((state) => state.user);
   const getUserInfo = useUserStore((state) => state.getUserInfo);
   const postUserInfo = useUserStore((state) => state.postUserInfo);
-  const isLoading = useUserStore((state) => state.isLoading);
-  const error = useUserStore((state) => state.error);
+
+  const services = useServicesStore((state) => state.services);
+  const getServicesServer = useServicesStore((state) => state.getServices);
+
+  const photos = usePhotosStore((state) => state.photos);
+  const getPhotosServer = usePhotosStore((state) => state.getPhotos);
+
+  const schedules = useSchedulesStore((state) => state.schedules);
+  const getSchedulesServer = useSchedulesStore((state) => state.getSchedules);
 
   useEffect(() => {
     if (clerkUserObj) {
@@ -45,16 +55,37 @@ const Header = () => {
     }
   }, [clerkUserObj]);
 
-  // useEffect(() => {
-  //   // if user is not null and doesnt have the role property
-  //   if (user !== null && user?.role === null) {
-  //     navigate('/sign-up/questionnaire');
-  //   }
-  // }, [user]);
+  // If user is a service provider, fetch services, schedules, and photos
+  useEffect(() => {
+    // users data is loaded and
+    if (user !== null && services === null) {
+      getServicesServer(user._id);
+    }
+    // users data is loaded and
+    if (user !== null && photos === null) {
+      getPhotosServer(user._id);
+    }
+    // users data is loaded and
+    if (user !== null && schedules === null) {
+      getSchedulesServer(user._id);
+    }
+  }, [
+    user,
+    services,
+    photos,
+    schedules,
+    getServicesServer,
+    getPhotosServer,
+    getSchedulesServer,
+  ]);
 
   useEffect(() => {
     console.log('user', user);
-  }, [user]);
+
+    console.log('services: ', services);
+    console.log('photos: ', photos);
+    console.log('schedules: ', schedules);
+  }, [user, services, photos, schedules]);
 
   return (
     <div

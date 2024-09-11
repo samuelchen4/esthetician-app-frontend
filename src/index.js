@@ -10,6 +10,7 @@ import SignUpQuestionnairePage from './pages/SignUpQuestionnairePage';
 import LikesPage from './pages/LikesPage';
 import ManageAccountPage from './pages/ManageAccountPage';
 import PersonalInfoPage from './pages/PersonalInfoPage';
+import PersonalProviderInfoPage from './pages/PersonalProviderInfoPage';
 
 const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY || null;
 
@@ -42,6 +43,10 @@ root.render(
             <Route
               path='/users/:userId/personal-info'
               element={<PersonalInfoPage />}
+            />
+            <Route
+              path='/users/:userId/provider-info'
+              element={<PersonalProviderInfoPage />}
             />
           </Routes>
         </div>
