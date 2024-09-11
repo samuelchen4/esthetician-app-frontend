@@ -2,6 +2,7 @@
 import { create } from 'zustand';
 import {
   getUserByClerkId,
+  patchNameById,
   patchRoleById,
   postClientInfo,
   postUserByClerkId,
@@ -11,6 +12,11 @@ const useUserStore = create((set) => ({
   isLoggedIn: false,
   user: null,
   isLoading: false,
+  patchUserName: async (userId, firstName, lastName) => {
+    set({ isLoading: true });
+    const userInfo = await patchNameById(userId, firstName, lastName);
+    set({ user: userInfo, isLoading: false });
+  },
   patchUserRole: async (userId, isClient) => {
     set({ isLoading: true });
     const role = isClient ? 'client' : 'user';

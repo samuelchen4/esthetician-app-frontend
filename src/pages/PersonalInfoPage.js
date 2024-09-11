@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
+import Loader from 'src/components/Loader';
 import useUserStore from 'src/stores/useUserStore';
 
 const PersonalInfoPage = () => {
@@ -20,9 +21,35 @@ const PersonalInfoPage = () => {
     province,
     role,
   } = user || {};
+  const userLoading = useUserStore((state) => state.isLoading);
+  const patchNamesServer = useUserStore((state) => state.patchUserName);
+
+  const resetNames = () => {
+    setFirstName(firstNameStore);
+    setLastName(lastNameStore);
+  };
 
   const toggleNameOpen = () => {
+    if (nameOpen === true) {
+      resetNames();
+    }
+    if (nameErrorOpen === true) {
+      setNameErrorOpen(false);
+    }
     setNameOpen(!nameOpen);
+  };
+
+  const submitName = async () => {
+    // Check is names are valid
+    const regex = /^[A-Za-z/s-]+$/;
+    if (regex.test(firstName) && regex.test(lastName)) {
+      // make api call for users
+      await patchNamesServer(_id, firstName, lastName);
+      toggleNameOpen();
+    } else {
+      // toggle error message state
+      setNameErrorOpen(true);
+    }
   };
 
   const toggleEmailOpen = () => {
@@ -38,6 +65,7 @@ const PersonalInfoPage = () => {
   };
   //  local state
   const [nameOpen, setNameOpen] = useState(false);
+  const [nameErrorOpen, setNameErrorOpen] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
@@ -59,6 +87,7 @@ const PersonalInfoPage = () => {
 
   return (
     <div className='h-full py-2 mx-4 flex flex-col text-neutral-600 text-sm'>
+      {/* {userLoading && <Loader />} */}
       <ChevronLeft
         size='22'
         className='text-black mt-3 mb-10'
@@ -94,9 +123,14 @@ const PersonalInfoPage = () => {
                 className='border rounded-lg py-2 px-3'
               />
             </div>
+            {nameErrorOpen && (
+              <p className='mt-2 text-xs text-red-500 italic'>
+                Names can only contain letters!
+              </p>
+            )}
             <button
               className='mt-8 mr-auto py-1 px-2 border rounded-md bg-black text-white font-semibold'
-              onClick={toggleNameOpen}
+              onClick={submitName}
             >
               Save
             </button>
@@ -117,7 +151,6 @@ const PersonalInfoPage = () => {
         {emailOpen ? (
           <div className='flex flex-col'>
             <div className='flex flex-col space-y-1 mt-2'>
-              {/* <label htmlFor='email'>Email</label> */}
               <input
                 id='email'
                 type='email'

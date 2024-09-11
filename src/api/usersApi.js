@@ -35,6 +35,23 @@ export const postUserByClerkId = async (
   }
 };
 
+export const patchNameById = async (userId, firstName, lastName) => {
+  try {
+    const body = {
+      firstName,
+      lastName,
+    };
+    const response = await api.patch(`/api/users/${userId}/names`, body);
+    // console.log('patchNameById executed successfully!');
+    // console.log(response.data);
+    return response.data.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || 'Frontend error in patchRoleById method'
+    );
+  }
+};
+
 export const patchRoleById = async (userId, role) => {
   try {
     const body = {
