@@ -47,11 +47,69 @@ export const patchNameById = async (userId, firstName, lastName) => {
     return response.data.data;
   } catch (error) {
     throw new Error(
-      error.response?.data?.message || 'Frontend error in patchRoleById method'
+      error.response?.data?.message || 'Frontend error in patchNameById method'
     );
   }
 };
 
+export const patchEmailById = async (userId, email) => {
+  try {
+    const body = {
+      email,
+    };
+    const response = await api.patch(`/api/users/${userId}/emails`, body);
+    console.log('patchEmailById executed successfully!');
+    console.log(response.data);
+    return response.data.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || 'Frontend error in patchEmailById method'
+    );
+  }
+};
+
+export const patchPhoneById = async (userId, phone) => {
+  try {
+    const body = {
+      phone,
+    };
+    const response = await api.patch(`/api/users/${userId}/phones`, body);
+    console.log('patchPhoneById executed successfully!');
+    console.log(response.data);
+    return response.data.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || 'Frontend error in patchPhoneById method'
+    );
+  }
+};
+
+export const patchAddressById = async (
+  userId,
+  address,
+  postalCode,
+  city,
+  province
+) => {
+  try {
+    const body = {
+      userId,
+      address,
+      postalCode,
+      city,
+      province,
+    };
+    const response = await api.patch(`/api/users/${userId}/address`, body);
+    console.log('patchAddressById executed successfully!');
+    console.log(response.data);
+    return response.data.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        'Frontend error in patchAddressById method'
+    );
+  }
+};
 export const patchRoleById = async (userId, role) => {
   try {
     const body = {
