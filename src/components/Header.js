@@ -57,17 +57,18 @@ const Header = () => {
 
   // If user is a service provider, fetch services, schedules, and photos
   useEffect(() => {
-    // users data is loaded and
-    if (user !== null && services === null) {
-      getServicesServer(user._id);
-    }
-    // users data is loaded and
-    if (user !== null && photos === null) {
-      getPhotosServer(user._id);
-    }
-    // users data is loaded and
-    if (user !== null && schedules === null) {
-      getSchedulesServer(user._id);
+    if (user !== null) {
+      if (services === null) {
+        getServicesServer(user._id);
+      }
+
+      if (photos === null) {
+        getPhotosServer(user._id);
+      }
+
+      if (schedules === null) {
+        getSchedulesServer(user._id);
+      }
     }
   }, [
     user,
@@ -80,11 +81,17 @@ const Header = () => {
   ]);
 
   useEffect(() => {
-    console.log('user', user);
-
-    console.log('services: ', services);
-    console.log('photos: ', photos);
-    console.log('schedules: ', schedules);
+    if (
+      user !== null &&
+      services !== null &&
+      photos !== null &&
+      schedules !== null
+    ) {
+      console.log('user', user);
+      console.log('services: ', services);
+      console.log('photos: ', photos);
+      console.log('schedules: ', schedules);
+    }
   }, [user, services, photos, schedules]);
 
   return (

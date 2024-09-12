@@ -180,8 +180,7 @@ const PersonalInfoPage = () => {
   ]);
 
   return (
-    <div className='h-full py-2 mx-4 flex flex-col text-neutral-600 text-sm'>
-      {/* {userLoading && <Loader />} */}
+    <div className='py-2 mx-4 flex flex-col text-neutral-600 text-sm'>
       <ChevronLeft
         size='22'
         className='text-black mt-3 mb-10'

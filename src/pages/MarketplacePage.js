@@ -6,7 +6,7 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
 import ClientCard from '../components/ClientCard';
 import Modal from '../components/Modal';
-import { categories } from '../constants/categories';
+import categories from '../constants/categories';
 import { cn } from 'src/lib/utils';
 import { Button } from 'src/components/ui/button';
 import { Calendar } from 'src/components/ui/calendar';

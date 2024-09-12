@@ -1,7 +1,6 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import CircleImage from './CircleImage';
 import Carousel from './Carousel';
-import { ClientCardSkeleton } from './ClientCardSkeleton';
 
 const images = [
   '/static/client-card-title-picture-1.png',

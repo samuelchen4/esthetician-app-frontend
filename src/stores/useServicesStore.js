@@ -10,6 +10,12 @@ const useServicesStore = create((set) => ({
     const services = await getServicesById(userId);
     set({ isLoading: false, services });
   },
+  postServices: async (userId, services) => {
+    set({ isLoading: true });
+    // Should return an array of services
+    // const services = await postServicesById(userId, services);
+    set({ isLoading: false, services });
+  },
 }));
 
 export default useServicesStore;

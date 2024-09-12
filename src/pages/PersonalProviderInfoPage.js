@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Camera } from 'lucide-react';
 import PulseLoader from 'src/components/PulseLoader';
 import useUserStore from 'src/stores/useUserStore';
 import useServicesStore from 'src/stores/useServicesStore';
 import useSchedulesStore from 'src/stores/useSchedulesStore';
 import usePhotosStore from 'src/stores/usePhotosStore';
+import servicesConstant from 'src/constants/categories';
+import Carousel from 'src/components/Carousel';
+import { cn } from 'src/lib/utils';
 
 const PersonalProviderInfoPage = () => {
   // React Router
@@ -14,6 +17,7 @@ const PersonalProviderInfoPage = () => {
   // Zustand
   const user = useUserStore((state) => state.user);
   const servicesStore = useServicesStore((state) => state.services);
+  const servicesStoreLoading = useServicesStore((state) => state.isLoading);
   const photosStore = usePhotosStore((state) => state.photos);
   const schedulesStore = useSchedulesStore((state) => state.schedules);
 
@@ -30,38 +34,31 @@ const PersonalProviderInfoPage = () => {
     // role:roleStore,
   } = user || {};
   const userLoading = useUserStore((state) => state.isLoading);
-  const patchNamesServer = useUserStore((state) => state.patchUserName);
   const patchEmailServer = useUserStore((state) => state.patchEmail);
   const patchPhoneServer = useUserStore((state) => state.patchPhone);
   const patchAddressServer = useUserStore((state) => state.patchAddress);
 
-  const [services, setServices] = useState([]);
-  const [photos, setPhotos] = useState([]);
-  const [schedules, setSchedules] = useState([]);
-
-  //   format the servicesStore, only run this when serviceStore !== null
-  const renderServices = () => {
+  const renderServices = useCallback(() => {
     const serviceNamesArray = servicesStore.map(
       (servicesObj) => servicesObj.service_name
     );
+    console.log('serviceNamesArray: ', serviceNamesArray);
     setServices(serviceNamesArray);
-  };
+  }, [servicesStore]);
 
-  //   format the servicesStore, only run this when serviceStore !== null
-  const renderPhotos = () => {
-    const photosUrlArray = servicesStore.map(
-      (photosObj) => photosObj.image_url
-    );
+  const renderPhotos = useCallback(() => {
+    const photosUrlArray = photosStore.map((photosObj) => {
+      return photosObj.image_url;
+    });
     setPhotos(photosUrlArray);
-  };
+  }, [photosStore]);
 
-  //   format the servicesStore, only run this when serviceStore !== null
-  const renderSchedules = () => {
+  const renderSchedules = useCallback(() => {
     const schedulesDayArray = schedulesStore.map(
       (schedulesObj) => schedulesObj.day
     );
     setSchedules(schedulesDayArray);
-  };
+  }, [schedulesStore]);
 
   //   Run this everytime servicesStore changes
   useEffect(() => {
@@ -85,32 +82,40 @@ const PersonalProviderInfoPage = () => {
     renderSchedules,
   ]);
 
-  const toggleNameOpen = () => {
-    if (nameErrorOpen === true) {
-      setNameErrorOpen(false);
+  const toggleServicesOpen = () => {
+    if (servicesErrorOpen === true) {
+      setServicesErrorOpen(false);
     }
-    setNameOpen(!nameOpen);
+    setServicesOpen(!servicesOpen);
   };
 
-  const cancelName = () => {
+  const cancelServices = () => {
     // Reset name state
-    setFirstName(firstNameStore);
-    setLastName(lastNameStore);
+    renderServices();
 
-    toggleNameOpen();
+    toggleServicesOpen();
   };
 
-  const submitName = async () => {
-    // Check is names are valid
-    const regex = /^[A-Za-z/s-]+$/;
-    if (regex.test(firstName) && regex.test(lastName)) {
-      // make api call for users
-      await patchNamesServer(_id, firstName, lastName);
-      toggleNameOpen();
+  const handleServicesClick = (e) => {
+    const included = services.includes(e.target.value);
+    const value = e.target.value;
+
+    // If services state does not include, add
+    if (included === false) {
+      setServices((prevState) => {
+        return [value, ...prevState];
+      });
+      // If services state includes, remove
     } else {
-      // toggle error message state
-      setNameErrorOpen(true);
+      setServices((prevState) => {
+        const updatedArray = prevState.filter((service) => service !== value);
+        return updatedArray;
+      });
     }
+  };
+
+  const submitServices = async () => {
+    // Check is names are valid
   };
 
   const toggleEmailOpen = () => {
@@ -198,10 +203,13 @@ const PersonalProviderInfoPage = () => {
   };
 
   //  local state
-  const [nameOpen, setNameOpen] = useState(false);
-  const [nameErrorOpen, setNameErrorOpen] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [services, setServices] = useState([]);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [servicesErrorOpen, setServicesErrorOpen] = useState(false);
+
+  const [photos, setPhotos] = useState([]);
+
+  const [schedules, setSchedules] = useState([]);
 
   const [emailOpen, setEmailOpen] = useState(false);
   const [emailErrorOpen, setEmailErrorOpen] = useState(false);
@@ -217,28 +225,13 @@ const PersonalProviderInfoPage = () => {
   const [postalCode, setPostalCode] = useState('');
   const [city, setCity] = useState('');
   const [province, setProvince] = useState('');
-  //   populate local state
+
   useEffect(() => {
-    if (firstNameStore) setFirstName(firstNameStore);
-    if (lastNameStore) setLastName(lastNameStore);
-    if (emailStore) setEmail(emailStore);
-    if (addressStore) setAddress(addressStore);
-    if (postalCodeStore) setPostalCode(postalCodeStore);
-    if (cityStore) setCity(cityStore);
-    if (provinceStore) setProvince(provinceStore);
-  }, [
-    firstNameStore,
-    lastNameStore,
-    emailStore,
-    addressStore,
-    postalCodeStore,
-    cityStore,
-    provinceStore,
-  ]);
+    console.log(services);
+  }, [services]);
 
   return (
-    <div className='h-full py-2 mx-4 flex flex-col text-neutral-600 text-sm'>
-      {/* {userLoading && <Loader />} */}
+    <div className='py-2 mx-4 flex flex-col text-neutral-600 text-sm overflow-y-auto'>
       <ChevronLeft
         size='22'
         className='text-black mt-3 mb-10'
@@ -246,44 +239,44 @@ const PersonalProviderInfoPage = () => {
       />
       <h2 className='text-black font-semibold text-lg mb-5'>Provider Info</h2>
       <div className='flex flex-col border-b py-4'>
-        <div className='flex justify-between'>
+        <div className='flex justify-between mb-2'>
           <p className='text-black font-semibold'>Services</p>
-          <button className='underline' onClick={cancelName}>
-            {nameOpen ? 'Cancel' : 'Edit'}
+          <button className='underline' onClick={cancelServices}>
+            {servicesOpen ? 'Cancel' : 'Edit'}
           </button>
         </div>
-        {nameOpen ? (
+        {servicesOpen ? (
           <div className='flex flex-col'>
-            <div className='flex flex-col space-y-1 mt-2'>
-              <label htmlFor='firstName'>First Name</label>
-              <input
-                id='firstName'
-                type='text'
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className='border rounded-lg py-2 px-3'
-              />
+            <p className='mb-3'>
+              Click a service to select or deselect it. Selected services are
+              highlighted, making it easy to manage your offerings.
+            </p>
+            <div className='flex flex-wrap items-start'>
+              {servicesConstant.map((service) => (
+                <button
+                  value={service}
+                  className={cn(
+                    'py-2 px-4 mx-1 my-1 border rounded-full font-semibold shadow-md ',
+                    services.includes(service)
+                      ? 'bg-black text-white'
+                      : 'bg-white text-black'
+                  )}
+                  onClick={handleServicesClick}
+                >
+                  {service}
+                </button>
+              ))}
             </div>
-            <div className='flex flex-col space-y-1 mt-2'>
-              <label htmlFor='lastName'>Last Name</label>
-              <input
-                id='lastName'
-                type='text'
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className='border rounded-lg py-2 px-3'
-              />
-            </div>
-            {nameErrorOpen && (
+            {servicesErrorOpen && (
               <p className='mt-2 text-xs text-red-500 italic'>
                 Names can only contain letters!
               </p>
             )}
             <button
               className='mt-8 mr-auto text-center w-16 h-8 border rounded-md bg-black text-white font-semibold'
-              onClick={submitName}
+              onClick={submitServices}
             >
-              {nameOpen && userLoading ? <PulseLoader /> : 'Save'}
+              {servicesOpen && servicesStoreLoading ? <PulseLoader /> : 'Save'}
             </button>
           </div>
         ) : (
@@ -299,14 +292,25 @@ const PersonalProviderInfoPage = () => {
         </div>
         {emailOpen ? (
           <div className='flex flex-col'>
-            <div className='flex flex-col space-y-1 mt-2'>
+            <div className='flex flex-col space-y-2 mt-2'>
+              <p>
+                Click the button below to showoff pictures of your work from
+                your camera roll!
+              </p>
+              <label
+                htmlFor='fileInput'
+                className='w-full h-40 flex flex-col items-center justify-center cursor-pointer bg-neutral-100 text-black border rounded-lg font-semibold'
+              >
+                <Camera size='40' />
+                <p>Select Photos!</p>
+              </label>
               <input
-                id='email'
-                type='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className='border rounded-lg py-2 px-3'
+                id='fileInput'
+                type='file'
+                accept='image/*'
+                style={{ display: 'none' }}
               />
+              <Carousel images={photos} width='100' />
             </div>
             {emailErrorOpen && (
               <p className='mt-2 text-xs text-red-500 italic'>
@@ -321,7 +325,7 @@ const PersonalProviderInfoPage = () => {
             </button>
           </div>
         ) : (
-          <p>{photos.join(', ')}</p>
+          <Carousel images={photos} width='100' />
         )}
       </div>
       <div className='flex flex-col border-b py-4'>
@@ -360,7 +364,7 @@ const PersonalProviderInfoPage = () => {
           <p>{schedules.join(', ')}</p>
         )}
       </div>
-      <div className='mt-auto mb-10 flex flex-col items-center space-y-3'>
+      <div className='mt-20 flex flex-col items-center space-y-3'>
         <p>Click this button to see what your profile looks like!</p>
         <button className='px-4 py-2 border border-gray-500 bg-black text-white font-semibold rounded-full'>
           View Profile
