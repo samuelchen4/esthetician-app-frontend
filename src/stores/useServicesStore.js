@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getServicesById } from 'src/api/usersApi';
+import { getServicesById, postServicesById } from 'src/api/servicesApi';
 
 const useServicesStore = create((set) => ({
   isLoading: false,
@@ -13,8 +13,9 @@ const useServicesStore = create((set) => ({
   postServices: async (userId, services) => {
     set({ isLoading: true });
     // Should return an array of services
-    // const services = await postServicesById(userId, services);
-    set({ isLoading: false, services });
+    const servicesData = await postServicesById(userId, services);
+    console.log(servicesData);
+    set({ isLoading: false, services: servicesData });
   },
 }));
 

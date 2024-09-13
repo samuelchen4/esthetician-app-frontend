@@ -1,4 +1,4 @@
-export const days = [
+const days = [
   'Monday',
   'Tuesday',
   'Wednesday',
@@ -7,3 +7,5 @@ export const days = [
   'Saturday',
   'Sunday',
 ];
+
+export default days;

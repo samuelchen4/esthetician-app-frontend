@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getSchedulesById } from 'src/api/schedulesApi';
+import { getSchedulesById, postSchedulesById } from 'src/api/schedulesApi';
 
 const useSchedulesStore = create((set) => ({
   isLoading: false,
@@ -9,6 +9,12 @@ const useSchedulesStore = create((set) => ({
     // Should return an array of services
     const schedules = await getSchedulesById(userId);
     set({ isLoading: false, schedules });
+  },
+  postSchedules: async (userId, schedules) => {
+    set({ isLoading: true });
+    // Should return an array of services
+    const schedulesData = await postSchedulesById(userId, schedules);
+    set({ isLoading: false, schedules: schedulesData });
   },
 }));
 

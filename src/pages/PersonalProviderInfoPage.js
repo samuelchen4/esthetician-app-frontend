@@ -7,6 +7,7 @@ import useServicesStore from 'src/stores/useServicesStore';
 import useSchedulesStore from 'src/stores/useSchedulesStore';
 import usePhotosStore from 'src/stores/usePhotosStore';
 import servicesConstant from 'src/constants/categories';
+import schedulesConstant from 'src/constants/days';
 import Carousel from 'src/components/Carousel';
 import { cn } from 'src/lib/utils';
 
@@ -18,8 +19,11 @@ const PersonalProviderInfoPage = () => {
   const user = useUserStore((state) => state.user);
   const servicesStore = useServicesStore((state) => state.services);
   const servicesStoreLoading = useServicesStore((state) => state.isLoading);
+  const postServicesStore = useServicesStore((state) => state.postServices);
   const photosStore = usePhotosStore((state) => state.photos);
   const schedulesStore = useSchedulesStore((state) => state.schedules);
+  const schedulesStoreLoading = useSchedulesStore((state) => state.isLoading);
+  const postSchedulesStore = useSchedulesStore((state) => state.postSchedules);
 
   const {
     _id,
@@ -35,7 +39,6 @@ const PersonalProviderInfoPage = () => {
   } = user || {};
   const userLoading = useUserStore((state) => state.isLoading);
   const patchEmailServer = useUserStore((state) => state.patchEmail);
-  const patchPhoneServer = useUserStore((state) => state.patchPhone);
   const patchAddressServer = useUserStore((state) => state.patchAddress);
 
   const renderServices = useCallback(() => {
@@ -90,9 +93,7 @@ const PersonalProviderInfoPage = () => {
   };
 
   const cancelServices = () => {
-    // Reset name state
     renderServices();
-
     toggleServicesOpen();
   };
 
@@ -115,7 +116,12 @@ const PersonalProviderInfoPage = () => {
   };
 
   const submitServices = async () => {
-    // Check is names are valid
+    // Post the new services into DB
+    console.log('starting submit');
+    await postServicesStore(_id, services);
+    console.log('ending submit');
+
+    toggleServicesOpen();
   };
 
   const toggleEmailOpen = () => {
@@ -143,28 +149,40 @@ const PersonalProviderInfoPage = () => {
     }
   };
 
-  const togglePhoneOpen = () => {
-    if (phoneOpen === true) {
-      setPhoneErrorOpen(false);
+  const toggleSchedulesOpen = () => {
+    if (schedulesErrorOpen === true) {
+      setSchedulesErrorOpen(false);
     }
-    setPhoneOpen(!phoneOpen);
+    setSchedulesOpen(!schedulesOpen);
   };
 
-  const cancelPhone = () => {
-    // Reset phone state
-    setPhone(phoneStore);
-    togglePhoneOpen();
+  const cancelSchedules = () => {
+    renderSchedules();
+    toggleSchedulesOpen();
   };
 
-  const submitPhone = async () => {
-    const regex = /^[0-9]+$/;
-    if (regex.test(phone)) {
-      // submit phone
-      await patchPhoneServer(_id, phone);
-      togglePhoneOpen();
+  const handleSchedulesClick = (e) => {
+    const included = schedules.includes(e.target.value);
+    const value = e.target.value;
+
+    // If services state does not include, add
+    if (included === false) {
+      setSchedules((prevState) => {
+        return [value, ...prevState];
+      });
+      // If services state includes, remove
     } else {
-      setPhoneErrorOpen(true);
+      setSchedules((prevState) => {
+        const updatedArray = prevState.filter((day) => day !== value);
+        return updatedArray;
+      });
     }
+  };
+
+  const submitSchedules = async () => {
+    await postSchedulesStore(_id, schedules);
+
+    toggleSchedulesOpen();
   };
 
   const toggleAddressOpen = () => {
@@ -172,34 +190,6 @@ const PersonalProviderInfoPage = () => {
       setAddressErrorOpen(false);
     }
     setAddressOpen(!addressOpen);
-  };
-
-  const cancelAddress = () => {
-    setAddress(addressStore);
-    setPostalCode(postalCodeStore);
-    setCity(cityStore);
-    setProvince(provinceStore);
-
-    toggleAddressOpen();
-  };
-
-  const submitAddress = async () => {
-    const addressRegex = /^[a-zA-Z0-9\s,'-]*$/;
-    const postalCodeRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
-    const cityRegex = /^[a-zA-Z\s'-]{2,}$/;
-    const provinceRegex = /^(AB|BC|MB|NB|NL|NS|NT|NU|ON|PE|QC|SK|YT)$/;
-
-    if (
-      addressRegex.test(address) &&
-      postalCodeRegex.test(postalCode) &&
-      cityRegex.test(city) &&
-      provinceRegex.test(province)
-    ) {
-      await patchAddressServer(_id, address, postalCode, city, province);
-      toggleAddressOpen();
-    } else {
-      setAddressErrorOpen(true);
-    }
   };
 
   //  local state
@@ -210,21 +200,15 @@ const PersonalProviderInfoPage = () => {
   const [photos, setPhotos] = useState([]);
 
   const [schedules, setSchedules] = useState([]);
+  const [schedulesOpen, setSchedulesOpen] = useState(false);
+  const [schedulesErrorOpen, setSchedulesErrorOpen] = useState(false);
 
   const [emailOpen, setEmailOpen] = useState(false);
   const [emailErrorOpen, setEmailErrorOpen] = useState(false);
   const [email, setEmail] = useState('');
 
-  const [phoneOpen, setPhoneOpen] = useState(false);
-  const [phoneErrorOpen, setPhoneErrorOpen] = useState(false);
-  const [phone, setPhone] = useState('');
-
   const [addressOpen, setAddressOpen] = useState(false);
   const [addressErrorOpen, setAddressErrorOpen] = useState(false);
-  const [address, setAddress] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [city, setCity] = useState('');
-  const [province, setProvince] = useState('');
 
   useEffect(() => {
     console.log(services);
@@ -267,11 +251,6 @@ const PersonalProviderInfoPage = () => {
                 </button>
               ))}
             </div>
-            {servicesErrorOpen && (
-              <p className='mt-2 text-xs text-red-500 italic'>
-                Names can only contain letters!
-              </p>
-            )}
             <button
               className='mt-8 mr-auto text-center w-16 h-8 border rounded-md bg-black text-white font-semibold'
               onClick={submitServices}
@@ -331,33 +310,42 @@ const PersonalProviderInfoPage = () => {
       <div className='flex flex-col border-b py-4'>
         <div className='flex justify-between'>
           <p className='text-black font-semibold'>Availability</p>
-          <button className='underline' onClick={cancelPhone}>
-            {phoneOpen ? 'Cancel' : 'Edit'}
+          <button className='underline' onClick={cancelSchedules}>
+            {schedulesOpen ? 'Cancel' : 'Edit'}
           </button>
         </div>
-        {phoneOpen ? (
+        {schedulesOpen ? (
           <div className='flex flex-col'>
-            <div className='flex flex-col space-y-1 mt-2'>
-              <input
-                id='phone'
-                type='phone'
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder='Example: 4031234567'
-                className='border rounded-lg py-2 px-3'
-              />
+            <p className='mb-3'>
+              Click a day to select or deselect it. Selected days are
+              highlighted, making it easy to manage your offerings.
+            </p>
+            <div className='flex flex-wrap items-start'>
+              {schedulesConstant.map((day) => (
+                <button
+                  value={day}
+                  className={cn(
+                    'py-2 px-4 mx-1 my-1 border rounded-full font-semibold shadow-md ',
+                    schedules.includes(day)
+                      ? 'bg-black text-white'
+                      : 'bg-white text-black'
+                  )}
+                  onClick={handleSchedulesClick}
+                >
+                  {day}
+                </button>
+              ))}
             </div>
-            {phoneErrorOpen && (
-              <p className='mt-2 text-xs text-red-500 italic'>
-                Invalid phone number. Can only contain 0-9!
-              </p>
-            )}
 
             <button
               className='mt-8 mr-auto text-center w-16 h-8 border rounded-md bg-black text-white font-semibold'
-              onClick={submitPhone}
+              onClick={submitSchedules}
             >
-              {phoneOpen && userLoading ? <PulseLoader /> : 'Save'}
+              {schedulesOpen && schedulesStoreLoading ? (
+                <PulseLoader />
+              ) : (
+                'Save'
+              )}
             </button>
           </div>
         ) : (

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Progress } from 'src/components/ui/progress';
 import categories from 'src/constants/categories';
-import { days } from 'src/constants/days';
+import days from 'src/constants/days';
 import useUserStore from 'src/stores/useUserStore';
 import { Label } from 'src/components/ui/label';
 import Toggle from 'src/components/Toggle';

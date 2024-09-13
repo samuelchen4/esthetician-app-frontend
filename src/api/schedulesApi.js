@@ -15,3 +15,20 @@ export const getSchedulesById = async (userId) => {
     );
   }
 };
+
+// DESC: Post schedules by _id
+// METHOD: POST
+export const postSchedulesById = async (userId, schedules) => {
+  try {
+    const body = { schedules };
+    const { data } = await api.post(`/api/users/${userId}/schedules`, body);
+    const responseSchedules = data.data;
+    // console.log('schedules: ', schedules);
+    return responseSchedules;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        'Frontend error in postSchedulesById method'
+    );
+  }
+};
