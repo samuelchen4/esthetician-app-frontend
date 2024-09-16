@@ -29,7 +29,7 @@ const ClientCard = ({
       className=' min-w-[200px] sm:max-w-[350px] w-full flex flex-col flex-auto border rounded-lg text-xs shadow-md my-2'
     >
       <div id='title-picture-container' className='w-full'>
-        <Carousel images={images} width={'120'} />
+        <Carousel state={images} width={'120'} />
       </div>
       <div
         id='card-details-container'

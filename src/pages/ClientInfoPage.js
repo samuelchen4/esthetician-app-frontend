@@ -179,7 +179,7 @@ const ClientInfoPage = () => {
               {loadingPhotos ? (
                 <Skeleton className='h-44 w-full' />
               ) : (
-                <Carousel images={images} aspect={'3/4'} width={'150'} />
+                <Carousel state={images} aspect={'3/4'} width={'150'} />
               )}
             </div>
             <div

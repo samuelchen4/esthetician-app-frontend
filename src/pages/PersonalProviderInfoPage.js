@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, Camera } from 'lucide-react';
 import PulseLoader from 'src/components/PulseLoader';
-import useUserStore from 'src/stores/useUserStore';
 import useServicesStore from 'src/stores/useServicesStore';
 import useSchedulesStore from 'src/stores/useSchedulesStore';
 import usePhotosStore from 'src/stores/usePhotosStore';
@@ -10,39 +9,25 @@ import servicesConstant from 'src/constants/categories';
 import schedulesConstant from 'src/constants/days';
 import Carousel from 'src/components/Carousel';
 import { cn } from 'src/lib/utils';
+import { generatePresignedS3Urls, postPhotoToS3 } from 'src/api/photosApi';
 
 const PersonalProviderInfoPage = () => {
   // React Router
   const navigate = useNavigate();
+  const { userId: _id } = useParams();
 
   // Zustand
-  const user = useUserStore((state) => state.user);
   const servicesStore = useServicesStore((state) => state.services);
   const servicesStoreLoading = useServicesStore((state) => state.isLoading);
   const postServicesStore = useServicesStore((state) => state.postServices);
   const photosStore = usePhotosStore((state) => state.photos);
+  const photosStoreLoading = usePhotosStore((state) => state.isLoading);
   const schedulesStore = useSchedulesStore((state) => state.schedules);
   const schedulesStoreLoading = useSchedulesStore((state) => state.isLoading);
   const postSchedulesStore = useSchedulesStore((state) => state.postSchedules);
 
-  const {
-    _id,
-    first_name: firstNameStore,
-    last_name: lastNameStore = 'Last',
-    email: emailStore,
-    phone_number: phoneStore,
-    address: addressStore,
-    postal_code: postalCodeStore,
-    city: cityStore,
-    province: provinceStore,
-    // role:roleStore,
-  } = user || {};
-  const userLoading = useUserStore((state) => state.isLoading);
-  const patchEmailServer = useUserStore((state) => state.patchEmail);
-  const patchAddressServer = useUserStore((state) => state.patchAddress);
-
   const renderServices = useCallback(() => {
-    const serviceNamesArray = servicesStore.map(
+    const serviceNamesArray = servicesStore?.map(
       (servicesObj) => servicesObj.service_name
     );
     console.log('serviceNamesArray: ', serviceNamesArray);
@@ -50,40 +35,18 @@ const PersonalProviderInfoPage = () => {
   }, [servicesStore]);
 
   const renderPhotos = useCallback(() => {
-    const photosUrlArray = photosStore.map((photosObj) => {
+    const photosUrlArray = photosStore?.map((photosObj) => {
       return photosObj.image_url;
     });
     setPhotos(photosUrlArray);
   }, [photosStore]);
 
   const renderSchedules = useCallback(() => {
-    const schedulesDayArray = schedulesStore.map(
+    const schedulesDayArray = schedulesStore?.map(
       (schedulesObj) => schedulesObj.day
     );
     setSchedules(schedulesDayArray);
   }, [schedulesStore]);
-
-  //   Run this everytime servicesStore changes
-  useEffect(() => {
-    if (servicesStore !== null) {
-      renderServices();
-    }
-
-    if (photosStore !== null) {
-      renderPhotos();
-    }
-
-    if (schedulesStore !== null) {
-      renderSchedules();
-    }
-  }, [
-    servicesStore,
-    photosStore,
-    schedulesStore,
-    renderServices,
-    renderPhotos,
-    renderSchedules,
-  ]);
 
   const toggleServicesOpen = () => {
     if (servicesErrorOpen === true) {
@@ -124,29 +87,79 @@ const PersonalProviderInfoPage = () => {
     toggleServicesOpen();
   };
 
-  const toggleEmailOpen = () => {
-    if (emailErrorOpen === true) {
-      setEmailErrorOpen(false);
+  const togglePhotosOpen = () => {
+    if (photosErrorOpen === true) {
+      setPhotosErrorOpen(false);
     }
-    setEmailOpen(!emailOpen);
+    // toggle between open states
+    setPhotosOpen(!photosOpen);
   };
 
-  const cancelEmail = () => {
-    setEmail(emailStore);
-    toggleEmailOpen();
+  const cancelPhotos = () => {
+    renderPhotos();
+    togglePhotosOpen();
   };
 
-  const submitEmail = async () => {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (regex.test(email)) {
-      // Submit email to db
-      await patchEmailServer(_id, email);
+  const addPhoto = (e) => {
+    // get files
+    const files = e.target.files;
+    console.log('files: ', files); // Get object of files, convert to an array
 
-      // Close email modal
-      toggleEmailOpen();
-    } else {
-      setEmailErrorOpen(true);
-    }
+    const filesArray = Array.from(files).filter((file) =>
+      file.type.startsWith('image/')
+    );
+    console.log('filesArray: ', filesArray);
+
+    // get imageUrls
+    const imageUrlArray = filesArray.map((image) => {
+      const url = URL.createObjectURL(image);
+      const imageId = `${Math.random()}-${Date.now()}`;
+      tempPhotoObjects.current.push({ imageId, url, image });
+      return url;
+    }); // Get temp url for each object,
+    console.log('imageUrlArray: ', imageUrlArray);
+    // on submit get a real one for it
+
+    // add to state
+    setTempPhotos((prevState) => [...imageUrlArray, ...prevState]);
+  };
+
+  const submitPhotos = async () => {
+    console.log('before: ', tempPhotoObjects.current);
+
+    // match ref and state
+    tempPhotoObjects.current = tempPhotoObjects.current.filter((fileObj) =>
+      tempPhotos.some((browserUrl) => browserUrl === fileObj.url)
+    );
+    console.log('after: ', tempPhotoObjects.current);
+
+    // generate presigned Urls for S3
+    // create payload without file just metadata
+    const tempPhotosMetadata = tempPhotoObjects.current.map((obj) => ({
+      fileType: obj.image.type,
+      url: obj.url,
+      imageId: obj.imageId,
+    }));
+    const presignedUrls = await generatePresignedS3Urls(
+      _id,
+      tempPhotosMetadata
+    );
+    console.log('presignedUrls: ', presignedUrls);
+
+    presignedUrls.map(async (obj) => {
+      const { imageId, uploadURL } = obj;
+      // fetch image
+      const element = tempPhotoObjects.current.find(
+        (refObj) => refObj.imageId === imageId
+      );
+      console.log('obj: ', element);
+      console.log('file: ', element.image);
+      console.log('uploadURL: ', uploadURL);
+      // Upload images into S3 for each url
+      await postPhotoToS3(uploadURL, element.image);
+    });
+    setTempPhotos([]);
+    togglePhotosOpen();
   };
 
   const toggleSchedulesOpen = () => {
@@ -185,34 +198,41 @@ const PersonalProviderInfoPage = () => {
     toggleSchedulesOpen();
   };
 
-  const toggleAddressOpen = () => {
-    if (addressErrorOpen === true) {
-      setAddressErrorOpen(false);
-    }
-    setAddressOpen(!addressOpen);
-  };
-
   //  local state
   const [services, setServices] = useState([]);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [servicesErrorOpen, setServicesErrorOpen] = useState(false);
 
   const [photos, setPhotos] = useState([]);
+  const [tempPhotos, setTempPhotos] = useState([]);
+  const tempPhotoObjects = useRef([]);
+  const [photosOpen, setPhotosOpen] = useState(false);
+  const [photosErrorOpen, setPhotosErrorOpen] = useState(false);
 
   const [schedules, setSchedules] = useState([]);
   const [schedulesOpen, setSchedulesOpen] = useState(false);
   const [schedulesErrorOpen, setSchedulesErrorOpen] = useState(false);
 
-  const [emailOpen, setEmailOpen] = useState(false);
-  const [emailErrorOpen, setEmailErrorOpen] = useState(false);
-  const [email, setEmail] = useState('');
-
-  const [addressOpen, setAddressOpen] = useState(false);
-  const [addressErrorOpen, setAddressErrorOpen] = useState(false);
-
   useEffect(() => {
-    console.log(services);
-  }, [services]);
+    if (servicesStore !== null) {
+      renderServices();
+    }
+
+    if (photosStore !== null) {
+      renderPhotos();
+    }
+
+    if (schedulesStore !== null) {
+      renderSchedules();
+    }
+  }, [
+    servicesStore,
+    photosStore,
+    schedulesStore,
+    renderServices,
+    renderPhotos,
+    renderSchedules,
+  ]);
 
   return (
     <div className='py-2 mx-4 flex flex-col text-neutral-600 text-sm overflow-y-auto'>
@@ -241,7 +261,7 @@ const PersonalProviderInfoPage = () => {
                   value={service}
                   className={cn(
                     'py-2 px-4 mx-1 my-1 border rounded-full font-semibold shadow-md ',
-                    services.includes(service)
+                    services?.includes(service)
                       ? 'bg-black text-white'
                       : 'bg-white text-black'
                   )}
@@ -265,20 +285,20 @@ const PersonalProviderInfoPage = () => {
       <div className='flex flex-col border-b py-4'>
         <div className='flex justify-between'>
           <p className='text-black font-semibold'>Pictures</p>
-          <button className='underline' onClick={cancelEmail}>
-            {emailOpen ? 'Cancel' : 'Edit'}
+          <button className='underline' onClick={cancelPhotos}>
+            {photosOpen ? 'Cancel' : 'Edit'}
           </button>
         </div>
-        {emailOpen ? (
+        {photosOpen ? (
           <div className='flex flex-col'>
-            <div className='flex flex-col space-y-2 mt-2'>
+            <div className='flex flex-col space-y-4 mt-2'>
               <p>
                 Click the button below to showoff pictures of your work from
                 your camera roll!
               </p>
               <label
                 htmlFor='fileInput'
-                className='w-full h-40 flex flex-col items-center justify-center cursor-pointer bg-neutral-100 text-black border rounded-lg font-semibold'
+                className=' w-full h-40 flex flex-col items-center justify-center cursor-pointer bg-neutral-100 text-black border rounded-lg font-semibold'
               >
                 <Camera size='40' />
                 <p>Select Photos!</p>
@@ -287,24 +307,34 @@ const PersonalProviderInfoPage = () => {
                 id='fileInput'
                 type='file'
                 accept='image/*'
+                multiple
+                onChange={addPhoto}
                 style={{ display: 'none' }}
               />
-              <Carousel images={photos} width='100' />
+              {tempPhotos.length > 0 && (
+                <p className='font-semibold text-black'>New photos!</p>
+              )}
+              <Carousel
+                width='150'
+                remove={true}
+                state={tempPhotos}
+                setState={setTempPhotos}
+              />
             </div>
-            {emailErrorOpen && (
+            {photosErrorOpen && (
               <p className='mt-2 text-xs text-red-500 italic'>
                 Invalid email address. Please enter a valid email.
               </p>
             )}
             <button
               className='mt-8 mr-auto text-center w-16 h-8 border rounded-md bg-black text-white font-semibold'
-              onClick={submitEmail}
+              onClick={submitPhotos}
             >
-              {emailOpen && userLoading ? <PulseLoader /> : 'Save'}
+              {photosOpen && photosStoreLoading ? <PulseLoader /> : 'Save'}
             </button>
           </div>
         ) : (
-          <Carousel images={photos} width='100' />
+          <Carousel state={photos} width='125' />
         )}
       </div>
       <div className='flex flex-col border-b py-4'>

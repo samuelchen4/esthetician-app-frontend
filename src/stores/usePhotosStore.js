@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getPhotosById } from 'src/api/photosApi';
+import { getPhotosById, postPhotosById } from 'src/api/photosApi';
 
 const usePhotosStore = create((set) => ({
   isLoading: false,
@@ -8,6 +8,11 @@ const usePhotosStore = create((set) => ({
     set({ isLoading: true });
     // Should return an array of services
     const photos = await getPhotosById(userId);
+    set({ isLoading: false, photos });
+  },
+  postPhotos: async (userId, data) => {
+    set({ isLoading: true });
+    const photos = await postPhotosById(userId, data);
     set({ isLoading: false, photos });
   },
 }));
