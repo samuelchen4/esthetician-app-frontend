@@ -26,7 +26,7 @@ root.render(
         <div className='z-10'>
           <Header />
         </div>
-        <div className='relative z-0 mt-[50px] h-full box-border'>
+        <div className='relative z-0 mt-[50px] h-full box-border text-lg'>
           <Routes>
             <Route path='/' element={<MarketplacePage />} />
             <Route path='/home' element={<MarketplacePage />} />

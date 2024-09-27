@@ -11,13 +11,13 @@ const AestheticianSettingsPage = () => {
   const { userId: _id } = useParams();
 
   return (
-    <div className='py-2 mx-4 flex flex-col text-neutral-600 text-sm overflow-y-auto'>
+    <div className='py-2 mx-4 flex flex-col text-neutral-600 overflow-y-auto'>
       <ChevronLeft
         size='22'
         className='text-black mt-3 mb-10'
         onClick={() => navigate(-1)}
       />
-      <h2 className='text-black font-semibold text-lg mb-5'>Provider Info</h2>
+      <h2 className='text-black font-semibold text-2xl mb-5'>Provider Info</h2>
       <ServicesComponent userId={_id} />
       <PicturesComponent userId={_id} />
       <SchedulesComponent userId={_id} />
