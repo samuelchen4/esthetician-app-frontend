@@ -70,3 +70,20 @@ export const postPhotoToS3 = async (presignedURL, photo) => {
     );
   }
 };
+
+// DESC: Gets presigned url for viewing photos from s3
+// Method: GET
+export const getPhotoFromS3 = async (s3Key) => {
+  try {
+    const config = { params: { key: s3Key } };
+    const { data } = await api.get('/api/photos/keys', config);
+    console.log(data);
+    const url = data.url;
+    return url;
+  } catch (error) {
+    console.error(error);
+    throw new Error(
+      error.response?.data?.message || 'Frontend error in getPhotoFromS3 method'
+    );
+  }
+};

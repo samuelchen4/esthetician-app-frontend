@@ -9,8 +9,8 @@ import { ClerkProvider } from '@clerk/clerk-react';
 import SignUpQuestionnairePage from './pages/SignUpQuestionnairePage';
 import LikesPage from './pages/LikesPage';
 import ManageAccountPage from './pages/ManageAccountPage';
-import PersonalInfoPage from './pages/PersonalInfoPage';
-import PersonalProviderInfoPage from './pages/PersonalProviderInfoPage';
+import PersonalSettingsPages from 'src/pages/PersonalSettingsPage/PersonalSettingsPage';
+import AestheticianSettingsPage from 'src/pages/AestheticianSettingsPage/AestheticianSettingsPage';
 
 const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY || null;
 
@@ -42,11 +42,11 @@ root.render(
             />
             <Route
               path='/users/:userId/personal-info'
-              element={<PersonalInfoPage />}
+              element={<PersonalSettingsPages />}
             />
             <Route
-              path='/users/:userId/provider-info'
-              element={<PersonalProviderInfoPage />}
+              path='/users/:userId/ethetician-info'
+              element={<AestheticianSettingsPage />}
             />
           </Routes>
         </div>

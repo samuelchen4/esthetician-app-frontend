@@ -15,6 +15,11 @@ const usePhotosStore = create((set) => ({
     const photos = await postPhotosById(userId, data);
     set({ isLoading: false, photos });
   },
+  // // Gets presigned url for photo to view from s3
+  // getPhoto: async (photoId) => {
+  //   const photoUrl = await getPhotoServer()
+
+  // }
 }));
 
 export default usePhotosStore;

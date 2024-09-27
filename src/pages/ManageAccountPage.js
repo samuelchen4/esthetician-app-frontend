@@ -53,7 +53,7 @@ const ManageAccountPage = () => {
         </Link>
 
         {role === 'client' && (
-          <Link to={`/users/${_id}/provider-info`}>
+          <Link to={`/users/${_id}/ethetician-info`}>
             <div
               id='personal-information'
               className='py-1 px-2 flex items-center justify-between border-b rounded-lg'
