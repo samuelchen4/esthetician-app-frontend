@@ -135,7 +135,7 @@ const PicturesComponent = ({ userId }) => {
   return (
     <div className='flex flex-col border-b py-4'>
       <div className='flex justify-between mb-3'>
-        <p className='text-black font-semibold'>
+        <p className='text-black'>
           {photosOpen ? 'Current Pictures' : 'Pictures'}
         </p>
         <button className='underline' onClick={cancelPhotos}>

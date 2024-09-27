@@ -71,7 +71,7 @@ const ServicesComponent = ({ userId }) => {
   return (
     <div className='flex flex-col border-b py-4'>
       <div className='flex justify-between mb-2'>
-        <p className='text-black font-semibold'>Services</p>
+        <p className='text-black'>Services</p>
         <button className='underline' onClick={cancelServices}>
           {servicesOpen ? 'Cancel' : 'Edit'}
         </button>

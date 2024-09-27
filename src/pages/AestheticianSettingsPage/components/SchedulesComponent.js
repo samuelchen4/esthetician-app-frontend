@@ -69,7 +69,7 @@ const SchedulesComponent = ({ userId }) => {
   return (
     <div className='flex flex-col border-b py-4'>
       <div className='flex justify-between'>
-        <p className='text-black font-semibold'>Availability</p>
+        <p className='text-black '>Availability</p>
         <button className='underline' onClick={cancelSchedules}>
           {schedulesOpen ? 'Cancel' : 'Edit'}
         </button>
