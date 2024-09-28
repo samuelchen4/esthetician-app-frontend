@@ -26,7 +26,7 @@ const ClientCard = ({
     // <div className='my-1 min-w-[200px] sm:max-w-[350px]'>
     <div
       id='card-container'
-      className=' min-w-[200px] sm:max-w-[350px] w-full flex flex-col flex-auto border rounded-lg text-xs shadow-md my-2'
+      className=' min-w-[200px] sm:max-w-[350px] w-full flex flex-col flex-auto border rounded-lg text-sm shadow-md my-2 animate-fadeIn'
     >
       <div id='title-picture-container' className='w-full'>
         <Carousel state={images} width={'120'} />
@@ -50,7 +50,7 @@ const ClientCard = ({
             <p className=' text-blue-500'>
               {services !== null ? services.join(', ') : 'Specialist'}
             </p>
-            <div className='flex justify-between text-xs'>
+            <div className='flex justify-between'>
               <p>Location: {location === null ? 'Calgary, AB' : location}</p>
               <p>
                 Avaliability: {schedules !== null ? schedules.join(' ') : 'Mon'}
@@ -58,8 +58,8 @@ const ClientCard = ({
             </div>
           </div>
         </div>
-        <p className='pt-4 h-[120px]'>
-          {userStory == false ||
+        <p className='pt-4 '>
+          {userStory === false ||
             `Sint aliquip nulla ad cillum ex eiusmod proident cupidatat aliqua sit
           minim Sint aliquip nulla ad cillum ex eiusmod proident cupidatat
           aliqua sit minim Sint aliquip nulla ad cillum ex eiusmod proident

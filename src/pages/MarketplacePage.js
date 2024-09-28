@@ -12,14 +12,22 @@ import { Button } from 'src/components/ui/button';
 import { Calendar } from 'src/components/ui/calendar';
 import { ClientCardSkeleton } from 'src/components/ClientCardSkeleton';
 import useUserStore from 'src/stores/useUserStore';
+import { useUser } from '@clerk/clerk-react';
+import PageLoader from 'src/components/PageLoader';
 
 const headerHeight = '50';
 
 const MarketplacePage = () => {
-  // useNavigate
-  const navigate = useNavigate();
+  // Clerk
+  const clerkObj = useUser();
+  console.log(clerkObj);
+  const { isLoaded: clerkIsLoaded, isSignedIn, user: clerkUser } = clerkObj;
+
   // userStore
   const user = useUserStore((state) => state.user);
+
+  // useNavigate
+  const navigate = useNavigate();
   useEffect(() => {
     // if user is not null and doesnt have the role property
     if (user !== null && user?.role === null) {
@@ -125,8 +133,10 @@ const MarketplacePage = () => {
     return clientCards;
   };
 
+  if (!clerkIsLoaded || (isSignedIn && user === null)) return <PageLoader />;
+
   return (
-    <div id='page-container' className='mx-4 flex flex-col text-neutral-600'>
+    <div id='page-container' className='mx-4 flex flex-col text-neutral-600 '>
       <h2 className='text-center my-5 font-bold text-5xl font-alexandria text-black'>
         Explore
         <span className='text-primary block md:inline-block md:ml-4'>
@@ -135,7 +145,7 @@ const MarketplacePage = () => {
       </h2>
       <div
         id='search-container'
-        className='text-sm flex mb-5 space-x-2 justify-center sticky z-90 py-2'
+        className='text-sm flex mb-5 space-x-2 justify-center sticky z-30 py-2'
         style={{ top: headerHeight ? `${headerHeight}px` : 'auto' }}
       >
         <Button

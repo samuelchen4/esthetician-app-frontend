@@ -47,6 +47,7 @@ const useUserStore = create((set) => ({
     const userInfo = await patchRoleById(userId, role);
     set({ user: userInfo, isLoading: false });
   },
+  // Get userInfo by clerkId
   getUserInfo: async (clerkUserId) => {
     set({ isLoading: true });
     const userInfo = await getUserByClerkId(clerkUserId);

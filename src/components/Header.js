@@ -12,11 +12,14 @@ import useServicesStore from 'src/stores/useServicesStore';
 import useSchedulesStore from 'src/stores/useSchedulesStore';
 import usePhotosStore from 'src/stores/usePhotosStore';
 import UserButton from './UserButton';
-import { Loader } from 'lucide-react';
+import { Skeleton } from 'src/components/ui/skeleton';
 
 const Header = () => {
   // Clerk auth
-  const { user: clerkUserObj } = useUser();
+  const clerkUserObj = useUser();
+  const { isLoaded: clerkIsLoaded, isSignedIn, user: clerkUser } = clerkUserObj;
+
+  console.log('clerkUserObj: ', clerkUserObj);
   // From Zustand store
   const user = useUserStore((state) => state.user);
   const getUserInfo = useUserStore((state) => state.getUserInfo);
@@ -32,13 +35,17 @@ const Header = () => {
   const getSchedulesServer = useSchedulesStore((state) => state.getSchedules);
 
   useEffect(() => {
-    if (clerkUserObj) {
+    console.log(clerkUserObj);
+  }, [clerkUserObj]);
+
+  useEffect(() => {
+    if (clerkUser) {
       const {
         id: clerkUserId,
         firstName,
         lastName,
-        primaryEmailAddress: primaryEmailAddressObj,
-      } = clerkUserObj;
+        primaryEmailAddressObj,
+      } = clerkUser;
       const email = primaryEmailAddressObj?.emailAddress || '';
 
       userIsAuthenticated();
@@ -53,7 +60,7 @@ const Header = () => {
         }
       }
     }
-  }, [clerkUserObj]);
+  }, [clerkUser]);
 
   // If user is a service provider, fetch services, schedules, and photos
   useEffect(() => {
@@ -94,11 +101,27 @@ const Header = () => {
     }
   }, [user, services, photos, schedules]);
 
+  if (!clerkIsLoaded || (isSignedIn && user === null))
+    return (
+      <div
+        id='header-container'
+        className='fixed top-0 bg-white shadow-sm flex items-center justify-between py-2 px-6 w-full h-[50px]'
+      >
+        <img
+          src='/static/beauty_connect_logo_2_compressed.png'
+          alt='logo'
+          className='h-7'
+        />
+        <Skeleton className='rounded-full w-8 h-8 border' />
+      </div>
+    );
+
   return (
     <div
       id='header-container'
       className='fixed top-0 bg-white shadow-sm flex items-center justify-between py-2 px-6 w-full h-[50px]'
     >
+      {/* if clerk user is loaded and user store isnt show skeleton */}
       <Link to='/'>
         <img
           src='/static/beauty_connect_logo_2_compressed.png'

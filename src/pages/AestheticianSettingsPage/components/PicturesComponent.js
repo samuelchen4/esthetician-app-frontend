@@ -15,7 +15,7 @@ const PicturesComponent = ({ userId }) => {
   const photosStoreLoading = usePhotosStore((state) => state.isLoading);
 
   // Local
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState(['1', '2', '3']);
   //   const [photosLoading, setPhotosLoading] = useState(false);
   const [tempPhotos, setTempPhotos] = useState([]);
   const tempPhotoObjects = useRef([]);
@@ -47,6 +47,7 @@ const PicturesComponent = ({ userId }) => {
         return '/static/logo-square.png';
       }
     });
+    // return results;
     setPhotos(photoUrls);
   }, [photosStore]);
 

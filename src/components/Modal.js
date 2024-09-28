@@ -26,7 +26,7 @@ const Modal = ({ isOpen, onClose, children }) => {
 
   return ReactDOM.createPortal(
     <div
-      className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end z-50 pt-safe-top'
+      className='fixed inset-0 bg-gray-300 bg-opacity-50 flex justify-center items-end z-50 pt-safe-top'
       onClick={handleOverlayClick}
     >
       <div className='h-full w-full relative animate-slideInUp bg-white p-6'>

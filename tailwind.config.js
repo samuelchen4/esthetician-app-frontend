@@ -1,13 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // darkMode: false,
   content: [
     './pages/**/*.{js,jsx}',
     './components/**/*.{js,jsx}',
     './app/**/*.{js,jsx}',
     './src/**/*.{js,jsx}',
   ],
-  prefix: '',
   theme: {
     container: {
       center: true,
@@ -39,12 +37,40 @@ module.exports = {
           '0%': { transform: 'translateY(100%)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
-      },
-      animation: {
-        slideInUp: 'slideInUp 0.3s forwards',
-      },
-
-      keyframes: {
+        slideInLeft: {
+          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        'page-loader': {
+          '0%, 100%': {
+            transform: 'translate(-35px)',
+            boxShadow: '0 0 #F4DD51, 0 0 #E3AAD6',
+          },
+          '40%': {
+            transform: 'translate(35px)',
+            boxShadow: '-15px 0 #F4DD51, -30px 0 #E3AAD6',
+          },
+          '50%': {
+            transform: 'translate(35px)',
+            boxShadow: '0 0 #F4DD51, 0 0 #E3AAD6',
+          },
+          '90%': {
+            transform: 'translate(-35px)',
+            boxShadow: '15px 0 #F4DD51, 30px 0 #E3AAD6',
+          },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeOut: {
+          '0%': {
+            opacity: '1',
+          },
+          '100%': {
+            opacity: '0',
+          },
+        },
         'accordion-down': {
           from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
@@ -55,6 +81,11 @@ module.exports = {
         },
       },
       animation: {
+        slideInUp: 'slideInUp 0.4s forwards',
+        slideInLeft: 'slideInLeft 0.3s forwards',
+        'page-loader': 'page-loader 1.5s infinite',
+        fadeIn: 'fadeIn 0.7s forwards',
+        fadeOut: 'fadeOut 0.7s forwards',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
@@ -71,7 +102,7 @@ module.exports = {
         },
         '.no-scrollbar': {
           '-ms-overflow-style': 'none',
-          'scrollbar-width': 'none,',
+          'scrollbar-width': 'none',
         },
       };
 

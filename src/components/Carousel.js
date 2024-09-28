@@ -1,5 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
+import Image from 'src/components/Image';
 // import Image from 'src/components/Image';
 
 const Carousel = ({
@@ -33,16 +34,7 @@ const Carousel = ({
     >
       {state.map((image, idx) => (
         <div className='relative flex-shrink-0'>
-          <img
-            key={idx}
-            src={image}
-            alt={`image ${idx}`}
-            className='object-cover rounded-md border'
-            style={{
-              width: `${width}px`, // Set width using inline style in pixels
-              aspectRatio: aspect, // Set the aspect ratio using inline style
-            }}
-          />
+          <Image src={image} alt={`image ${idx}`} width={width} />
           {remove && (
             <button
               data-src={image}

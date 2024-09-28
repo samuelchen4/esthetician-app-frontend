@@ -11,9 +11,12 @@ const SideNav = ({ setter, userId, firstName, lastName, email }) => {
   };
 
   return (
-    <div className='fixed w-full h-[calc(100dvh-50px)] text-neutral-600 top-[50px] left-0 right-0 flex text-sm'>
-      <div className='grow bg-gray-400 opacity-20' onClick={setFalse}></div>
-      <div className='w-60 h-full opacity-100 bg-white ml-auto p-2 flex flex-col'>
+    <div className='fixed w-full h-[calc(100dvh-50px)] text-neutral-600 top-[50px] left-0 right-0 flex'>
+      <div
+        className='absolute z-10 inset-0 grow bg-gray-300 opacity-40'
+        onClick={setFalse}
+      ></div>
+      <div className='absolute z-20 right-0 min-w-60 h-full opacity-100 bg-white ml-auto p-2 flex flex-col animate-slideInLeft '>
         <div className=' text-black font-semibold bg-blue-200 p-2 rounded-md mb-1'>
           <p>
             {firstName} {lastName}

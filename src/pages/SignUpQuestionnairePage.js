@@ -140,15 +140,28 @@ const SignUpQuestionnairePage = () => {
   const { question, actionJsx } = questionsArray[index];
 
   return (
-    <div className=' max-h-[calc(100vh-50px)] grow border-2 m-4 flex flex-col items-center'>
-      <Progress value={(index / (questionsArray.length - 1)) * 100} />
-      <h2 className='border-2 text-3xl font-semibold'>{question}</h2>
-      <div className='border-2 grow'>{actionJsx}</div>
-      <div className='border-2 mt-auto flex flex-col'>
-        <button onClick={handleSubmit}>
+    <div className='h-full flex flex-col items-center'>
+      <Progress
+        value={(index / (questionsArray.length - 1)) * 100}
+        className='h-1.5 rounded-none'
+      />
+      <div className='grow bg-pink-100 '>
+        <h2 className=' text-3xl font-semibold'>{question}</h2>
+        <div className=' grow'>{actionJsx}</div>
+      </div>
+      <div className='border-t-2 w-full py-3 px-4 mt-auto flex justify-between'>
+        <button
+          onClick={decrementIndex}
+          className='py-2 px-3 border border-gray-100 rounded-lg bg-gray-50 shadow-sm'
+        >
+          back
+        </button>
+        <button
+          onClick={handleSubmit}
+          className='py-2 px-3 border rounded-lg text-white bg-primary border-primary shadow-sm'
+        >
           {index === questionsArray.length - 1 ? 'Submit' : 'Continue'}
         </button>
-        <button onClick={decrementIndex}>back</button>
       </div>
     </div>
   );
