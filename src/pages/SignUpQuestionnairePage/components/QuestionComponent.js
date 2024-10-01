@@ -54,7 +54,7 @@ const QuestionComponent = ({
         {subQuestion && <p className='text-sm'>{subQuestion}</p>}
       </div>
       <div className='px-4 py-8'>{children}</div>
-      <div className='border-t-2 w-full py-3 px-4 mt-auto flex justify-between'>
+      <div className='fixed bottom-0 border-t-2 w-full py-3 px-4 flex justify-between'>
         <button
           className='py-2 px-3 border border-gray-100 rounded-lg bg-gray-50 shadow-sm'
           onClick={goBack}
