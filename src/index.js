@@ -6,7 +6,7 @@ import MarketplacePage from './pages/MarketplacePage';
 import ClientInfoPage from './pages/ClientInfoPage';
 import Header from './components/Header';
 import { ClerkProvider } from '@clerk/clerk-react';
-import SignUpQuestionnairePage from './pages/SignUpQuestionnairePage';
+import SignUpQuestionnairePage from 'src/pages/SignUpQuestionnairePage/SignUpQuestionnarePage';
 import LikesPage from './pages/LikesPage';
 import ManageAccountPage from './pages/ManageAccountPage';
 import PersonalSettingsPages from 'src/pages/PersonalSettingsPage/PersonalSettingsPage';
@@ -32,7 +32,7 @@ root.render(
             <Route path='/home' element={<MarketplacePage />} />
             <Route path='/client-info/:userId' element={<ClientInfoPage />} />
             <Route
-              path='/sign-up/questionnaire'
+              path='/sign-up/questionnaire/*'
               element={<SignUpQuestionnairePage />}
             />
             <Route path='/users/:userId/likes' element={<LikesPage />} />
