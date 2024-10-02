@@ -13,7 +13,7 @@ import { Button } from 'src/components/ui/button';
 
 const SignUpQuestionnarePage = () => {
   return (
-    <div className='scrollable-container flex flex-col text-neutral-600 animate-fadeIn'>
+    <div className='overflow-y-auto flex flex-col text-neutral-600 animate-fadeIn'>
       <Routes>
         <Route path='/question/:index' element={<QuestionRouter />} />
       </Routes>
@@ -71,11 +71,11 @@ const FirstQuestion = React.memo(({ progress }) => {
     emailRef.current.addEventListener('input', handleInputChange);
 
     // Cleanup event listeners on unmount
-    return () => {
-      firstNameRef.current.removeEventListener('input', handleInputChange);
-      lastNameRef.current.removeEventListener('input', handleInputChange);
-      emailRef.current.removeEventListener('input', handleInputChange);
-    };
+    // return () => {
+    //   firstNameRef.current.removeEventListener('input', handleInputChange);
+    //   lastNameRef.current.removeEventListener('input', handleInputChange);
+    //   emailRef.current.removeEventListener('input', handleInputChange);
+    // };
   }, []);
 
   //   This doesnt need to take agruments
@@ -177,6 +177,7 @@ const SecondQuestion = React.memo(({ progress }) => {
         progress={progress}
         question="What services do you offer? We'd love to hear how you'll be bringing your expertise to the table! 🎉 "
         submitFunction={handleSubmit}
+        canSubmit={services?.length > 0 ? true : false}
       >
         <div className='flex flex-col space-y-8'>{renderButtons}</div>
       </QuestionComponent>
@@ -238,6 +239,7 @@ const ScheduleQuestion = React.memo(({ progress }) => {
         progress={progress}
         question='What days work best for you?'
         submitFunction={handleSubmit}
+        canSubmit={schedules?.length > 0 ? true : false}
       >
         <div className='flex flex-col space-y-8'>{renderButtons}</div>
       </QuestionComponent>
