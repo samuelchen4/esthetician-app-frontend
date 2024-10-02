@@ -13,7 +13,7 @@ import { Button } from 'src/components/ui/button';
 
 const SignUpQuestionnarePage = () => {
   return (
-    <div className='overflow-y-auto flex flex-col text-neutral-600 animate-fadeIn'>
+    <div className='flex flex-col text-neutral-600 animate-fadeIn text-base border-4 border-red-50'>
       <Routes>
         <Route path='/question/:index' element={<QuestionRouter />} />
       </Routes>
@@ -235,7 +235,7 @@ const ScheduleQuestion = React.memo(({ progress }) => {
     <>
       <QuestionComponent
         header='Last question, I promise!'
-        className='pt-4 animate-fadeIn'
+        className='pt-4 animate-fadeIn  border-2'
         progress={progress}
         question='What days work best for you?'
         submitFunction={handleSubmit}

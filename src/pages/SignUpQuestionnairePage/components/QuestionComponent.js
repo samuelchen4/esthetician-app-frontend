@@ -53,7 +53,7 @@ const QuestionComponent = ({
         <Progress value={progress} className='h-2 rounded-md ' />
         <p className='text-sm'>Question {index}</p>
         <p className='text-xl'>{question}</p>
-        {subQuestion && <p className='text-sm'>{subQuestion}</p>}
+        {subQuestion && <p>{subQuestion}</p>}
       </div>
       <div className='px-4 py-8'>{children}</div>
       <div className='fixed bottom-0 border-t-2 w-full py-3 px-4 flex justify-between bg-white'>
