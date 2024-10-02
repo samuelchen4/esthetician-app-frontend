@@ -84,7 +84,7 @@ module.exports = {
         slideInUp: 'slideInUp 0.4s forwards',
         slideInLeft: 'slideInLeft 0.3s forwards',
         'page-loader': 'page-loader 1.5s infinite',
-        fadeIn: 'fadeIn 0.7s forwards',
+        '-webkit-fadeIn': 'fadeIn 0.7s forwards',
         fadeOut: 'fadeOut 0.7s forwards',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
