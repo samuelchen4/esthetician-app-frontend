@@ -74,7 +74,9 @@ const FirstQuestion = React.memo(({ progress, userId }) => {
   const patchBasicUserInfo = useUserStore((state) => state.patchBasicUserInfo);
 
   // local state
-  const [canSubmit, setCanSubmit] = useState(false);
+  const [canSubmit, setCanSubmit] = useState(
+    firstName && lastName && email ? true : false
+  );
 
   // local ref
   const firstNameRef = useRef(null);
