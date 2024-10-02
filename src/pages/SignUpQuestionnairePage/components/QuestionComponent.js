@@ -62,7 +62,7 @@ const QuestionComponent = ({
       </div>
       <div className='px-4 py-8 mb-[60px]'>{children}</div>
       <div className='fixed bottom-0 border-t w-full py-3 px-4 flex justify-between bg-white'>
-        {index !== 4 && (
+        {index > 1 && index < 4 && (
           <button
             className='py-2 px-3 border border-gray-100 rounded-lg bg-gray-50 shadow-sm'
             type='button'

@@ -68,6 +68,8 @@ const FirstQuestion = React.memo(({ progress, userId }) => {
   const navigate = useNavigate();
   const location = useLocation();
   // zustand
+  const userStore = useUserStore((state) => state.user);
+  const { first_name: firstName, last_name: lastName, email } = userStore;
   const userStoreLoading = useUserStore((state) => state.isLoading);
   const patchBasicUserInfo = useUserStore((state) => state.patchBasicUserInfo);
 
@@ -154,19 +156,34 @@ const FirstQuestion = React.memo(({ progress, userId }) => {
         <div className='flex flex-col space-y-8 '>
           <div className='flex flex-col space-y-3'>
             <label htmlFor='firstName'>First Name:</label>
-            <Input text='text' name='firstName' ref={firstNameRef} />
+            <Input
+              text='text'
+              name='firstName'
+              ref={firstNameRef}
+              defaultValue={firstName}
+            />
           </div>
           <div className='flex flex-col space-y-3'>
             <label htmlFor='lastName'>Last Name:</label>
-            <Input text='text' name='lastName' ref={lastNameRef} />
+            <Input
+              text='text'
+              name='lastName'
+              ref={lastNameRef}
+              defaultValue={lastName}
+            />
           </div>
           <div className='flex flex-col space-y-3'>
             <label htmlFor='email'>Email:</label>
-            <Input text='email' name='email' ref={emailRef} />
+            <Input
+              text='email'
+              name='email'
+              ref={emailRef}
+              defaultValue={email}
+            />
           </div>
           <div className='flex flex-col space-y-3'>
             <label htmlFor='role'>I am an aethetician!</label>
-            <Switch id='role' ref={roleRef} />
+            <Switch id='role' ref={roleRef} className='' />
           </div>
         </div>
       </QuestionComponent>
