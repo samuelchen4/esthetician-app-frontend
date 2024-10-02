@@ -42,19 +42,19 @@ const QuestionComponent = ({
 
   return (
     // <div className='flex flex-col'>
-    <form className={cn('grow flex flex-col', className)} onSubmit={goNext}>
+    <form className={cn('flex flex-col', className)} onSubmit={goNext}>
       <div
         id='question-component-title'
         className='flex flex-col space-y-4 px-4'
       >
-        <h3 className='font-semibold text-xl text-black'>{header}</h3>
+        <h3 className='font-semibold text-2xl text-black'>{header}</h3>
         <Progress value={progress} className='h-2 rounded-md ' />
         <p className='text-sm'>Question {index}</p>
-        <p>{question}</p>
+        <p className='text-xl'>{question}</p>
         {subQuestion && <p className='text-sm'>{subQuestion}</p>}
       </div>
       <div className='px-4 py-8'>{children}</div>
-      <div className='fixed bottom-0 border-t-2 w-full py-3 px-4 flex justify-between'>
+      <div className='fixed bottom-0 border-t-2 w-full py-3 px-4 flex justify-between bg-white'>
         <button
           className='py-2 px-3 border border-gray-100 rounded-lg bg-gray-50 shadow-sm'
           onClick={goBack}
