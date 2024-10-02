@@ -44,7 +44,10 @@ const QuestionComponent = ({
 
   return (
     // <div className='flex flex-col'>
-    <form className={cn('flex flex-col', className)} onSubmit={goNext}>
+    <form
+      className={cn('flex flex-col overflow-y-auto', className)}
+      onSubmit={goNext}
+    >
       <div
         id='question-component-title'
         className='flex flex-col space-y-4 px-4'
