@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from 'src/components/ui/button';
 import { Progress } from 'src/components/ui/progress';
 import { cn } from 'src/lib/utils';
 
@@ -12,6 +13,7 @@ const QuestionComponent = ({
   children,
   submitFunction,
   className,
+  canSubmit,
 }) => {
   // react router
   const navigate = useNavigate();
@@ -61,12 +63,16 @@ const QuestionComponent = ({
         >
           back
         </button>
-        <button
-          className='py-2 px-3 border rounded-lg text-white bg-primary border-primary shadow-sm'
+        <Button
+          className={cn(
+            'py-2 px-3 border rounded-lg  shadow-sm text-gray-400 bg-gray-50',
+            canSubmit && 'text-white bg-primary border-primary'
+          )}
           type='submit'
+          disabled={!canSubmit}
         >
           {index === last ? 'Submit' : 'Continue'}
-        </button>
+        </Button>
       </div>
     </form>
   );

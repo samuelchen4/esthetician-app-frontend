@@ -1,9 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useParams } from 'react-router-dom';
 import QuestionComponent from 'src/pages/SignUpQuestionnairePage/components/QuestionComponent';
 import { Input } from 'src/components/ui/input';
-import { Label } from 'src/components/ui/label';
-import Toggle from 'src/components/Toggle';
 import { Switch } from 'src/components/ui/switch';
 
 // second question component imports
@@ -15,7 +13,7 @@ import { Button } from 'src/components/ui/button';
 
 const SignUpQuestionnarePage = () => {
   return (
-    <div className=' flex flex-col text-neutral-600 animate-fadeIn'>
+    <div className='scrollable-container flex flex-col text-neutral-600 animate-fadeIn'>
       <Routes>
         <Route path='/question/:index' element={<QuestionRouter />} />
       </Routes>
@@ -43,11 +41,42 @@ const QuestionRouter = () => {
 };
 
 const FirstQuestion = React.memo(({ progress }) => {
+  // local state
+  const [canSubmit, setCanSubmit] = useState(false);
+
   // local ref
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
   const emailRef = useRef(null);
   const roleRef = useRef(null);
+
+  const checkFieldsFilled = () => {
+    if (
+      firstNameRef.current.value !== '' &&
+      lastNameRef.current.value !== '' &&
+      emailRef.current.value !== ''
+    ) {
+      setCanSubmit(true);
+    } else {
+      setCanSubmit(false);
+    }
+  };
+
+  // Attach `onInput` event listeners to check the values as the user types
+  useEffect(() => {
+    const handleInputChange = () => checkFieldsFilled();
+
+    firstNameRef.current.addEventListener('input', handleInputChange);
+    lastNameRef.current.addEventListener('input', handleInputChange);
+    emailRef.current.addEventListener('input', handleInputChange);
+
+    // Cleanup event listeners on unmount
+    return () => {
+      firstNameRef.current.removeEventListener('input', handleInputChange);
+      lastNameRef.current.removeEventListener('input', handleInputChange);
+      emailRef.current.removeEventListener('input', handleInputChange);
+    };
+  }, []);
 
   //   This doesnt need to take agruments
   //  just needs to run
@@ -69,6 +98,7 @@ const FirstQuestion = React.memo(({ progress }) => {
         question='Tell us about yourself!'
         subQuestion='Enter your information, like your first name, last name, and email!'
         submitFunction={handleSubmit}
+        canSubmit={canSubmit}
       >
         <div className='flex flex-col space-y-8'>
           <div className='flex flex-col space-y-3'>
@@ -84,7 +114,6 @@ const FirstQuestion = React.memo(({ progress }) => {
             <Input text='email' name='email' ref={emailRef} />
           </div>
           <div className='flex flex-col space-y-3'>
-            {/* <Toggle checked={state.isClient} onChange={handleToggleChange} /> */}
             <label htmlFor='role'>I am selling services!</label>
             <Switch id='role' ref={roleRef} />
           </div>
