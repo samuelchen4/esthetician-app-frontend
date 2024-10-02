@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/api-config';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
@@ -25,15 +25,6 @@ const MarketplacePage = () => {
 
   // userStore
   const user = useUserStore((state) => state.user);
-
-  // useNavigate
-  const navigate = useNavigate();
-  useEffect(() => {
-    // if user is not null and doesnt have the role property
-    if (user !== null && user?.role === null) {
-      navigate('/sign-up/questionnaire');
-    }
-  }, [user]);
 
   const [clientData, setClientData] = useState([]);
   const [isServiceOpen, setIsServiceOpen] = useState(false);
@@ -133,7 +124,8 @@ const MarketplacePage = () => {
     return clientCards;
   };
 
-  if (!clerkIsLoaded || (isSignedIn && user === null)) return <PageLoader />;
+  if (!clerkIsLoaded || (isSignedIn && user === null))
+    return <PageLoader className='fixed inset-x-0 border' />;
 
   return (
     <div id='page-container' className='mx-4 flex flex-col text-neutral-600 '>

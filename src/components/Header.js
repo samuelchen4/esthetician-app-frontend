@@ -6,7 +6,7 @@ import {
   // UserButton,
   useUser,
 } from '@clerk/clerk-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useUserStore from 'src/stores/useUserStore';
 import useServicesStore from 'src/stores/useServicesStore';
 import useSchedulesStore from 'src/stores/useSchedulesStore';
@@ -15,6 +15,8 @@ import UserButton from './UserButton';
 import { Skeleton } from 'src/components/ui/skeleton';
 
 const Header = () => {
+  // React Router
+  const navigate = useNavigate();
   // Clerk auth
   const clerkUserObj = useUser();
   const { isLoaded: clerkIsLoaded, isSignedIn, user: clerkUser } = clerkUserObj;
@@ -35,8 +37,10 @@ const Header = () => {
   const getSchedulesServer = useSchedulesStore((state) => state.getSchedules);
 
   useEffect(() => {
-    console.log(clerkUserObj);
-  }, [clerkUserObj]);
+    if (user !== null && user.role === null) {
+      navigate('/sign-up/questionnaire/question/1');
+    }
+  }, [user]);
 
   useEffect(() => {
     if (clerkUser) {

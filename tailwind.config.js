@@ -32,6 +32,11 @@ module.exports = {
       spacing: {
         'safe-top': 'env(safe-area-inset-top)',
       },
+      // Add custom utility class for -webkit-overflow-scrolling
+      webkitOverflowScrolling: {
+        touch: '-webkit-overflow-scrolling: touch',
+        auto: '-webkit-overflow-scrolling: auto',
+      },
       keyframes: {
         slideInUp: {
           '0%': { transform: 'translateY(100%)', opacity: '0' },
@@ -84,7 +89,7 @@ module.exports = {
         slideInUp: 'slideInUp 0.4s forwards',
         slideInLeft: 'slideInLeft 0.3s forwards',
         'page-loader': 'page-loader 1.5s infinite',
-        '-webkit-fadeIn': 'fadeIn 0.7s forwards',
+        fadeIn: 'fadeIn 0.7s forwards',
         fadeOut: 'fadeOut 0.7s forwards',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
@@ -97,6 +102,12 @@ module.exports = {
 
     function ({ addUtilities }) {
       const newUtilities = {
+        '.scroll-touch': {
+          '-webkit-overflow-scrolling': 'touch',
+        },
+        '.scroll-auto': {
+          '-webkit-overflow-scrolling': 'auto',
+        },
         '.no-scrollbar::-webkit-scrollbar': {
           display: 'none',
         },
@@ -106,7 +117,7 @@ module.exports = {
         },
       };
 
-      addUtilities(newUtilities);
+      addUtilities(newUtilities, ['responsive']);
     },
   ],
 };

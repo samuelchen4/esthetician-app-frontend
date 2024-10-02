@@ -1,19 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Routes, Route, useParams } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useParams,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import QuestionComponent from 'src/pages/SignUpQuestionnairePage/components/QuestionComponent';
 import { Input } from 'src/components/ui/input';
 import { Switch } from 'src/components/ui/switch';
+import { CircleCheckBig } from 'lucide-react';
+
+// first question
+import useUserStore from 'src/stores/useUserStore';
+// import {useLocation} from 'react-router-dom'
 
 // second question component imports
 import serviceConstants from 'src/constants/categories';
+import useServicesStore from 'src/stores/useServicesStore';
 
 // third question
 import daysConstants from 'src/constants/days';
+import useSchedulesStore from 'src/stores/useSchedulesStore';
 import { Button } from 'src/components/ui/button';
+import PageLoader from 'src/components/PageLoader';
+
+// last Question
+// import { useNavigate } from 'react-router-dom';
 
 const SignUpQuestionnarePage = () => {
   return (
-    <div className='overflow-y-auto flex flex-col text-neutral-600 animate-fadeIn text-base border-4 border-red-50'>
+    <div className='flex flex-col text-neutral-700 text-base'>
       <Routes>
         <Route path='/question/:index' element={<QuestionRouter />} />
       </Routes>
@@ -23,24 +40,37 @@ const SignUpQuestionnarePage = () => {
 
 const QuestionRouter = () => {
   const { index: nonConvertedIndex } = useParams();
+  const userStore = useUserStore((state) => state.user);
 
   const index = parseInt(nonConvertedIndex, 10);
+  const last = 4;
 
-  const progress = ((index - 1) / 3) * 100;
+  const progress = ((index - 1) / (last - 1)) * 100;
+  if (userStore === null)
+    return <PageLoader className='fixed inset-x-0 border' />;
 
   // Render components based on index
   if (index === 1) {
-    return <FirstQuestion progress={progress} />;
+    return <FirstQuestion progress={progress} userId={userStore?._id} />;
   } else if (index === 2) {
-    return <SecondQuestion progress={progress} />;
+    return <SecondQuestion progress={progress} userId={userStore?._id} />;
   } else if (index === 3) {
-    return <ScheduleQuestion progress={progress} />;
+    return <ScheduleQuestion progress={progress} userId={userStore?._id} />;
+  } else if (index === last) {
+    return <ResultsQuestion progress={progress} />;
   } else {
     return <div>Question not found</div>;
   }
 };
 
-const FirstQuestion = React.memo(({ progress }) => {
+const FirstQuestion = React.memo(({ progress, userId }) => {
+  // router
+  const navigate = useNavigate();
+  const location = useLocation();
+  // zustand
+  const userStoreLoading = useUserStore((state) => state.isLoading);
+  const patchBasicUserInfo = useUserStore((state) => state.patchBasicUserInfo);
+
   // local state
   const [canSubmit, setCanSubmit] = useState(false);
 
@@ -71,36 +101,57 @@ const FirstQuestion = React.memo(({ progress }) => {
     emailRef.current.addEventListener('input', handleInputChange);
 
     // Cleanup event listeners on unmount
-    // return () => {
-    //   firstNameRef.current.removeEventListener('input', handleInputChange);
-    //   lastNameRef.current.removeEventListener('input', handleInputChange);
-    //   emailRef.current.removeEventListener('input', handleInputChange);
-    // };
-  }, []);
+    return () => {
+      if (firstNameRef.current && lastNameRef.current && emailRef.current) {
+        firstNameRef.current.removeEventListener('input', handleInputChange);
+        lastNameRef.current.removeEventListener('input', handleInputChange);
+        emailRef.current.removeEventListener('input', handleInputChange);
+      }
+    };
+  }, [location]);
 
   //   This doesnt need to take agruments
   //  just needs to run
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('firstNameRef: ', firstNameRef.current.value);
     console.log('lastNameRef: ', lastNameRef.current.value);
     console.log('emailRef: ', emailRef.current.value);
     console.log('roleRef: ', roleRef.current.getAttribute('aria-checked'));
 
+    const firstName = firstNameRef.current.value;
+    const lastName = lastNameRef.current.value;
+    const email = emailRef.current.value;
+
+    const role =
+      roleRef.current.getAttribute('aria-checked') === 'true'
+        ? 'client'
+        : 'user';
+
+    console.log('firstName: ', firstName);
+    console.log('lastName: ', lastName);
+    console.log('email: ', email);
+    console.log('role: ', role);
+
     console.log('Call api to submit first, last, email, and role');
+    await patchBasicUserInfo(userId, firstName, lastName, email, role);
+
+    navigate('/sign-up/questionnaire/question/4');
+    return role === 'user' ? true : false;
   };
 
   return (
     <>
       <QuestionComponent
         header='Lets Get Started!'
-        className='pt-4 animate-fadeIn'
+        className='pt-4'
         progress={progress}
         question='Tell us about yourself!'
         subQuestion='Enter your information, like your first name, last name, and email!'
         submitFunction={handleSubmit}
         canSubmit={canSubmit}
+        submitLoading={userStoreLoading}
       >
-        <div className='flex flex-col space-y-8'>
+        <div className='flex flex-col space-y-8 '>
           <div className='flex flex-col space-y-3'>
             <label htmlFor='firstName'>First Name:</label>
             <Input text='text' name='firstName' ref={firstNameRef} />
@@ -114,7 +165,7 @@ const FirstQuestion = React.memo(({ progress }) => {
             <Input text='email' name='email' ref={emailRef} />
           </div>
           <div className='flex flex-col space-y-3'>
-            <label htmlFor='role'>I am selling services!</label>
+            <label htmlFor='role'>I am an aethetician!</label>
             <Switch id='role' ref={roleRef} />
           </div>
         </div>
@@ -123,7 +174,11 @@ const FirstQuestion = React.memo(({ progress }) => {
   );
 });
 
-const SecondQuestion = React.memo(({ progress }) => {
+const SecondQuestion = React.memo(({ progress, userId }) => {
+  // zustand
+  const servicesStore = useServicesStore((state) => state.services);
+  const servicesLoadingStore = useServicesStore((state) => state.isLoading);
+  const postServicesStore = useServicesStore((state) => state.postServices);
   // local state
   // has to be state bc we need to rerender for the buttons
   const [services, setServices] = useState([]);
@@ -167,17 +222,20 @@ const SecondQuestion = React.memo(({ progress }) => {
   });
   //   This doesnt need to take agruments
   //  just needs to run
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    await postServicesStore(userId, services);
+  };
 
   return (
     <>
       <QuestionComponent
         header='Awesome! Let’s get to know you better'
-        className='pt-4 animate-fadeIn'
+        className='pt-4'
         progress={progress}
         question="What services do you offer? We'd love to hear how you'll be bringing your expertise to the table! 🎉 "
         submitFunction={handleSubmit}
         canSubmit={services?.length > 0 ? true : false}
+        submitLoading={servicesLoadingStore}
       >
         <div className='flex flex-col space-y-8'>{renderButtons}</div>
       </QuestionComponent>
@@ -185,7 +243,10 @@ const SecondQuestion = React.memo(({ progress }) => {
   );
 });
 
-const ScheduleQuestion = React.memo(({ progress }) => {
+const ScheduleQuestion = React.memo(({ progress, userId }) => {
+  // zustand
+  const schedulesLoadingStore = useSchedulesStore((state) => state.isLoading);
+  const postSchedulesStore = useSchedulesStore((state) => state.postSchedules);
   // local state
   // has to be state bc we need to rerender for the buttons
   const [schedules, setSchedules] = useState([]);
@@ -229,19 +290,49 @@ const ScheduleQuestion = React.memo(({ progress }) => {
   });
   //   This doesnt need to take agruments
   //  just needs to run
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    await postSchedulesStore(userId, schedules);
+  };
 
   return (
     <>
       <QuestionComponent
         header='Last question, I promise!'
-        className='pt-4 animate-fadeIn  border-2'
+        className='pt-4'
         progress={progress}
         question='What days work best for you?'
         submitFunction={handleSubmit}
         canSubmit={schedules?.length > 0 ? true : false}
+        submitLoading={schedulesLoadingStore}
       >
         <div className='flex flex-col space-y-8'>{renderButtons}</div>
+      </QuestionComponent>
+    </>
+  );
+});
+
+// ResultsQuestionScreen
+const ResultsQuestion = React.memo(({ progress }) => {
+  const navigate = useNavigate();
+
+  const submitFunction = () => {
+    navigate('/');
+  };
+
+  return (
+    <>
+      <QuestionComponent
+        header='All Done!'
+        className='pt-4'
+        progress={progress}
+        question="You're all set! You've completed the questionnaire, great job! 🎉"
+        subQuestion='Now, click continue to return to your dashboard and explore a world of talented aestheticians nearby, ready to help you look and feel your best. Let’s get glowing!'
+        submitFunction={submitFunction}
+        canSubmit={true}
+      >
+        <div className='flex justify-center my-10'>
+          <CircleCheckBig size='80' className='text-primary border-primary' />
+        </div>
       </QuestionComponent>
     </>
   );

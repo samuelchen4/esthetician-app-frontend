@@ -9,6 +9,7 @@ import {
   postUserByClerkId,
   patchPhoneById,
   patchAddressById,
+  patchBasicUserInfoById,
 } from '../api/usersApi';
 
 const useUserStore = create((set) => ({
@@ -63,10 +64,23 @@ const useUserStore = create((set) => ({
     );
     set({ user: userInfo, isLoading: false });
   },
+  // Deparcated
   postUserClientInfo: async (userId, clientInfoArray) => {
     set({ isloading: true });
     const updatedUserInfo = await postClientInfo(userId, clientInfoArray);
     set({ user: updatedUserInfo, isLoading: false });
+  },
+  // patches first, last, email and role
+  patchBasicUserInfo: async (userId, firstName, lastName, email, role) => {
+    set({ isLoading: true });
+    const updatedUserInfo = await patchBasicUserInfoById(
+      userId,
+      firstName,
+      lastName,
+      email,
+      role
+    );
+    set({ user: updatedUserInfo, isloading: false });
   },
 }));
 

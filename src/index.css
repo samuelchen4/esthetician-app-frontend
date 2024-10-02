@@ -6,3 +6,7 @@
   overflow-y: auto; /* Enables vertical scrolling */
   -webkit-overflow-scrolling: touch; /* Enables momentum scrolling on iOS */
 }
+
+body {
+  overscroll-behavior: none;
+}

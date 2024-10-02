@@ -26,7 +26,7 @@ const ClientCard = ({
     // <div className='my-1 min-w-[200px] sm:max-w-[350px]'>
     <div
       id='card-container'
-      className=' min-w-[200px] sm:max-w-[350px] w-full flex flex-col flex-auto border rounded-lg text-sm shadow-md my-2 animate-fadeIn'
+      className=' min-w-[200px] sm:max-w-[350px] w-full flex flex-col flex-auto border rounded-lg text-sm shadow-md my-2'
     >
       <div id='title-picture-container' className='w-full'>
         <Carousel state={images} width={'120'} />
