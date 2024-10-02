@@ -13,7 +13,7 @@ import { Button } from 'src/components/ui/button';
 
 const SignUpQuestionnarePage = () => {
   return (
-    <div className='flex flex-col text-neutral-600 animate-fadeIn text-base border-4 border-red-50'>
+    <div className='min-h-[100dvh] flex flex-col text-neutral-600 animate-fadeIn text-base border-4 border-red-50'>
       <Routes>
         <Route path='/question/:index' element={<QuestionRouter />} />
       </Routes>
