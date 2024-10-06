@@ -16,6 +16,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
+        roboto: ['roboto', 'sans-serif'],
         alexandria: ['Alexandria', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
       },

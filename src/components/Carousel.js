@@ -1,6 +1,7 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import Image from 'src/components/Image';
+import { cn } from 'src/lib/utils';
 // import Image from 'src/components/Image';
 
 const Carousel = ({
@@ -8,6 +9,7 @@ const Carousel = ({
   setState = null,
   aspect = 1,
   width = 35,
+  className,
   remove = false,
 }) => {
   // return error if remove true but no state and setState
@@ -30,16 +32,19 @@ const Carousel = ({
   return (
     <div
       id='carousel-container'
-      className='p-2 flex overflow-x-scroll space-x-2 no-scrollbar'
+      className={cn(
+        'p-2 flex overflow-x-scroll space-x-2 no-scrollbar',
+        className
+      )}
     >
       {state.map((image, idx) => (
-        <div className='relative flex-shrink-0'>
+        <div className='relative flex-shrink-0 shadow-sm'>
           <Image src={image} alt={`image ${idx}`} width={width} />
           {remove && (
             <button
               data-src={image}
               onClick={removePicture}
-              className='absolute top-2 right-2 border p-1 rounded-full bg-blue-100 shadow-sm'
+              className='absolute top-2 right-2 border p-1 rounded-full bg-blue-100'
             >
               <X size='14' className='text-black font-bold' />
             </button>
