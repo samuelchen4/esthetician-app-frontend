@@ -208,7 +208,7 @@ const MarketplacePage = () => {
       </p>
       <div
         id="client-container"
-        className="flex flex-col pt-4 space-y-10 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center"
+        className="flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center"
       >
         {renderCards()}
       </div>
