@@ -113,22 +113,22 @@ const MarketplacePage = () => {
 
     const clientCards = clientData.map((clientObj, index) => {
       // Remove this later, just for testing
-      let imagesUpdated;
+      const imagesUpdated = [];
       switch (index % 4) {
         case 0:
-          imagesUpdated = imagesNails;
+          imagesUpdated.push(...imagesNails);
           break;
         case 1:
-          imagesUpdated = imagesHair;
+          imagesUpdated.push(...imagesHair);
           break;
         case 2:
-          imagesUpdated = imagesBotox;
+          imagesUpdated.push(...imagesBotox);
           break;
         case 3:
-          imagesUpdated = imagesLashes;
+          imagesUpdated.push(...imagesLashes);
           break;
         default:
-          imagesUpdated = imagesHair; // Default fallback if needed.
+          imagesUpdated.push(...imagesNails);
       }
 
       const {
