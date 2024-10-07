@@ -18,6 +18,35 @@ import PageLoader from "src/components/PageLoader";
 
 const headerHeight = "50";
 
+const imagesNails = [
+  "/static/nails-1.png",
+  "/static/nails-2.png",
+  "/static/nails-3.png",
+  "/static/nails-4.png",
+  "/static/nails-5.png",
+];
+
+const imagesHair = [
+  "/static/hair-1.jpeg",
+  "/static/hair-2.jpeg",
+  "/static/hair-3.jpeg",
+  "/static/hair-4.jpeg",
+  "/static/hair-5.jpeg",
+];
+
+const imagesBotox = [
+  "/static/botox-1.jpeg",
+  "/static/botox-2.jpeg",
+  "/static/botox-3.jpeg",
+  "/static/botox-4.jpeg",
+];
+
+const imagesLashes = [
+  "/static/lashes-1.jpeg",
+  "/static/lashes-2.jpeg",
+  "/static/lashes-3.jpeg",
+  "/static/lashes-4.jpeg",
+];
 const MarketplacePage = () => {
   // Clerk
   const clerkObj = useUser();
@@ -82,7 +111,26 @@ const MarketplacePage = () => {
       return new Array(10).fill(null).map((item) => <ClientCardSkeleton />);
     }
 
-    const clientCards = clientData.map((clientObj) => {
+    const clientCards = clientData.map((clientObj, index) => {
+      // Remove this later, just for testing
+      let imagesUpdated;
+      switch (index % 4) {
+        case 0:
+          imagesUpdated = imagesNails;
+          break;
+        case 1:
+          imagesUpdated = imagesHair;
+          break;
+        case 2:
+          imagesUpdated = imagesBotox;
+          break;
+        case 3:
+          imagesUpdated = imagesLashes;
+          break;
+        default:
+          imagesUpdated = imagesHair; // Default fallback if needed.
+      }
+
       const {
         _id: clientId,
         first_name: firstName,
@@ -109,6 +157,7 @@ const MarketplacePage = () => {
           }}
         >
           <ClientCard
+            images={imagesUpdated}
             firstName={firstName}
             lastName={lastName}
             userStory={userStory}
