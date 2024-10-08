@@ -183,16 +183,20 @@ const ExplorePage = () => {
   return (
     <div className="flex flex-col text-neutral-600 font-nunito">
       <div id="explore-page-hero" className="relative flex">
-        <img src="/static/hero-picture-1.jpg" className="z-0 h-full w-full" />
-        <div className="absolute inset-0 z-10 grow bg-gray-700 opacity-60"></div>
-        <div className="absolute inset-0 z-20 grow flex flex-col justify-center items-center p-4 text-base text-white tracking-wide">
-          <h2 className="font-bold text-2xl mb-2">
-            Beauty is Personal – Discover Aestheticians Who Match Your Style!
+        <img
+          src="/static/hero-picture-1.jpg"
+          className="z-0 h-48 w-full object-cover"
+        />
+        <div className="absolute inset-0 z-10 grow bg-gray-700 opacity-70"></div>
+        <div className="absolute inset-0 z-20 grow flex flex-col justify-center items-start p-4 text-base text-white tracking-wider ">
+          <h2 className="font-bold text-3xl text-[#85C1E9] mb-2">
+            Beauty is Personal
           </h2>
-          <p className="font-semibold text-lg text-blue-100">
+          <p>Discover Aestheticians Who Match Your Style!</p>
+          {/* <p className="font-semibold text-lg text-blue-100">
             Find the perfect aesthetician, explore their specialties, and
             schedule your next beauty session in just a few clicks
-          </p>
+          </p> */}
         </div>
       </div>
       <div id="page-container" className="mt-5 mx-4 flex flex-col">
