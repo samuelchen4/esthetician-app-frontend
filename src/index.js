@@ -13,6 +13,7 @@ import PersonalSettingsPages from "src/pages/PersonalSettingsPage/PersonalSettin
 import AestheticianSettingsPage from "src/pages/AestheticianSettingsPage/AestheticianSettingsPage";
 import TestPage from "./pages/AetheticiansPage/TestPage";
 import MobileNav from "./MobileNav";
+import ExplorePage from "src/pages/ExplorePage/ExplorePage";
 
 const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY || null;
 
@@ -30,7 +31,8 @@ root.render(
         </div> */}
         <div className="relative pb-14 box-border z-0">
           <Routes>
-            <Route path="/" element={<MarketplacePage />} />
+            <Route path="/" element={<ExplorePage />} />
+            <Route path="/explore" element={<ExplorePage />} />
             <Route path="/home" element={<MarketplacePage />} />
             {/* <Route path='/client-info/:userId' element={<TestPage />} /> */}
             <Route path="/client-info/:userId" element={<AetheticiansPage />} />

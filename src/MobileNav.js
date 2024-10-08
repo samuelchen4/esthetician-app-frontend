@@ -50,11 +50,11 @@ const MobileNav = ({ className }) => {
   return (
     <div
       className={cn(
-        "flex justify-between px-6 py-3 bg-white border-t border-gray-200 font-nunito",
+        "flex justify-between px-6 py-2 bg-white border-t border-gray-200 font-nunito",
         className
       )}
     >
-      <Link to={"/"}>
+      <Link to={"/explore"}>
         <button
           name="explore"
           onClick={handleClick}
