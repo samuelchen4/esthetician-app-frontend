@@ -53,8 +53,8 @@ root.render(
             />
           </Routes>
         </div>
+        <MobileNav className="fixed bottom-0 left-0 right-0" />
       </Router>
-      <MobileNav className="fixed bottom-0 left-0 right-0" />
     </ClerkProvider>
   </div>
 );
