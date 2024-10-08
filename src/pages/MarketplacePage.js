@@ -34,12 +34,12 @@ const imagesHair = [
   "/static/hair-5.jpeg",
 ];
 
-const imagesBotox = [
-  "/static/botox-1.jpeg",
-  "/static/botox-2.jpeg",
-  "/static/botox-3.jpeg",
-  "/static/botox-4.jpeg",
-];
+// const imagesBotox = [
+//   "/static/botox-1.jpeg",
+//   "/static/botox-2.jpeg",
+//   "/static/botox-3.jpeg",
+//   "/static/botox-4.jpeg",
+// ];
 
 const imagesLashes = [
   "/static/lashes-1.jpeg",
@@ -114,18 +114,20 @@ const MarketplacePage = () => {
     const clientCards = clientData.map((clientObj, index) => {
       // Remove this later, just for testing
       const imagesUpdated = [];
+      let profilePicture;
       switch (index % 4) {
         case 0:
           imagesUpdated.push(...imagesNails);
+          profilePicture = "/static/client-card-profile-picture.png";
           break;
         case 1:
           imagesUpdated.push(...imagesHair);
+          profilePicture = "/static/client-card-profile-picture-2.png";
           break;
         case 2:
-          imagesUpdated.push(...imagesBotox);
-          break;
-        case 3:
           imagesUpdated.push(...imagesLashes);
+          profilePicture = "/static/client-card-profile-picture-3.png";
+
           break;
         default:
           imagesUpdated.push(...imagesNails);
@@ -158,6 +160,7 @@ const MarketplacePage = () => {
         >
           <ClientCard
             images={imagesUpdated}
+            profilePicture={profilePicture}
             firstName={firstName}
             lastName={lastName}
             userStory={userStory}

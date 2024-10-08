@@ -1,17 +1,10 @@
 import React from "react";
 import Carousel from "src/components/Carousel";
-import { Dot, Heart, Star, StarHalf, Ellipsis } from "lucide-react";
-
-// const images = [
-//   "/static/nails-1.png",
-//   "/static/nails-2.png",
-//   "/static/nails-3.png",
-//   "/static/nails-4.png",
-//   "/static/nails-5.png",
-// ];
+import { Dot, Heart, Star, StarHalf } from "lucide-react";
 
 const ClientCard = ({
-  images,
+  images, // delete this when done testing
+  profilePicture = "/static/blank-profile-picture.png", // delete this when done testing
   firstName,
   lastName,
   userStory,
@@ -42,10 +35,15 @@ const ClientCard = ({
         </p> */}
       </div>
       <div className=" relative mx-4 mt-5 mb-4 grow">
-        <img
-          src="/static/client-card-profile-picture-2.png"
+        {/* <img
+          src={profile_picture}
           className="absolute top-[-70px] h-14 border-2 border-black rounded-sm shadow-md object-cover"
+        /> */}
+        <img
+          src={profilePicture}
+          className="absolute top-[-70px] h-14 w-14 border-2 border-black rounded-full shadow-md object-cover"
         />
+
         {/* <Ellipsis
           size="24"
           className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-gray-300"
