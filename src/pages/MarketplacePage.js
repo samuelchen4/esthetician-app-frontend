@@ -183,7 +183,7 @@ const MarketplacePage = () => {
   return (
     <div
       id="page-container"
-      className="mx-4 flex flex-col text-neutral-600 font-nunito"
+      className="mt-5 mx-4 flex flex-col text-neutral-600 font-nunito"
     >
       <h2 className="text-center my-5 font-bold text-5xl font-alexandria text-black">
         Explore
@@ -253,21 +253,31 @@ const MarketplacePage = () => {
           </div>
         </Modal>
       )}
-      <h3 className="text-2xl text-black font-bold tracking-wide mb-0.5">
-        Trending Aetheticians
-      </h3>
+      <div className="flex justify-between items-center">
+        <h3 className="text-2xl text-black font-bold tracking-wide mb-0.5">
+          Trending Aetheticians
+        </h3>
+        <p className="text-gray-400 underline underline-offset-2 font-thin text-sm">
+          See All
+        </p>
+      </div>
       <p className="mb-1 self-start sm:self-center text-sm text-gray-500">
         Aint no party like a Diddy party! 🔥
       </p>
       <div
         id="client-trending-container"
-        className="mb-6 flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center"
+        className="mb-6 flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center sm:items-center"
       >
         {renderCards()}
       </div>
-      <h3 className="text-2xl text-black font-bold tracking-wide mb-0.5">
-        Up-And-Comers
-      </h3>
+      <div className="flex justify-between items-center">
+        <h3 className="text-2xl text-black font-bold tracking-wide mb-0.5">
+          Up-And-Comers
+        </h3>
+        <p className="text-gray-400 underline underline-offset-2 font-thin text-sm">
+          See All
+        </p>
+      </div>
       <p className="mb-1 self-start sm:self-center text-sm text-gray-500">
         Meet the Latest Rising Stars in Aesthetics! 🌟
       </p>
