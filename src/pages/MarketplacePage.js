@@ -115,7 +115,7 @@ const MarketplacePage = () => {
       // Remove this later, just for testing
       const imagesUpdated = [];
       let profilePicture;
-      switch (index % 4) {
+      switch (index % 3) {
         case 0:
           imagesUpdated.push(...imagesNails);
           profilePicture = "/static/client-card-profile-picture.png";

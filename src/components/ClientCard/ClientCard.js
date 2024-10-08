@@ -41,7 +41,7 @@ const ClientCard = ({
         /> */}
         <img
           src={profilePicture}
-          className="absolute top-[-70px] h-14 w-14 border-2 border-black rounded-full shadow-md object-cover"
+          className="absolute top-[-70px] h-16 w-16 border-2 border-black rounded-full shadow-md object-cover"
         />
 
         {/* <Ellipsis
