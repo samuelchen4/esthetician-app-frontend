@@ -187,12 +187,14 @@ const ExplorePage = () => {
           src="/static/hero-picture-1.jpg"
           className="z-0 h-48 w-full object-cover"
         />
-        <div className="absolute inset-0 z-10 grow bg-gray-700 opacity-70"></div>
+        <div className="absolute inset-0 z-10 grow bg-gray-700 opacity-80"></div>
         <div className="absolute inset-0 z-20 grow flex flex-col justify-center items-start p-4 text-base text-white tracking-wider ">
-          <h2 className="font-bold text-3xl text-[#85C1E9] mb-2">
+          <h2 className="font-bold text-4xl text-[#AED6F1] mb-2">
             Beauty is Personal
           </h2>
-          <p>Discover Aestheticians Who Match Your Style!</p>
+          <p className="font-semibold">
+            Discover Aestheticians Who Match Your Style!
+          </p>
           {/* <p className="font-semibold text-lg text-blue-100">
             Find the perfect aesthetician, explore their specialties, and
             schedule your next beauty session in just a few clicks
