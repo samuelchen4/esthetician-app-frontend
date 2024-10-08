@@ -83,7 +83,7 @@ const MarketplacePage = () => {
   useEffect(() => {
     const fetchClientCardData = async () => {
       const config = {
-        params: { service },
+        params: { service, limit: 3 },
       };
 
       try {
@@ -181,7 +181,10 @@ const MarketplacePage = () => {
     return <PageLoader className="fixed inset-x-0 border" />;
 
   return (
-    <div id="page-container" className="mx-4 flex flex-col text-neutral-600 ">
+    <div
+      id="page-container"
+      className="mx-4 flex flex-col text-neutral-600 font-nunito"
+    >
       <h2 className="text-center my-5 font-bold text-5xl font-alexandria text-black">
         Explore
         <span className="text-primary block md:inline-block md:ml-4">
@@ -250,17 +253,27 @@ const MarketplacePage = () => {
           </div>
         </Modal>
       )}
-      <p className="my-1 self-start sm:self-center text-xs text-black font-semibold">
-        {`We found ${
-          clientData.length
-        } clients who specialize in ${service?.toLowerCase()} for ${format(
-          date,
-          "PPP"
-        )}!`}
+      <h3 className="text-2xl text-black font-bold tracking-wide mb-0.5">
+        Trending Aetheticians
+      </h3>
+      <p className="mb-1 self-start sm:self-center text-sm text-gray-500">
+        Aint no party like a Diddy party! 🔥
       </p>
       <div
-        id="client-container"
-        className="flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center"
+        id="client-trending-container"
+        className="mb-6 flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center"
+      >
+        {renderCards()}
+      </div>
+      <h3 className="text-2xl text-black font-bold tracking-wide mb-0.5">
+        Up-And-Comers
+      </h3>
+      <p className="mb-1 self-start sm:self-center text-sm text-gray-500">
+        Meet the Latest Rising Stars in Aesthetics! 🌟
+      </p>
+      <div
+        id="client-trending-container"
+        className="mb-6 flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center"
       >
         {renderCards()}
       </div>
