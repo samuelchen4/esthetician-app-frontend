@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from "react";
-import api from "src/api/api-config";
-import { Link } from "react-router-dom";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { ChevronDown } from "lucide-react";
+import React, { useState, useEffect } from 'react';
+import api from 'src/api/api-config';
+import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
+import { Calendar as CalendarIcon, Search } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 // import ClientCard from '../components/ClientCard';
-import ClientCard from "src/components/ClientCard/ClientCard";
-import Modal from "src/components/Modal";
-import categories from "src/constants/categories";
-import { cn } from "src/lib/utils";
-import { Button } from "src/components/ui/button";
-import { Calendar } from "src/components/ui/calendar";
-import { ClientCardSkeleton } from "src/components/ClientCardSkeleton";
-import useUserStore from "src/stores/useUserStore";
-import { useUser } from "@clerk/clerk-react";
-import PageLoader from "src/components/PageLoader";
+import ClientCard from 'src/components/ClientCard/ClientCard';
+import Modal from 'src/components/Modal';
+import categories from 'src/constants/categories';
+import { cn } from 'src/lib/utils';
+import { Button } from 'src/components/ui/button';
+import { Calendar } from 'src/components/ui/calendar';
+import { ClientCardSkeleton } from 'src/components/ClientCardSkeleton';
+import useUserStore from 'src/stores/useUserStore';
+import { useUser } from '@clerk/clerk-react';
+import PageLoader from 'src/components/PageLoader';
 
-const headerHeight = "50";
+const headerHeight = '50';
 
 const imagesNails = [
-  "/static/nails-1.png",
-  "/static/nails-2.png",
-  "/static/nails-3.png",
-  "/static/nails-4.png",
-  "/static/nails-5.png",
+  '/static/nails-1.png',
+  '/static/nails-2.png',
+  '/static/nails-3.png',
+  '/static/nails-4.png',
+  '/static/nails-5.png',
 ];
 
 const imagesHair = [
-  "/static/hair-1.jpeg",
-  "/static/hair-2.jpeg",
-  "/static/hair-3.jpeg",
-  "/static/hair-4.jpeg",
-  "/static/hair-5.jpeg",
+  '/static/hair-1.jpeg',
+  '/static/hair-2.jpeg',
+  '/static/hair-3.jpeg',
+  '/static/hair-4.jpeg',
+  '/static/hair-5.jpeg',
 ];
 
 // const imagesBotox = [
@@ -42,10 +42,10 @@ const imagesHair = [
 // ];
 
 const imagesLashes = [
-  "/static/lashes-1.jpeg",
-  "/static/lashes-2.jpeg",
-  "/static/lashes-3.jpeg",
-  "/static/lashes-4.jpeg",
+  '/static/lashes-1.jpeg',
+  '/static/lashes-2.jpeg',
+  '/static/lashes-3.jpeg',
+  '/static/lashes-4.jpeg',
 ];
 const ExplorePage = () => {
   // Clerk
@@ -58,7 +58,7 @@ const ExplorePage = () => {
 
   const [clientData, setClientData] = useState([]);
   const [isServiceOpen, setIsServiceOpen] = useState(false);
-  const [service, setService] = useState("Nails");
+  const [service, setService] = useState('Nails');
   const [isDateOpen, setIsDateOpen] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -88,7 +88,7 @@ const ExplorePage = () => {
 
       try {
         const { data } = await api.get(
-          "/api/marketplace/client-search",
+          '/api/marketplace/client-search',
           config
         );
         // console.log('api call completed!');
@@ -96,7 +96,7 @@ const ExplorePage = () => {
         setClientData(data.data);
         // setClientData([data.data[0]]); // Testing to get one card
       } catch (error) {
-        console.error("Error fetching client data", error);
+        console.error('Error fetching client data', error);
       }
     };
 
@@ -118,15 +118,15 @@ const ExplorePage = () => {
       switch (index % 3) {
         case 0:
           imagesUpdated.push(...imagesNails);
-          profilePicture = "/static/client-card-profile-picture.png";
+          profilePicture = '/static/client-card-profile-picture.png';
           break;
         case 1:
           imagesUpdated.push(...imagesHair);
-          profilePicture = "/static/client-card-profile-picture-2.png";
+          profilePicture = '/static/client-card-profile-picture-2.png';
           break;
         case 2:
           imagesUpdated.push(...imagesLashes);
-          profilePicture = "/static/client-card-profile-picture-3.png";
+          profilePicture = '/static/client-card-profile-picture-3.png';
 
           break;
         default:
@@ -178,57 +178,58 @@ const ExplorePage = () => {
   };
 
   if (!clerkIsLoaded || (isSignedIn && user === null))
-    return <PageLoader className="fixed inset-x-0 border" />;
+    return <PageLoader className='fixed inset-x-0 border' />;
 
   return (
-    <div className="flex flex-col text-neutral-600 font-nunito">
-      <div id="explore-page-hero" className="relative flex">
+    <div className='flex flex-col text-neutral-600 font-nunito'>
+      <div id='explore-page-hero' className='relative flex'>
         <img
-          src="/static/hero-picture-1.jpg"
-          className="z-0 h-48 w-full object-cover"
+          src='/static/hero-picture-6.jpg'
+          className='z-0 w-full object-cover rounded-sm'
         />
-        <div className="absolute inset-0 z-10 grow bg-gray-700 opacity-80"></div>
-        <div className="absolute inset-0 z-20 grow flex flex-col justify-center items-start p-4 text-base text-white tracking-wider ">
-          <h2 className="font-bold text-4xl text-[#AED6F1] mb-2">
-            Beauty is Personal
+        <div className='absolute inset-0 z-10 grow bg-black opacity-60'></div>
+        <div className='absolute inset-0 z-20 grow flex flex-col justify-center items-start p-4 text-base text-white tracking-wider'>
+          <h2 className='font-bold text-4xl text-white font-lora mb-1'>
+            Beauty is
           </h2>
-          <p className="font-semibold">
-            Discover Aestheticians Who Match Your Style!
-          </p>
-          {/* <p className="font-semibold text-lg text-blue-100">
-            Find the perfect aesthetician, explore their specialties, and
-            schedule your next beauty session in just a few clicks
-          </p> */}
+          <h2 className='font-bold text-4xl text-white mb-2 font-lora'>
+            Personal
+          </h2>
+          <p className='font-semibold mb-5'>Find Your Expert</p>
+          <button className='flex items-center space-x-3 mx-auto border rounded-full py-3 px-4 shadow-xl text-black bg-white border-white text-sm'>
+            <Search size='20' />
+            <p>Search for a service or aethetician</p>
+          </button>
         </div>
       </div>
-      <div id="page-container" className="mt-5 mx-4 flex flex-col">
-        <div className="flex justify-between items-center">
-          <h3 className="text-2xl text-black font-bold tracking-wide mb-0.5">
-            Trending Aetheticians
+      <div id='page-container' className='mt-5 mx-4 flex flex-col'>
+        <div className='flex justify-between items-center'>
+          <h3 className='text-2xl text-black font-bold tracking-wide mb-0.5'>
+            Trending
           </h3>
-          <p className="text-gray-400 font-thin text-sm">See All</p>
+          <p className='text-gray-400 text-sm'>See All</p>
         </div>
-        <p className="mb-1 self-start sm:self-center text-sm text-gray-500">
-          Aint no party like a Diddy party! 🔥
+        <p className='mb-1 self-start sm:self-center text-sm text-gray-500'>
+          Discover popular aestheticians in your area! 🔥
         </p>
         <div
-          id="client-trending-container"
-          className="mb-6 flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center sm:items-center"
+          id='client-trending-container'
+          className='mb-6 flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center sm:items-center'
         >
           {renderCards()}
         </div>
-        <div className="flex justify-between items-center">
-          <h3 className="text-2xl text-black font-bold tracking-wide mb-0.5">
+        <div className='flex justify-between items-center'>
+          <h3 className='text-2xl text-black font-bold tracking-wide mb-0.5'>
             Up-And-Comers
           </h3>
-          <p className="text-gray-400 font-thin text-sm">See All</p>
+          <p className='text-gray-400 text-sm'>See All</p>
         </div>
-        <p className="mb-1 self-start sm:self-center text-sm text-gray-500">
+        <p className='mb-1 self-start sm:self-center text-sm text-gray-500'>
           Meet the Latest Rising Stars in Aesthetics! 🌟
         </p>
         <div
-          id="client-trending-container"
-          className="mb-6 flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center"
+          id='client-trending-container'
+          className='mb-6 flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center'
         >
           {renderCards()}
         </div>
