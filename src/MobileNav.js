@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { cn } from 'src/lib/utils';
 import { Earth, Search, Heart, CircleUserRound } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { SignedIn, SignedOut, SignInButton, useUser } from '@clerk/clerk-react';
+import { useUser } from '@clerk/clerk-react';
 import useUserStore from 'src/stores/useUserStore';
+import useMobileNavStore from 'src/stores/useMobileNavStore';
 
 const MobileNav = ({ className }) => {
   // Clerk auth
@@ -14,6 +15,9 @@ const MobileNav = ({ className }) => {
   const userStore = useUserStore((state) => state.user);
   const getUserInfo = useUserStore((state) => state.getUserInfo);
   const postUserInfo = useUserStore((state) => state.postUserInfo);
+
+  const currentPageStore = useMobileNavStore((state) => state.currentPage);
+  const changePageStore = useMobileNavStore((state) => state.changePage);
 
   useEffect(() => {
     if (clerkUser) {
@@ -39,13 +43,12 @@ const MobileNav = ({ className }) => {
       }
     }
   }, [clerkUser]);
-  // Local
-  const [selected, setSelected] = useState('');
 
   const handleClick = (e) => {
     const name = e.currentTarget.name;
     console.log('name: ', name);
-    setSelected(name);
+
+    changePageStore(name);
   };
   return (
     <div
@@ -54,53 +57,66 @@ const MobileNav = ({ className }) => {
         className
       )}
     >
-      <Link to={'/explore'}>
+      {/* <Link to={'/explore'}>
         <button
           name='explore'
           onClick={handleClick}
           className={cn(
             'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
-            selected === 'explore' && 'text-primary'
+            currentPageStore === 'explore' && 'text-primary'
           )}
         >
           <Earth size='24' className='stroke-2' />
           <p className='text-xs font-semibold'>Explore</p>
         </button>
+      </Link> */}
+      <Link
+        name='explore'
+        onClick={handleClick}
+        className={cn(
+          'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
+          currentPageStore === 'explore' && 'text-primary'
+        )}
+        to={'/explore'}
+      >
+        <Earth size='24' className='stroke-2' />
+        <p className='text-xs font-semibold'>Explore</p>
       </Link>
-      <button
+      <Link
         name='search'
         onClick={handleClick}
         className={cn(
           'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
-          selected === 'search' && 'text-primary'
+          currentPageStore === 'search' && 'text-primary'
         )}
+        to={'/search'}
       >
         <Search size='24' className=' stroke-2' />
         <p className='text-xs  font-semibold'>Search</p>
-      </button>
-      <button
+      </Link>
+      <Link
         name='likes'
         onClick={handleClick}
         className={cn(
           'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
-          selected === 'likes' && 'text-primary'
+          currentPageStore === 'likes' && 'text-primary'
         )}
+        to={'/likes'}
       >
         <Heart size='24' className=' stroke-2' />
         <p className='text-xs  font-semibold '>Likes</p>
-      </button>
-      <Link to={`/users/manage-account`}>
-        <button
-          name='profile'
-          onClick={handleClick}
-          className={cn(
-            'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
-            selected === 'profile' && 'text-primary'
-          )}
-        >
-          <CircleUserRound size='24' className='stroke-2' />
-          <p className='text-xs  font-semibold'>Profile</p>
-        </button>
+      </Link>
+      <Link
+        to={`/users/manage-account`}
+        name='profile'
+        onClick={handleClick}
+        className={cn(
+          'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
+          currentPageStore === 'profile' && 'text-primary'
+        )}
+      >
+        <CircleUserRound size='24' className='stroke-2' />
+        <p className='text-xs  font-semibold'>Profile</p>
       </Link>
     </div>
   );

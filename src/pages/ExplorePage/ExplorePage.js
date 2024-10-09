@@ -196,7 +196,7 @@ const ExplorePage = () => {
             Personal
           </h2>
           <p className='font-semibold mb-5'>Find Your Expert</p>
-          <button className='flex items-center space-x-3 mx-auto border rounded-full py-3 px-4 shadow-xl text-black bg-white border-white text-sm'>
+          <button className='flex items-center space-x-3 mx-auto border rounded-full py-3 px-4 shadow-xl text-black bg-white border-white '>
             <Search size='20' />
             <p>Search for a service or aethetician</p>
           </button>
@@ -229,7 +229,7 @@ const ExplorePage = () => {
         </p>
         <div
           id='client-trending-container'
-          className='mb-6 flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center'
+          className='mb-20 flex flex-col pt-4 space-y-6 sm:flex-row sm:flex-wrap sm:space-x-2 sm:justify-center'
         >
           {renderCards()}
         </div>
