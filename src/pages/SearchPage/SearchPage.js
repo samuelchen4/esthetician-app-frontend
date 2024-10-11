@@ -1,6 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
+import useDataStore from "src/stores/useDataStore";
+import { ClientCardSkeleton } from "src/components/ClientCardSkeleton";
+import ClientCard from "src/components/ClientCard/ClientCard";
+
+const limit = 10;
 
 const SearchPage = () => {
   // router
@@ -10,26 +15,36 @@ const SearchPage = () => {
     navigate("/search/search-page");
   };
 
+  // Zustand
+  const dataStore = useDataStore((state) => state.data);
+  const isDataLoadingStore = useDataStore((state) => state.isLoading);
+
+  // Function that renders card component for information from dataStore
+  const renderAetheticianCards = () => {
+    if (isDataLoadingStore === true) {
+      const skeletons = new Array(3).map((x) => <ClientCardSkeleton />);
+      return skeletons;
+    } else {
+      const cards = dataStore.map((aethetician) => {
+        return <ClientCard />;
+      });
+    }
+  };
+
   // render blocks
   // This function will be in the SearchBlock Carousel component
   // takes in an array of strings, strings are the titles of each block
   const topics = ["Trending, Nearby, Nails, Botox, Lashes, Hair"];
 
-  const renderBlocks = () => {
-    const blocks = topics.map((topic, index) => {
-      // Make rows first
-    });
-  };
-
   return (
-    <div className="flex flex-col my-4 mb-20 mx-6 text-neutral-600 font-nunito border">
+    <div className="flex flex-col my-4 mb-20 mx-4 text-neutral-600 font-nunito">
       <h3 className="text-3xl text-black font-bold my-6">Aetheticians</h3>
       <div className="flex flex-col space-y-3 mb-10">
         <p className="text-xl font-bold">What are you looking for?</p>
 
         <button
           onClick={handleSearchClick}
-          className="sticky top-5 z-40 py-2.5 px-4 flex items-center space-x-2 text-left overflow-x-hidden border border-neutral-400 rounded-xl shadow-md"
+          className="sticky top-5 z-40 py-2 px-4 flex items-center space-x-2 text-left text-base overflow-x-hidden border border-neutral-400 rounded-xl shadow-md"
         >
           <Search size="20" />
           {/* Pull the values from the useSearchStore to generate text here */}

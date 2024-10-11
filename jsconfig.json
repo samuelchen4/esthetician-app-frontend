@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "paths": { "@/*": ["./src/*"] },
-    "baseUrl": "."
+    "baseUrl": "src",  // This will tell your IDE and compiler that "src" is the base path
+    "paths": {
+      "src/*": ["*"]   // This will map the "src" folder
+    }
   }
 }
