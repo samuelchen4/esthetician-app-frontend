@@ -1,22 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import api from 'src/api/api-config';
-import { Link } from 'react-router-dom';
-import { format } from 'date-fns';
-import { Calendar as CalendarIcon, Search } from 'lucide-react';
-import { ChevronDown } from 'lucide-react';
-// import ClientCard from '../components/ClientCard';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search } from 'lucide-react';
 import ClientCard from 'src/components/ClientCard/ClientCard';
-import Modal from 'src/components/Modal';
-import categories from 'src/constants/categories';
-import { cn } from 'src/lib/utils';
-import { Button } from 'src/components/ui/button';
-import { Calendar } from 'src/components/ui/calendar';
 import { ClientCardSkeleton } from 'src/components/ClientCardSkeleton';
 import useUserStore from 'src/stores/useUserStore';
 import { useUser } from '@clerk/clerk-react';
 import PageLoader from 'src/components/PageLoader';
-
-const headerHeight = '50';
+import SearchModal from 'src/components/SearchModal';
 
 const imagesNails = [
   '/static/nails-1.png',
@@ -34,13 +25,6 @@ const imagesHair = [
   '/static/hair-5.jpeg',
 ];
 
-// const imagesBotox = [
-//   "/static/botox-1.jpeg",
-//   "/static/botox-2.jpeg",
-//   "/static/botox-3.jpeg",
-//   "/static/botox-4.jpeg",
-// ];
-
 const imagesLashes = [
   '/static/lashes-1.jpeg',
   '/static/lashes-2.jpeg',
@@ -56,34 +40,22 @@ const ExplorePage = () => {
   // userStore
   const user = useUserStore((state) => state.user);
 
+  // local state
+  const [searchOpen, setSearchOpen] = useState(true);
   const [clientData, setClientData] = useState([]);
-  const [isServiceOpen, setIsServiceOpen] = useState(false);
-  const [service, setService] = useState('Nails');
-  const [isDateOpen, setIsDateOpen] = useState(false);
-  const [date, setDate] = useState(new Date());
 
-  const handleServiceModal = () => {
-    setIsServiceOpen(!isServiceOpen);
-  };
+  // dom router
+  const navigate = useNavigate();
 
-  const handleDatePickerModal = () => {
-    setIsDateOpen(!isDateOpen);
+  const handleSearchClick = () => {
+    navigate('/search/search-page');
   };
 
   // Close modal when service is selected
   useEffect(() => {
-    setIsServiceOpen(false);
-  }, [service]);
-
-  // Close modal when date is selected
-  useEffect(() => {
-    setIsDateOpen(false);
-  }, [date]);
-
-  useEffect(() => {
     const fetchClientCardData = async () => {
       const config = {
-        params: { service, limit: 3 },
+        params: { service: 'Lashes', limit: 3 },
       };
 
       try {
@@ -101,7 +73,7 @@ const ExplorePage = () => {
     };
 
     fetchClientCardData();
-  }, [service]);
+  }, []);
 
   // Renders the cards when the state changes
   // array of objects
@@ -181,7 +153,7 @@ const ExplorePage = () => {
     return <PageLoader className='fixed inset-x-0 border' />;
 
   return (
-    <div className='flex flex-col text-neutral-600 font-nunito'>
+    <div className=' flex flex-col text-neutral-600 font-nunito'>
       <div id='explore-page-hero' className='relative flex'>
         <img
           src='/static/hero-picture-6.jpg'
@@ -189,6 +161,10 @@ const ExplorePage = () => {
         />
         <div className='absolute inset-0 z-10 grow bg-black opacity-60'></div>
         <div className='absolute inset-0 z-20 grow flex flex-col justify-center items-start p-4 text-base text-white tracking-wider'>
+          {/* <img
+            src='/static/beauty_connect_logo_2_compressed.png'
+            className='h-10 mb-1'
+          /> */}
           <h2 className='font-bold text-4xl text-white font-lora mb-1'>
             Beauty is
           </h2>
@@ -196,7 +172,10 @@ const ExplorePage = () => {
             Personal
           </h2>
           <p className='font-semibold mb-5'>Find Your Expert</p>
-          <button className='flex items-center space-x-3 mx-auto border rounded-full py-3 px-4 shadow-xl text-black bg-white border-white '>
+          <button
+            onClick={handleSearchClick}
+            className='flex items-center space-x-2 mx-auto border rounded-full py-3 px-4 shadow-xl text-black bg-white border-black '
+          >
             <Search size='20' />
             <p>Search for a service or aethetician</p>
           </button>

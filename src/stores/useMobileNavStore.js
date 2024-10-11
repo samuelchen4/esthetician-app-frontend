@@ -4,10 +4,19 @@ import { create } from 'zustand';
 // want the bottom nav to follow
 const useMobileNavStore = create((set) => ({
   isOpen: true,
+  setIsOpen: (isOpen) => {
+    set({ isOpen });
+  },
   currentPage: '',
   getCurrentPage: () => {
     const path = window.location.pathname;
     console.log(path);
+
+    // edge case
+    if (path === '/') {
+      set({ currentPage: 'explore' });
+      return;
+    }
 
     const regex = /^\/([^\/]+)/;
     const match = path.match(regex);

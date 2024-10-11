@@ -12,6 +12,8 @@ const MobileNav = ({ className }) => {
   const { isLoaded: clerkIsLoaded, isSignedIn, user: clerkUser } = clerkUserObj;
 
   // Zustand
+  const isOpenMobileNavStore = useMobileNavStore((state) => state.isOpen);
+
   const userStore = useUserStore((state) => state.user);
   const getUserInfo = useUserStore((state) => state.getUserInfo);
   const postUserInfo = useUserStore((state) => state.postUserInfo);
@@ -50,6 +52,9 @@ const MobileNav = ({ className }) => {
 
     changePageStore(name);
   };
+
+  if (!isOpenMobileNavStore) return <></>;
+
   return (
     <div
       className={cn(
@@ -57,19 +62,6 @@ const MobileNav = ({ className }) => {
         className
       )}
     >
-      {/* <Link to={'/explore'}>
-        <button
-          name='explore'
-          onClick={handleClick}
-          className={cn(
-            'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
-            currentPageStore === 'explore' && 'text-primary'
-          )}
-        >
-          <Earth size='24' className='stroke-2' />
-          <p className='text-xs font-semibold'>Explore</p>
-        </button>
-      </Link> */}
       <Link
         name='explore'
         onClick={handleClick}
