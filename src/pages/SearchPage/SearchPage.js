@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Search } from "lucide-react";
+import { Search, Dot } from "lucide-react";
 import useDataStore from "src/stores/useDataStore";
+import useSearchStore from "src/stores/useSearchStore";
 import { ClientCardSkeleton } from "src/components/ClientCardSkeleton";
 import ClientCard from "src/components/ClientCard/ClientCard";
 
@@ -18,6 +19,11 @@ const SearchPage = () => {
   // Zustand
   const dataStore = useDataStore((state) => state.data);
   const isDataLoadingStore = useDataStore((state) => state.isLoading);
+
+  const city = useSearchStore((state) => state.city);
+  const province = useSearchStore((state) => state.province);
+  const service = useSearchStore((state) => state.service);
+  const filter = useSearchStore((state) => state.filter);
 
   // Function that renders card component for information from dataStore
   const renderAetheticianCards = () => {
@@ -44,16 +50,29 @@ const SearchPage = () => {
 
         <button
           onClick={handleSearchClick}
-          className="sticky top-5 z-40 py-2 px-4 flex items-center space-x-2 text-left text-base overflow-x-hidden border border-neutral-400 rounded-xl shadow-md"
+          className="sticky top-5 z-40 py-2 px-4 flex items-center space-x-3 text-left text-base overflow-x-hidden border border-neutral-400 rounded-xl shadow-md"
         >
           <Search size="20" />
           {/* Pull the values from the useSearchStore to generate text here */}
-          <p>Calgary, Alberta</p>
+          {!city || !province || !service ? (
+            <p>Personalize Your Search!</p>
+          ) : (
+            <div className="flex items-center">
+              <p>
+                {city}, {province}
+              </p>
+              <Dot size="22" />
+              <p>{service}</p>
+              {filter && (
+                <>
+                  <Dot size="22" />
+                  <p>{filter}</p>
+                </>
+              )}
+            </div>
+          )}
         </button>
       </div>
-      <div></div>
-
-      {/* search block carousel component */}
       <div
         className="flex flex-col 
       space-y-6"

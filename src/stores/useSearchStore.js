@@ -4,7 +4,13 @@ import { create } from "zustand";
 // want the bottom nav to follow
 const useSearchStore = create((set) => ({
   city: "",
+  setCity: (newCity) => {
+    set({ city: newCity });
+  },
   province: "",
+  setProvince: (newProvince) => {
+    set({ province: newProvince });
+  },
   service: "",
   //   sets service to the argument
   setService: (newService) => {
