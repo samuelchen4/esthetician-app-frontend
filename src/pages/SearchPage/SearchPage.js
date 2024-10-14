@@ -87,7 +87,7 @@ const SearchPage = () => {
             <p className="font-bold text-black">Trending</p>
           </div>
           <div className="grow flex bg-gray-200 p-4 rounded-lg shadow-md">
-            <p className="font-bold text-black mt-auto">Nearby</p>
+            <p className="font-bold text-black ">Nearby</p>
           </div>
         </div>
         <div id="search-row" className="flex space-x-6 h-40 ">
@@ -95,7 +95,7 @@ const SearchPage = () => {
             <p className="font-bold text-black">Nails</p>
           </div>
           <div className="w-4/12 p-4 bg-gray-200 rounded-lg shadow-md">
-            <p className="font-bold text-black mt-auto">Lashes</p>
+            <p className="font-bold text-black ">Lashes</p>
           </div>
         </div>
         <div id="search-row" className="flex space-x-6 h-40 ">
