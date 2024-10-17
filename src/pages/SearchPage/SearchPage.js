@@ -1,29 +1,25 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Search, Dot } from "lucide-react";
-import useDataStore from "src/stores/useDataStore";
-import useSearchStore from "src/stores/useSearchStore";
-import { ClientCardSkeleton } from "src/components/ClientCardSkeleton";
-import ClientCard from "src/components/ClientCard/ClientCard";
-// import PulseLoader from 'src/components/PulseLoader';
-import PageLoader from "src/components/PageLoader";
-
-const limit = 10;
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Search, Dot } from 'lucide-react';
+import useDataStore from 'src/stores/useDataStore';
+import useSearchStore from 'src/stores/useSearchStore';
+import { ClientCardSkeleton } from 'src/components/ClientCardSkeleton';
+import ClientCard from 'src/components/ClientCard/ClientCard';
+import PageLoader from 'src/components/PageLoader';
 
 const imagesHair = [
-  "/static/hair-1.jpeg",
-  "/static/hair-2.jpeg",
-  "/static/hair-3.jpeg",
-  "/static/hair-4.jpeg",
-  "/static/hair-5.jpeg",
+  '/static/hair-1.jpeg',
+  '/static/hair-2.jpeg',
+  '/static/hair-3.jpeg',
+  '/static/hair-4.jpeg',
+  '/static/hair-5.jpeg',
 ];
 
 const SearchPage = () => {
-  // router
+  // Router
   const navigate = useNavigate();
-
   const handleSearchClick = () => {
-    navigate("/search/search-page");
+    navigate('/search/search-page');
   };
 
   // Zustand
@@ -33,6 +29,7 @@ const SearchPage = () => {
   const getTrendingDataStore = useDataStore((state) => state.getTrendingData);
   const getClosestDataStore = useDataStore((state) => state.getClosestData);
 
+  //
   const city = useSearchStore((state) => state.city);
   const province = useSearchStore((state) => state.province);
   const service = useSearchStore((state) => state.service);
@@ -49,7 +46,9 @@ const SearchPage = () => {
     const limit = 10;
     let page = 1;
     if (isDataLoadingStore === true) {
-      const skeletons = new Array(limit).map((x) => <ClientCardSkeleton />);
+      const skeletons = Array.from({ length: limit }, () => (
+        <ClientCardSkeleton />
+      ));
       return skeletons;
     } else {
       const cards = dataStore.map((aethetician) => {
@@ -78,8 +77,8 @@ const SearchPage = () => {
   };
 
   const handleServiceCategoryClick = (e) => {
-    const newService = e.target.getAttribute("data-name");
-    console.log("newService: ", newService);
+    const newService = e.target.getAttribute('data-name');
+    console.log('newService: ', newService);
     // set the params first
     setSearchKeyword(newService);
     getDataStore(lat, long, city, province, newService, limit, page);
@@ -88,117 +87,119 @@ const SearchPage = () => {
   // render blocks
   // This function will be in the SearchBlock Carousel component
   // takes in an array of strings, strings are the titles of each block
-  const topics = ["Trending, Nearby, Nails, Botox, Lashes, Hair"];
+  const topics = ['Trending, Nearby, Nails, Botox, Lashes, Hair'];
+
+  // if (isDataLoadingStore === true)
+  //   return <PageLoader className='z-50 absolute inset-x-0' />;
 
   return (
-    <div className="flex flex-col my-4 mb-20 mx-4 text-neutral-600 font-nunito">
-      <h3 className="text-3xl text-black font-bold my-6">Aetheticians</h3>
-      {/* <div className="border-2 border-black sticky top-0 flex flex-col space-y-3 mb-10 "> */}
+    <div className='flex flex-col my-4 mb-20 mx-4 text-neutral-600 font-nunito'>
+      <h3 className='text-3xl text-black font-bold my-6'>Aetheticians</h3>
+      <div className='flex flex-col space-y-3 mb-6'>
+        <p className='text-xl font-bold'>What are you looking for?</p>
 
-      <p className="text-xl font-bold mb-2">What are you looking for?</p>
-
-      <button
-        onClick={handleSearchClick}
-        className="bg-white sticky top-10 mb-10 z-50 py-2 px-4 flex items-center space-x-3 text-left text-base font-semibold border border-neutral-700 text-neutral-700 rounded-xl shadow-md"
-      >
-        <Search size="20" />
-        {/* Pull the values from the useSearchStore to generate text here */}
-        {!city || !province || !service ? (
-          <p>Personalize Your Search!</p>
-        ) : (
-          <div className="flex items-center">
-            <p>
-              {city}, {province}
-            </p>
-            <Dot size="22" />
-            <p>{service}</p>
-            {filter && (
-              <>
-                <Dot size="22" />
-                <p>{filter}</p>
-              </>
-            )}
-          </div>
-        )}
-      </button>
-      {/* </div> */}
+        <button
+          onClick={handleSearchClick}
+          className='sticky top-5 z-40 py-2 px-4 flex items-center space-x-3 text-left text-base border border-neutral-400 rounded-xl shadow-md'
+        >
+          <Search size='20' />
+          {/* Pull the values from the useSearchStore to generate text here */}
+          {!city || !province || !service ? (
+            <p>Personalize Your Search!</p>
+          ) : (
+            <div className='flex items-center'>
+              <p>
+                {city}, {province}
+              </p>
+              <Dot size='22' />
+              <p>{service}</p>
+              {filter && (
+                <>
+                  <Dot size='22' />
+                  <p>{filter}</p>
+                </>
+              )}
+            </div>
+          )}
+        </button>
+      </div>
       <div
-        className="flex flex-col 
-      space-y-6 "
+        className='flex flex-col 
+      space-y-6 '
       >
-        {isDataLoadingStore && (
-          <PageLoader className="z-50 absolute inset-x-0" />
-        )}
-        {dataStore.length === 0 ? (
+        {/* {isDataLoadingStore && (
+          <PageLoader className='z-50 absolute inset-x-0' />
+        )} */}
+        {dataStore.length === 0 && isDataLoadingStore === false ? (
           <>
-            <div id="search-row" className="flex space-x-6 h-40">
+            <div id='search-row' className='flex space-x-6 h-40'>
               <div
-                name="Trending"
+                name='Trending'
                 onClick={() => {
-                  setSearchKeyword("Trending");
+                  setSearchKeyword('Trending');
                   getTrendingDataStore(lat, long, city, province, limit, page);
                 }}
-                data-type="filter"
-                className="w-4/12 bg-gray-200 p-4  rounded-lg shadow-md"
+                data-type='filter'
+                className='w-4/12 bg-gray-200 p-4  rounded-lg shadow-md'
               >
-                <p className="font-bold text-black">Trending</p>
+                <p className='font-bold text-black'>Trending</p>
               </div>
               <div
-                name="Nearby"
+                name='Nearby'
                 onClick={() => {
-                  setSearchKeyword("Nearby");
+                  setSearchKeyword('Nearby');
                   getClosestDataStore(lat, long, city, province, limit, page);
                 }}
-                data-type="filter"
-                className="grow flex bg-gray-200 p-4 rounded-lg shadow-md"
+                data-type='filter'
+                className='grow flex bg-gray-200 p-4 rounded-lg shadow-md'
               >
-                <p className="font-bold text-black ">Nearby</p>
+                <p className='font-bold text-black '>Nearby</p>
               </div>
             </div>
-            <div id="search-row" className="flex space-x-6 h-40 ">
+            <div id='search-row' className='flex space-x-6 h-40 '>
               <div
-                data-name="Nails"
+                data-name='Nails'
                 onClick={handleServiceCategoryClick}
-                data-type="service"
-                className="grow bg-gray-200 rounded-lg shadow-md p-4"
+                data-type='service'
+                className='grow bg-gray-200 rounded-lg shadow-md p-4'
               >
-                <p className="font-bold text-black">Nails</p>
+                <p className='font-bold text-black'>Nails</p>
               </div>
               <div
-                data-name="Lashes"
+                data-name='Lashes'
                 onClick={handleServiceCategoryClick}
-                data-type="service"
-                className="w-4/12 p-4 bg-gray-200 rounded-lg shadow-md"
+                data-type='service'
+                className='w-4/12 p-4 bg-gray-200 rounded-lg shadow-md'
               >
-                <p className="font-bold text-black ">Lashes</p>
+                <p className='font-bold text-black '>Lashes</p>
               </div>
             </div>
-            <div id="search-row" className="flex space-x-6 h-40 ">
+            <div id='search-row' className='flex space-x-6 h-40 '>
               <div
-                data-name="Hair"
+                data-name='Hair'
                 onClick={handleServiceCategoryClick}
-                data-type="service"
-                className="w-4/12 p-4 bg-gray-200 rounded-lg shadow-md"
+                data-type='service'
+                className='w-4/12 p-4 bg-gray-200 rounded-lg shadow-md'
               >
-                <p className="font-bold text-black">Hair</p>
+                <p className='font-bold text-black'>Hair</p>
               </div>
               <div
-                data-name="Botox"
+                data-name='Botox'
                 onClick={handleServiceCategoryClick}
-                data-type="service"
-                className="grow p-4 bg-gray-200 rounded-lg shadow-md"
+                data-type='service'
+                className='grow p-4 bg-gray-200 rounded-lg shadow-md'
               >
-                <p className="font-bold text-black mt-auto">Botox</p>
+                <p className='font-bold text-black mt-auto'>Botox</p>
               </div>
             </div>
           </>
         ) : (
           <>
-            <div className="space-y-1">
-              <h3 className="text-2xl text-black font-bold tracking-wide">
+            <div className='space-y-1'>
+              <h3 className='text-2xl text-black font-bold tracking-wide'>
                 {searchKeyword}
               </h3>
-              <p className="text-base">Find your search results below!</p>
+              <p className='text-base'>Find your search results below!</p>
             </div>
             {renderAetheticianCards()}
           </>

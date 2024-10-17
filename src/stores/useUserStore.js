@@ -11,6 +11,7 @@ import {
   patchAddressById,
   patchBasicUserInfoById,
 } from '../api/usersApi';
+import useLikesStore from 'src/stores/useLikesStore';
 
 const useUserStore = create((set) => ({
   isLoggedIn: false,
@@ -83,5 +84,19 @@ const useUserStore = create((set) => ({
     set({ user: updatedUserInfo, isloading: false });
   },
 }));
+
+// subscribe takes a state value and acallback, like useEffect but outside of react
+useUserStore.subscribe(
+  (state) => state.user,
+  (user) => {
+    console.log('subscribe method triggered!');
+    // User has authed, get all the likes
+    if (user !== null) {
+      console.log('Calling get likes');
+      const userId = user._id;
+      useLikesStore.getState().getLikes(userId);
+    }
+  }
+);
 
 export default useUserStore;

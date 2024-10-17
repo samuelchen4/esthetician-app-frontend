@@ -66,15 +66,19 @@ const ClientCard = ({
             <Dot size='20' />
             <div className=' flex items-center'>
               <Star size='12' className='text-yellow-400 ' />
-              <Star size='12' className='text-yellow-400 ' />
-              <Star size='12' className='text-yellow-400 ' />
-              <StarHalf size='12' className='text-yellow-400 ' />
-              <p className='ml-0.5'>{rating !== null ? rating : 3.0}</p>
+              {/* <Star size='12' className='text-yellow-400 ' /> */}
+              {/* <Star size='12' className='text-yellow-400 ' /> */}
+              {/* <StarHalf size='12' className='text-yellow-400 ' /> */}
+              <p className='ml-0.5 font-semibold'>
+                {rating !== null ? rating : 3.0}
+              </p>
             </div>
           </div>
           <p>
-            {!location ? 'Calgary, AB' : location} (
-            {truncateToOneDecimal(distance)} km)
+            {!location ? 'Calgary, AB' : location}{' '}
+            <span className='font-semibold'>
+              ({truncateToOneDecimal(distance)} km)
+            </span>
           </p>
         </div>
       </div>
