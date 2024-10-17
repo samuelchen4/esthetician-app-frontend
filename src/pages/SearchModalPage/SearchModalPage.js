@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useMobileNavStore from 'src/stores/useMobileNavStore';
-import useSearchStore from 'src/stores/useSearchStore';
-import useDataStore from 'src/stores/useDataStore';
-import { cn } from 'src/lib/utils';
-import { MoveLeft } from 'lucide-react';
-import serviceConstants from 'src/constants/categories';
-import filterConstants from 'src/constants/filters';
+import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import useMobileNavStore from "src/stores/useMobileNavStore";
+import useSearchStore from "src/stores/useSearchStore";
+import useDataStore from "src/stores/useDataStore";
+import { cn } from "src/lib/utils";
+import { MoveLeft } from "lucide-react";
+import serviceConstants from "src/constants/categories";
+import filterConstants from "src/constants/filters";
 
 const SearchModalPage = ({ className }) => {
   //   dom router
@@ -46,7 +46,7 @@ const SearchModalPage = ({ className }) => {
     // dont await this
     setSearchKeyword(service);
     getDataStore(lat, long, city, province, service, limit, page, filter);
-    navigate('/search');
+    navigate("/search");
   };
 
   //   Set the mobile nav component to close when this component is open
@@ -82,10 +82,10 @@ const SearchModalPage = ({ className }) => {
 
   // Clears all search params on click
   const clearAllHandler = () => {
-    setCity('');
-    setProvince('');
-    setService('');
-    setFilter('');
+    setCity("");
+    setProvince("");
+    setService("");
+    setFilter("");
 
     // Hacked together way of doing this bc, I dont have value prop binded to select
     if (selectRef.current) {
@@ -97,11 +97,11 @@ const SearchModalPage = ({ className }) => {
   const renderServiceButtons = () => {
     //   onClick for buttons
     const handleServiceButtonClick = (e) => {
-      console.log('service clicked: ', e.target.name);
+      console.log("service clicked: ", e.target.name);
       const newService = e.target.name;
 
       if (service === newService) {
-        setService('');
+        setService("");
       } else {
         setService(newService);
       }
@@ -114,8 +114,8 @@ const SearchModalPage = ({ className }) => {
           key={serviceConstant}
           onClick={handleServiceButtonClick}
           className={cn(
-            'py-2 px-4 border rounded-lg bg-white text-primary border-primary',
-            service === serviceConstant && 'bg-primary text-white'
+            "py-2 px-4 border rounded-lg bg-white text-primary border-primary",
+            service === serviceConstant && "bg-primary text-white"
           )}
         >
           {serviceConstant}
@@ -129,11 +129,11 @@ const SearchModalPage = ({ className }) => {
   const renderFilterButtons = () => {
     //   onClick for buttons
     const handleFilterButtonClick = (e) => {
-      console.log('filter clicked: ', e.target.name);
+      console.log("filter clicked: ", e.target.name);
       const newFilter = e.target.name;
 
       if (filter === newFilter) {
-        setFilter('');
+        setFilter("");
       } else {
         setFilter(newFilter);
       }
@@ -146,8 +146,8 @@ const SearchModalPage = ({ className }) => {
           key={filterConstant}
           onClick={handleFilterButtonClick}
           className={cn(
-            'py-2 px-4 border rounded-lg bg-white text-primary border-primary',
-            filter === filterConstant && 'bg-primary text-white'
+            "py-2 px-4 border rounded-lg bg-white text-primary border-primary",
+            filter === filterConstant && "bg-primary text-white"
           )}
         >
           {filterConstant}
@@ -160,48 +160,48 @@ const SearchModalPage = ({ className }) => {
   return (
     <div
       className={cn(
-        'z-50 flex flex-col p-6 text-neutral-600 font-nunito bg-white text-base',
+        "z-50 flex flex-col p-6 text-neutral-600 font-nunito bg-white text-base",
         className
       )}
     >
-      <MoveLeft size='24' className='stroke-black' onClick={clickBackButton} />
-      <h3 className='text-3xl text-black font-bold my-10'>Find Your Style</h3>
-      <div className='flex flex-col space-y-3 mb-10'>
-        <p className='text-xl font-bold'>Where are you?</p>
+      <MoveLeft size="24" className="stroke-black" onClick={clickBackButton} />
+      <h3 className="text-3xl text-black font-bold my-10">Find Your Style</h3>
+      <div className="flex flex-col space-y-3 mb-10">
+        <p className="text-xl font-bold">Where are you?</p>
         {/* Hard code values for dropdown rn, when we expand we can break this out into a seperate */}
         <select
           ref={selectRef}
           onChange={handleCityChange}
-          className='py-2.5 px-4 border border-neutral-400 rounded-xl'
+          // className='py-2.5 px-4 border border-neutral-400 rounded-xl'
         >
-          <option value='' disabled hidden>
+          <option value="" disabled hidden>
             Select a city!
           </option>
-          <option value='Calgary, Alberta'>Calgary, Alberta</option>
-          <option value='Edmonton, Alberta'>Edmonton, Alberta</option>
+          <option value="Calgary, Alberta">Calgary, Alberta</option>
+          <option value="Edmonton, Alberta">Edmonton, Alberta</option>
         </select>
       </div>
-      <div id='search-services' className='flex flex-col space-y-5 mb-10'>
-        <p className='text-xl font-bold'>What services are you looking for?</p>
-        <div className='flex flex-col space-y-4 w-2/5'>
+      <div id="search-services" className="flex flex-col space-y-5 mb-10">
+        <p className="text-xl font-bold">What services are you looking for?</p>
+        <div className="flex flex-col space-y-4 w-2/5">
           {renderServiceButtons()}
         </div>
       </div>
-      <div id='search-filters' className='flex flex-col space-y-5 mb-10'>
-        <p className='text-xl font-bold'>
+      <div id="search-filters" className="flex flex-col space-y-5 mb-10">
+        <p className="text-xl font-bold">
           Pick your filters
-          <span className='ml-2 text-xs'>(optional)</span>
+          <span className="ml-2 text-xs">(optional)</span>
         </p>
-        <div className='flex flex-col space-y-4 w-2/5'>
+        <div className="flex flex-col space-y-4 w-2/5">
           {renderFilterButtons()}
         </div>
       </div>
       <div
-        id='search-buttons'
-        className='fixed bottom-0 left-0 right-0 flex justify-between items-center px-6 pb-safe-bottom bg-white border-t border-gray-300'
+        id="search-buttons"
+        className="fixed bottom-0 left-0 right-0 flex justify-between items-center px-6 pb-safe-bottom bg-white border-t border-gray-300"
       >
         <p
-          className=' underline underline-offset-2 text-sm'
+          className=" underline underline-offset-2 text-sm"
           onClick={clearAllHandler}
         >
           Clear all
@@ -209,7 +209,7 @@ const SearchModalPage = ({ className }) => {
         {/* <Link to={"/search"}> */}
         <button
           onClick={submitDataHandler}
-          className='my-3 w-20 h-10 bg-primary text-white rounded-lg'
+          className="my-3 w-20 h-10 bg-primary text-white rounded-lg"
         >
           Search
         </button>
