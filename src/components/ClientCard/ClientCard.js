@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Carousel from 'src/components/Carousel';
 import { Dot, Heart, Star, StarHalf } from 'lucide-react';
-import { cn } from 'src/lib/utils';
+import { cn, truncateToOneDecimal } from 'src/lib/utils';
 
 const ClientCard = ({
   images, // delete this when done testing
@@ -12,9 +12,13 @@ const ClientCard = ({
   location,
   city,
   province,
+  postalCode,
   services,
-  schedules,
-  picture,
+  rating,
+  latitude,
+  longitude,
+  distance,
+  photos,
 }) => {
   const [liked, setLiked] = useState(false);
 
@@ -65,11 +69,13 @@ const ClientCard = ({
               <Star size='12' className='text-yellow-400 ' />
               <Star size='12' className='text-yellow-400 ' />
               <StarHalf size='12' className='text-yellow-400 ' />
-              <p className='ml-0.5'>(3.4)</p>
+              <p className='ml-0.5'>{rating !== null ? rating : 3.0}</p>
             </div>
           </div>
-          <p>{!location ? 'Calgary, AB' : location}</p>
-          {/* <p>Avaliable: Monday, Wednesday, Friday</p> */}
+          <p>
+            {!location ? 'Calgary, AB' : location} (
+            {truncateToOneDecimal(distance)} km)
+          </p>
         </div>
       </div>
     </div>

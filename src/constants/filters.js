@@ -1,3 +1,3 @@
-const filters = ['Nearby', 'Rating'];
+const filters = ['Nearby', 'Trending'];
 
 export default filters;

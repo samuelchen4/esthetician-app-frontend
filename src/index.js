@@ -7,7 +7,7 @@ import AetheticiansPage from './pages/AetheticiansPage/AetheticiansPage';
 import Header from './components/Header';
 import { ClerkProvider } from '@clerk/clerk-react';
 import SignUpQuestionnairePage from 'src/pages/SignUpQuestionnairePage/SignUpQuestionnarePage';
-import LikesPage from './pages/LikesPage';
+import LikesPage from 'src/pages/LikesPage/LikesPage';
 import ManageAccountPage from './pages/ManageAccountPage';
 import PersonalSettingsPages from 'src/pages/PersonalSettingsPage/PersonalSettingsPage';
 import AestheticianSettingsPage from 'src/pages/AestheticianSettingsPage/AestheticianSettingsPage';
@@ -42,7 +42,7 @@ root.render(
               path='/sign-up/questionnaire/*'
               element={<SignUpQuestionnairePage />}
             />
-            <Route path='/users/:userId/likes' element={<LikesPage />} />
+            <Route path='/likes' element={<LikesPage />} />
             <Route
               path='/users/:userId/manage-account'
               element={<ManageAccountPage />}

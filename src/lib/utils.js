@@ -10,3 +10,7 @@ export function convertToAMPM(hour) {
   const hourIn12HrFormat = hour % 12 || 12;
   return `${hourIn12HrFormat}:00 ${period}`;
 }
+
+export function truncateToOneDecimal(value) {
+  return Math.trunc(value * 10) / 10;
+}
