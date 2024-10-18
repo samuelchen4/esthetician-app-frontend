@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { cn } from 'src/lib/utils';
 import { Earth, Search, Heart, CircleUserRound } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import { useUser } from '@clerk/clerk-react';
-import useUserStore from 'src/stores/useUserStore';
 import useMobileNavStore from 'src/stores/useMobileNavStore';
+
+import useUserStore from 'src/stores/useUserStore';
 
 const MobileNav = ({ className }) => {
   // Router
@@ -16,9 +16,11 @@ const MobileNav = ({ className }) => {
     getCurrentPageStore();
   }, [location]);
 
-  // Clerk auth
-  const clerkUserObj = useUser();
-  const { isLoaded: clerkIsLoaded, isSignedIn, user: clerkUser } = clerkUserObj;
+  // // For testing to see the user store
+  // const user = useUserStore((state) => state.user);
+  // useEffect(() => {
+  //   console.log('Testing userStore: ', user);
+  // }, [user]);
 
   // Zustand
   const isOpenMobileNavStore = useMobileNavStore((state) => state.isOpen);
@@ -27,35 +29,6 @@ const MobileNav = ({ className }) => {
     (state) => state.getCurrentPage
   );
   const changePageStore = useMobileNavStore((state) => state.changePage);
-
-  const userStore = useUserStore((state) => state.user);
-  const getUserInfo = useUserStore((state) => state.getUserInfo);
-  const postUserInfo = useUserStore((state) => state.postUserInfo);
-
-  useEffect(() => {
-    if (clerkUser) {
-      const {
-        id: clerkUserId,
-        firstName,
-        lastName,
-        primaryEmailAddressObj,
-      } = clerkUser;
-      const email = primaryEmailAddressObj?.emailAddress || '';
-
-      userIsAuthenticated();
-
-      async function userIsAuthenticated() {
-        await getUserInfo(clerkUserId);
-
-        // Directly access the latest state from Zustand
-        const currentUser = useUserStore.getState().user;
-        if (currentUser === null) {
-          await postUserInfo(clerkUserId, firstName, lastName, email);
-        }
-        console.log(userStore);
-      }
-    }
-  }, [clerkUser]);
 
   const handleClick = (e) => {
     const name = e.currentTarget.name;

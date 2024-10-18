@@ -25,7 +25,7 @@ export const getDataApi = async (
     };
 
     const { data } = await api.get('/api/aetheticians', config);
-    console.log('data response: ', data);
+    // console.log('data response: ', data);
     return data.data;
   } catch (err) {
     console.log(err.message);

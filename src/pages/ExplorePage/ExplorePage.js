@@ -33,11 +33,6 @@ const imagesLashes = [
   '/static/lashes-4.jpeg',
 ];
 const ExplorePage = () => {
-  // Clerk
-  const clerkObj = useUser();
-  console.log(clerkObj);
-  const { isLoaded: clerkIsLoaded, isSignedIn, user: clerkUser } = clerkObj;
-
   // userStore
   const user = useUserStore((state) => state.user);
 
@@ -176,8 +171,8 @@ const ExplorePage = () => {
     return clientCards;
   };
 
-  if (!clerkIsLoaded || (isSignedIn && user === null))
-    return <PageLoader className='fixed inset-x-0 border' />;
+  // if (!clerkIsLoaded || (isSignedIn && user === null))
+  //   return <PageLoader className='fixed inset-x-0 border' />;
 
   return (
     <div className=' flex flex-col text-neutral-600 font-nunito'>

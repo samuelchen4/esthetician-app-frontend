@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import useLikesStore from 'src/stores/useLikesStore';
 import Carousel from 'src/components/Carousel';
 import { Dot, Heart, Star, StarHalf } from 'lucide-react';
 import { cn, truncateToOneDecimal } from 'src/lib/utils';
 
 const ClientCard = ({
+  aestheticianId,
   images, // delete this when done testing
   profilePicture = '/static/blank-profile-picture.png', // delete this when done testing
   firstName,
@@ -20,7 +22,13 @@ const ClientCard = ({
   distance,
   photos,
 }) => {
-  const [liked, setLiked] = useState(false);
+  // Zustand Likes
+  const likesStore = useLikesStore((state) => state.likes);
+  const isliked = likesStore.some(
+    (like) => like.aesthetician_id === aestheticianId
+  );
+
+  const [liked, setLiked] = useState(isliked);
 
   const handleLiked = (e) => {
     e.preventDefault();

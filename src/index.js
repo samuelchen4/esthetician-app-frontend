@@ -4,11 +4,9 @@ import './index.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MarketplacePage from './pages/MarketplacePage';
 import AetheticiansPage from './pages/AetheticiansPage/AetheticiansPage';
-import Header from './components/Header';
 import { ClerkProvider } from '@clerk/clerk-react';
 import SignUpQuestionnairePage from 'src/pages/SignUpQuestionnairePage/SignUpQuestionnarePage';
 import LikesPage from 'src/pages/LikesPage/LikesPage';
-import ManageAccountPage from './pages/ManageAccountPage';
 import PersonalSettingsPages from 'src/pages/PersonalSettingsPage/PersonalSettingsPage';
 import AestheticianSettingsPage from 'src/pages/AestheticianSettingsPage/AestheticianSettingsPage';
 
@@ -19,12 +17,15 @@ import SearchModalPage from 'src/pages/SearchModalPage/SearchModalPage';
 import LoginPage from 'src/pages/LoginPage/LoginPage';
 import SettingsPage from 'src/pages/SettingsPage/SettingsPage';
 import ScrollToTop from 'src/components/ScrollToTop';
+import { initializeFromClerk } from 'src/auth/initializeFromClerk';
 
 const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY || null;
 
 if (!PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key');
 }
+
+initializeFromClerk();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

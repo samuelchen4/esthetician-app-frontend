@@ -12,6 +12,8 @@ import {
   patchBasicUserInfoById,
 } from '../api/usersApi';
 import useLikesStore from 'src/stores/useLikesStore';
+import usePhotosStore from 'src/stores/usePhotosStore';
+import useServicesStore from 'src/stores/useServicesStore';
 
 const useUserStore = create((set) => ({
   isLoggedIn: false,
@@ -53,7 +55,8 @@ const useUserStore = create((set) => ({
   getUserInfo: async (clerkUserId) => {
     set({ isLoading: true });
     const userInfo = await getUserByClerkId(clerkUserId);
-    set({ user: userInfo, isLoading: false });
+    // set({ user: { ...userInfo }, isLoading: false });
+    set((state) => ({ ...state, user: userInfo, isLoading: false }));
   },
   postUserInfo: async (clerkUserId, firstName, lastName, email) => {
     set({ isLoading: true });
@@ -86,17 +89,29 @@ const useUserStore = create((set) => ({
 }));
 
 // subscribe takes a state value and acallback, like useEffect but outside of react
-useUserStore.subscribe(
-  (state) => state.user,
-  (user) => {
-    console.log('subscribe method triggered!');
-    // User has authed, get all the likes
-    if (user !== null) {
-      console.log('Calling get likes');
-      const userId = user._id;
-      useLikesStore.getState().getLikes(userId);
+
+export const initializeUserStoreListener = () => {
+  // when you call subscribe method this way, it will handle cleanup on unmount
+  const unsubscribe = useUserStore.subscribe(
+    (state) => state.user,
+    (user) => {
+      console.log('userStore: ', user);
+      // User has authed, get all the likes
+      if (user != null) {
+        console.log('Calling get likes');
+        const userId = user._id;
+        useLikesStore.getState().getLikes(userId);
+
+        // remove all stores when user is logged out
+      } else if (user == null) {
+        useLikesStore.setState((state) => ({ ...state, likes: [] }));
+        usePhotosStore.setState((state) => ({ ...state, photos: [] }));
+        useServicesStore.setState((state) => ({ ...state, services: [] }));
+      }
     }
-  }
-);
+  );
+
+  return unsubscribe;
+};
 
 export default useUserStore;

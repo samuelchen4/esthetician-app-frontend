@@ -10,7 +10,7 @@ const useMobileNavStore = create((set) => ({
   currentPage: '',
   getCurrentPage: () => {
     const path = window.location.pathname;
-    console.log(path);
+    // console.log('path: ', path);
 
     // edge case
     if (path === '/') {
@@ -23,7 +23,7 @@ const useMobileNavStore = create((set) => ({
 
     if (match) {
       const newPage = match[1];
-      console.log(newPage);
+      // console.log(newPage);
       set({ currentPage: newPage });
     }
   },

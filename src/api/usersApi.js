@@ -4,8 +4,9 @@ import api from './api-config';
 export const getUserByClerkId = async (clerkUserId) => {
   try {
     const response = await api.get(`/api/clerk-users/${clerkUserId}`);
-    console.log('getUserByClerkId response: ', response);
+    // console.log('getUserByClerkId response: ', response);
     const data = response.data.data === null ? null : response.data.data[0];
+    console.log('getUserByClerkId data: ', data);
     return data;
   } catch (error) {
     throw new Error(
