@@ -122,50 +122,50 @@ const TestPage = () => {
             {/* Review card */}
             <div
               id="review-card"
-              className="py-4 px-2 flex flex-col space-y-4 border-t-2 border-neutral-500"
+              className="py-4 px-2 flex flex-col space-y-4 border-t border-neutral-400"
             >
               <div className="flex items-center space-x-4">
                 <img
                   src="/static/client-card-profile-picture-2.png"
-                  className="h-20 w-20 rounded-full"
+                  className="h-14 w-14 rounded-full"
                 />
                 <div className="flex flex-col">
-                  <h5 className="font-bold">Samuel Goldberg</h5>
+                  <h5 className="font-semibold">Samuel Goldberg</h5>
                   <p className="text-sm">Sun, oct 20, 2024 at 11.42 AM</p>
                 </div>
               </div>
               <div className="flex space-x-1">
-                <Star size="20" className="stroke-yellow-400 fill-yellow-400" />
-                <Star size="20" className="stroke-yellow-400 fill-yellow-400" />
-                <Star size="20" className="stroke-yellow-400 fill-yellow-400" />
-                <Star size="20" className="stroke-yellow-400 fill-yellow-400" />
-                <Star size="20" className="stroke-gray-400 fill-gray-400" />
+                <Star size="16" className="stroke-yellow-400 fill-yellow-400" />
+                <Star size="16" className="stroke-yellow-400 fill-yellow-400" />
+                <Star size="16" className="stroke-yellow-400 fill-yellow-400" />
+                <Star size="16" className="stroke-yellow-400 fill-yellow-400" />
+                <Star size="16" className="stroke-gray-400 fill-gray-400" />
               </div>
-              <p>Sandy is the goat!!</p>
+              <p className="text-neutral-500">Sandy is the goat!!</p>
             </div>
           </div>
           <div
             id="review-card"
-            className="py-4 px-2 flex flex-col space-y-4 border-t-2 border-neutral-500"
+            className="py-4 px-2 flex flex-col space-y-4 border-t border-neutral-400"
           >
             <div className="flex items-center space-x-4">
               <img
                 src="/static/client-card-profile-picture.png"
-                className="h-20 w-20 rounded-full"
+                className="h-14 w-14 rounded-full"
               />
               <div className="flex flex-col">
-                <h5 className="font-bold">Karen Lee</h5>
+                <h5 className="font-semibold">Karen Lee</h5>
                 <p className="text-sm">Sun, oct 22, 2024 at 11:42 PM</p>
               </div>
             </div>
             <div className="flex space-x-1">
-              <Star size="20" className="stroke-yellow-400 fill-yellow-400" />
-              <Star size="20" className="stroke-yellow-400 fill-yellow-400" />
-              <Star size="20" className="stroke-yellow-400 fill-yellow-400" />
-              <Star size="20" className="stroke-yellow-400 fill-yellow-400" />
-              <Star size="20" className="stroke-yellow-400 fill-yellow-400" />
+              <Star size="16" className="stroke-yellow-400 fill-yellow-400" />
+              <Star size="16" className="stroke-yellow-400 fill-yellow-400" />
+              <Star size="16" className="stroke-yellow-400 fill-yellow-400" />
+              <Star size="16" className="stroke-yellow-400 fill-yellow-400" />
+              <Star size="16" className="stroke-yellow-400 fill-yellow-400" />
             </div>
-            <p>
+            <p className="text-neutral-500">
               Amazing experience! Sandy Leung is skilled, professional, and my
               nails have never looked better!
             </p>
