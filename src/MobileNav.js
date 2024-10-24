@@ -1,40 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { cn } from 'src/lib/utils';
 import { Earth, Search, Heart, CircleUserRound } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
 import useMobileNavStore from 'src/stores/useMobileNavStore';
-
-import useUserStore from 'src/stores/useUserStore';
+import { useRouter } from 'src/hooks/useRouter';
 
 const MobileNav = ({ className }) => {
-  // Router
-  const location = useLocation();
-
-  // change the current page state everytime url changes
-  useEffect(() => {
-    // when location changes, get the new page
-    getCurrentPageStore();
-  }, [location]);
-
-  // // For testing to see the user store
-  // const user = useUserStore((state) => state.user);
-  // useEffect(() => {
-  //   console.log('Testing userStore: ', user);
-  // }, [user]);
+  const { page, goToPage } = useRouter();
 
   // Zustand
   const isOpenMobileNavStore = useMobileNavStore((state) => state.isOpen);
-  const currentPageStore = useMobileNavStore((state) => state.currentPage);
-  const getCurrentPageStore = useMobileNavStore(
-    (state) => state.getCurrentPage
-  );
-  const changePageStore = useMobileNavStore((state) => state.changePage);
 
   const handleClick = (e) => {
-    const name = e.currentTarget.name;
-    console.log('name: ', name);
-
-    changePageStore(name);
+    const route = e.currentTarget.name;
+    console.log('route: ', route);
+    goToPage(`/${route}`);
   };
 
   if (!isOpenMobileNavStore) return <></>;
@@ -46,54 +25,51 @@ const MobileNav = ({ className }) => {
         className
       )}
     >
-      <Link
+      <button
         name='explore'
         onClick={handleClick}
         className={cn(
           'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
-          currentPageStore === 'explore' && 'text-primary'
+          page === 'explore' && 'text-primary'
         )}
         to={'/explore'}
       >
         <Earth size='24' className='stroke-2' />
         <p className='text-xs font-semibold'>Explore</p>
-      </Link>
-      <Link
+      </button>
+      <button
         name='search'
         onClick={handleClick}
         className={cn(
           'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
-          currentPageStore === 'search' && 'text-primary'
+          page === 'search' && 'text-primary'
         )}
-        to={'/search'}
       >
         <Search size='24' className=' stroke-2' />
         <p className='text-xs  font-semibold'>Search</p>
-      </Link>
-      <Link
+      </button>
+      <button
         name='likes'
         onClick={handleClick}
         className={cn(
           'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
-          currentPageStore === 'likes' && 'text-primary'
+          page === 'likes' && 'text-primary'
         )}
-        to={'/likes'}
       >
         <Heart size='24' className=' stroke-2' />
         <p className='text-xs  font-semibold '>Likes</p>
-      </Link>
-      <Link
-        to={`/profile`}
+      </button>
+      <button
         name='profile'
         onClick={handleClick}
         className={cn(
           'flex flex-col items-center text-gray-400 space-y-0.5 pb-3',
-          currentPageStore === 'profile' && 'text-primary'
+          page === 'profile' && 'text-primary'
         )}
       >
         <CircleUserRound size='24' className='stroke-2' />
         <p className='text-xs  font-semibold'>Profile</p>
-      </Link>
+      </button>
     </div>
   );
 };
