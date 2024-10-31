@@ -1,21 +1,44 @@
-import { LoadScriptNext, GoogleMap } from '@react-google-maps/api';
+import { LoadScriptNext, GoogleMap, Circle } from '@react-google-maps/api';
 
 const MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
 const Map = () => {
+  const mapContainerStyle = {
+    width: '100%',
+    height: '35vh',
+  };
+
+  const center = {
+    lat: 51.0447,
+    lng: -114.0633,
+  };
+
+  const circleOptions = {
+    strokeColor: '#71B2AB',
+    strokeOpacity: 1,
+    strokeWeight: 1,
+    fillColor: '#71B2AB',
+    fillOpacity: 0.25,
+    clickable: false,
+    draggable: false,
+    editable: false,
+    visible: true,
+  };
+
   return (
     <LoadScriptNext googleMapsApiKey={MAPS_API_KEY}>
       <GoogleMap
-        mapContainerStyle={{ width: '100%', height: '20vh' }}
-        center={{ lat: 40.748817, lng: -73.985428 }}
-        zoom={10}
+        mapContainerStyle={mapContainerStyle}
+        center={center}
+        zoom={14}
         options={{
           disableDefaultUI: true,
           zoomControl: false,
-          gestureHandling: 'greedy',
+          scrollwheel: false,
+          gestureHandling: 'cooperative',
         }}
       >
-        {/* Additional map features/components can go here */}
+        <Circle radius={400} center={center} options={circleOptions} />
       </GoogleMap>
     </LoadScriptNext>
   );
