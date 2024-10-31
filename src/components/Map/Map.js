@@ -6,11 +6,13 @@ const Map = () => {
   return (
     <LoadScriptNext googleMapsApiKey={MAPS_API_KEY}>
       <GoogleMap
-        mapContainerStyle={{ width: '100%', height: '200px' }}
+        mapContainerStyle={{ width: '100%', height: '20vh' }}
         center={{ lat: 40.748817, lng: -73.985428 }}
         zoom={10}
         options={{
           disableDefaultUI: true,
+          zoomControl: false,
+          gestureHandling: 'greedy',
         }}
       >
         {/* Additional map features/components can go here */}
