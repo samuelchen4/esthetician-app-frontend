@@ -2,15 +2,15 @@ import { LoadScriptNext, GoogleMap, Circle } from '@react-google-maps/api';
 
 const MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
-const Map = () => {
+const Map = ({ lat, lng }) => {
   const mapContainerStyle = {
     width: '100%',
     height: '35vh',
   };
 
   const center = {
-    lat: 51.0447,
-    lng: -114.0633,
+    lat,
+    lng,
   };
 
   const circleOptions = {
@@ -30,17 +30,18 @@ const Map = () => {
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         center={center}
-        zoom={14}
+        zoom={15}
         options={{
           disableDefaultUI: true,
+          clickableIcons: false,
           zoomControl: false,
           scrollwheel: false,
-          gestureHandling: 'greedy',
+          gestureHandling: 'none',
           fullscreenControl: true,
           keyboardShortcuts: false,
         }}
       >
-        <Circle radius={400} center={center} options={circleOptions} />
+        <Circle radius={300} center={center} options={circleOptions} />
       </GoogleMap>
     </LoadScriptNext>
   );

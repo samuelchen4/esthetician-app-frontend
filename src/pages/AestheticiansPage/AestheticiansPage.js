@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { MoveLeft, Share, Heart, Star } from 'lucide-react';
+import { MoveLeft, Share, Heart, Instagram, Facebook } from 'lucide-react';
 import Carousel from 'src/components/Carousel';
 import useMobileNavStore from 'src/stores/useMobileNavStore';
 import { useRouter } from 'src/hooks/useRouter';
@@ -85,6 +85,10 @@ const AestheticiansPage = ({}) => {
   return (
     <div className='flex flex-col text-black font-nunito'>
       <div id='cover-photo' className='relative'>
+        <div
+          id='cover-photo-screen'
+          className='absolute inset-0 bg-gradient-to-b from-white/0 to-white/100'
+        ></div>
         <div className='absolute inset-x-6 top-5 text-black flex justify-between'>
           <div
             className='p-2 bg-neutral-100 rounded-full border border-neutral-300'
@@ -104,35 +108,34 @@ const AestheticiansPage = ({}) => {
         <img
           src={userInfo.cover_picture}
           alt='personal cover photo for aesthetician'
-          className='h-72 w-full object-cover'
+          className='h-72 w-full object-cover border-b border-b-white'
         />
       </div>
       <div
         id='aesthetician-card'
-        className='relative -top-10 mx-6 border rounded-lg flex mb-8'
+        className='relative -top-20 mx-6 flex flex-col mb-8'
       >
         <img
-          // src='/static/crystal-profile-picture.jpg'
           src={userInfo.profile_picture}
-          className='w-2/5 rounded-l-lg'
+          className='rounded-full w-24 h-24 object-cover'
         />
-        <div className='rounded-r-lg grow flex flex-col py-2 px-4 bg-primary'>
+        <div className='mt-4 space-y-2 text-sm'>
           <h3 className='text-2xl font-bold tracking-wide'>
-            {userInfo.first_name}
+            {userInfo.first_name} {userInfo.last_name}
           </h3>
-          <h3 className='text-2xl font-bold tracking-wide'>
-            {userInfo.last_name}
-          </h3>
-          <p>
+          {/* <p>
             {services.map((serviceObj) => serviceObj.service_name).join(', ')}
-          </p>
+          </p> */}
           <div className='flex space-x-2 items-center'>
-            <p>{userInfo.rating}</p>
+            <p className='font-semibold'>{userInfo.rating}</p>
             <div className='flex space-x-1'>{renderStars(userInfo.rating)}</div>
           </div>
           <p>
             {userInfo.city}, {userInfo.province}
           </p>
+          <div id='aesthetician-social-links' className='flex space-x-2'>
+            <Instagram size='20' />
+          </div>
         </div>
       </div>
       <div id='aesthetician-body' className='mx-6 space-y-10 mb-20'>
@@ -180,12 +183,16 @@ const AestheticiansPage = ({}) => {
             src='/static/aesthetician-page-google-maps-example.jpg'
             className='rounded-lg'
           /> */}
-          <Map />
+          <Map lat={userInfo.latitude} lng={userInfo.longitude} />
           <p>Bridge land Area, Calgary, Alberta (4.5 km away)</p>
         </div>
       </div>
-      <div className='fixed bottom-0 inset-x-0 flex items-center px-6 pt-3 pb-safe-bottom bg-white border-t border-gray-300'>
-        <button className='ml-auto mb-3 py-2 px-4 rounded-lg bg-primary text-white'>
+      <div className='fixed bottom-0 inset-x-0 flex justify-between items-center px-6 pt-3 pb-safe-bottom bg-white border-t border-gray-300 text-base'>
+        <p className='mb-3 text-sm text-neutral-500'>
+          As soon as{' '}
+          <span className='underline underline-offset-4'>Today, 3:00 PM</span>
+        </p>
+        <button className='mb-3 py-2 px-3 rounded-xl bg-primary text-white'>
           Book Now
         </button>
       </div>
