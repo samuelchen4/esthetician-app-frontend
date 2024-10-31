@@ -35,7 +35,9 @@ const Map = () => {
           disableDefaultUI: true,
           zoomControl: false,
           scrollwheel: false,
-          gestureHandling: 'cooperative',
+          gestureHandling: 'greedy',
+          fullscreenControl: true,
+          keyboardShortcuts: false,
         }}
       >
         <Circle radius={400} center={center} options={circleOptions} />
