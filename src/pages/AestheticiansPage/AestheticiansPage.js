@@ -6,8 +6,9 @@ import { useRouter } from 'src/hooks/useRouter';
 import { cn, renderStars } from 'src/lib/utils';
 import { useAestheticiansDataFetch } from 'src/hooks/useAestheticiansDataFetch';
 import PageLoader from 'src/components/PageLoader';
+import Map from 'src/components/Map/Map';
 
-const TestPage = ({}) => {
+const AestheticiansPage = ({}) => {
   // controls UI so leave in component
   useEffect(() => {
     setIsBottomNavOpen(false);
@@ -175,10 +176,11 @@ const TestPage = ({}) => {
             For your privacy, your exact location will remain hidden until the
             booking is confirmed!
           </p>
-          <img
+          {/* <img
             src='/static/aesthetician-page-google-maps-example.jpg'
             className='rounded-lg'
-          />
+          /> */}
+          <Map />
           <p>Bridge land Area, Calgary, Alberta (4.5 km away)</p>
         </div>
       </div>
@@ -191,4 +193,4 @@ const TestPage = ({}) => {
   );
 };
 
-export default TestPage;
+export default AestheticiansPage;

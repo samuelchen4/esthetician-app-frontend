@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MarketplacePage from './pages/MarketplacePage';
-import AetheticiansPage from './pages/AetheticiansPage/AetheticiansPage';
+import AetheticiansPage from './pages/AestheticiansPage/AestheticiansPage';
 import { ClerkProvider } from '@clerk/clerk-react';
 import SignUpQuestionnairePage from 'src/pages/SignUpQuestionnairePage/SignUpQuestionnarePage';
 import LikesPage from 'src/pages/LikesPage/LikesPage';
 import PersonalSettingsPages from 'src/pages/PersonalSettingsPage/PersonalSettingsPage';
 import AestheticianSettingsPage from 'src/pages/AestheticianSettingsPage/AestheticianSettingsPage';
-import TestPage from 'src/pages/AetheticiansPage/TestPage';
 
 import MobileNav from './MobileNav';
 import ExplorePage from 'src/pages/ExplorePage/ExplorePage';
@@ -42,9 +41,10 @@ root.render(
             <Route path='/' element={<ExplorePage />} />
             <Route path='/explore' element={<ExplorePage />} />
             <Route path='/home' element={<MarketplacePage />} />
-            {/* <Route path='/client-info/:userId' element={<TestPage />} /> */}
-            <Route path='/client-info/:userId' element={<AetheticiansPage />} />
-            <Route path='/aestheticians/:userId' element={<TestPage />} />
+            <Route
+              path='/aestheticians/:userId'
+              element={<AetheticiansPage />}
+            />
             <Route
               path='/sign-up/questionnaire/*'
               element={<SignUpQuestionnairePage />}

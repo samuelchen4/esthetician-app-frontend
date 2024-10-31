@@ -5,6 +5,7 @@ import { Dot, Heart, Star, StarHalf } from 'lucide-react';
 import { cn, truncateToOneDecimal } from 'src/lib/utils';
 import { useRouter } from 'src/hooks/useRouter';
 import { Link } from 'react-router-dom';
+import LikeButton from 'src/components/LikeButton';
 
 const ClientCard = ({
   aestheticianId,
@@ -27,18 +28,6 @@ const ClientCard = ({
   const { goToPage } = useRouter();
 
   // Zustand Likes
-  const likesStore = useLikesStore((state) => state.likes);
-  const isliked = likesStore.some(
-    (like) => like.aesthetician_id === aestheticianId
-  );
-
-  const [liked, setLiked] = useState(isliked);
-
-  const handleLiked = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setLiked(!liked);
-  };
 
   return (
     <Link to={`/aestheticians/${aestheticianId}`}>
@@ -46,15 +35,11 @@ const ClientCard = ({
         id='card-container'
         className='relative w-full max-h-70 flex flex-col border text-xs text-gray-500 border-gray-300 rounded-lg shadow-md font-nunito sm:max-w-[350px]'
       >
-        <button
-          onClick={handleLiked}
-          className='z-40 absolute top-3 right-3 border border-gray-400 p-1.5 rounded-full shadow-sm bg-white text-black'
-        >
-          <Heart
-            size='20'
-            className={cn(liked && 'fill-primary stroke-primary')}
-          />
-        </button>
+        <LikeButton
+          aestheticianId={aestheticianId}
+          className='z-40 absolute top-3 right-3'
+        />
+
         <div className='relative'>
           <Carousel
             state={images}

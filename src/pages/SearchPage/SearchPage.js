@@ -54,6 +54,7 @@ const SearchPage = () => {
       const cards = dataStore.map((aethetician) => {
         return (
           <ClientCard
+            key={aethetician._id}
             aestheticianId={aethetician._id}
             images={imagesHair}
             profilePicture={aethetician.profile_picture}
