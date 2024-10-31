@@ -24,6 +24,8 @@ const AestheticiansPage = ({}) => {
   const { userInfo, products, reviews, photos, services, isLoading, error } =
     useAestheticiansDataFetch(params.userId);
 
+  console.log(userInfo);
+
   // make calls to render products ui
   const renderProducts = () => {
     const productCards = products.map((product) => {
@@ -117,10 +119,10 @@ const AestheticiansPage = ({}) => {
       >
         <img
           src={userInfo.profile_picture}
-          className='rounded-full w-24 h-24 object-cover'
+          className='rounded-full w-24 h-24 object-cover border-2 border-black'
         />
-        <div className='mt-4 space-y-2 text-sm'>
-          <h3 className='text-2xl font-bold tracking-wide'>
+        <div className='mt-4 space-y-2 text-base'>
+          <h3 className='text-3xl font-bold tracking-wide'>
             {userInfo.first_name} {userInfo.last_name}
           </h3>
           {/* <p>
@@ -131,7 +133,7 @@ const AestheticiansPage = ({}) => {
             <div className='flex space-x-1'>{renderStars(userInfo.rating)}</div>
           </div>
           <p>
-            {userInfo.city}, {userInfo.province}
+            {userInfo.city}, {userInfo.province} (4.2 km away)
           </p>
           <div id='aesthetician-social-links' className='flex space-x-2'>
             <Instagram size='20' />
