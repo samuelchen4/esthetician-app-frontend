@@ -34,13 +34,17 @@ const AestheticiansPage = ({}) => {
       return (
         <div
           key={id}
-          className="h-32 p-4 border border-neutral-400 rounded-lg shadow-sm flex flex-col space-y-3"
+          className="p-4 border border-neutral-400 rounded-lg shadow-sm flex flex-col space-y-1"
         >
-          <div className="flex justify-between">
+          <div className="flex justify-between font-semibold">
             <h4>{name}</h4>
             <p>From ${price}</p>
           </div>
+          <p className="text-neutral-500">30 min</p>
           <p className="text-neutral-500 text-sm">{description}</p>
+          <button className="text-white bg-primary border border-primary rounded-lg py-1 px-3 self-end">
+            Book
+          </button>
         </div>
       );
     });
@@ -132,11 +136,11 @@ const AestheticiansPage = ({}) => {
             {services.map((serviceObj) => serviceObj.service_name).join(', ')}
           </p> */}
           <div className="flex space-x-2 items-center">
-            <p className="font-semibold">{userInfo.rating}</p>
+            <p className="font-bold">{userInfo.rating}</p>
             <div className="flex space-x-1">{renderStars(userInfo.rating)}</div>
           </div>
-          <p>
-            {userInfo.city}, {userInfo.province} (4.2 km away)
+          <p className="font-bold">
+            Sandstone, {userInfo.city}, {userInfo.province} (4.2 km)
           </p>
           <div id="aesthetician-social-links" className="flex space-x-2">
             <Instagram size="24" />
@@ -144,9 +148,9 @@ const AestheticiansPage = ({}) => {
         </div>
         <div
           id="aesthetician-tags"
-          className="mb-4 border-y border-neutral-300 py-4 space-y-2"
+          className="mb-10 border-y border-neutral-300 py-4 space-y-2"
         >
-          <p>Tags:</p>
+          <p className="font-bold">Tags:</p>
           <div className="flex space-x-3 text-sm text-white font-semibold">
             {/* Function to render tags */}
             <p className="py-1 px-3 border rounded-2xl bg-yellow-500 border-yellow-500">
@@ -160,16 +164,16 @@ const AestheticiansPage = ({}) => {
             </p>
           </div>
         </div>
-        <div id="aesthetician-body" className="space-y-4">
-          <div className="space-y-1">
+        <div id="aesthetician-body" className="space-y-10">
+          <div className="space-y-4">
             <h3 className="text-xl font-bold">My Portfolio</h3>
             <Carousel
-              width="225"
+              width="200"
               state={photos.map((photoObj) => photoObj.image_url_local)}
-              className="px-0"
+              className="p-0"
             />
           </div>
-          <div className="space-y-1">
+          <div className="space-y-4">
             <h3 className="text-xl font-bold">My Services</h3>
             <div id="service-buttons" className="flex items-center">
               <button className="px-4 py-1 bg-primary text-white rounded-full">
@@ -181,21 +185,26 @@ const AestheticiansPage = ({}) => {
               {renderProducts()}
             </div>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-4">
             <h3 className="text-xl font-bold">My Reviews</h3>
             <div className="flex space-x-1">{renderStars(userInfo.rating)}</div>
             <p className="font-semibold">
-              4.8 <span className="text-blue-400">(169)</span>
+              {userInfo.rating}{" "}
+              <span className="text-blue-400">({reviews.length})</span>
             </p>
             <div id="aesthetician-reviews-container" className="pt-4 space-y-4">
               {renderReviews()}
             </div>
+            <button className="w-full py-2 px-5 border border-primary rounded-lg text-primary font-bold text-base bg-white">
+              More Reviews
+            </button>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-4">
             <h3 className="text-xl font-bold">My Story</h3>
-            <p className="text-neutral-500">{userInfo.user_story}</p>
+            {/* <p className="text-neutral-500">{userInfo.user_story}</p> */}
+            <p className="">{userInfo.user_story}</p>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-4">
             <h3 className="text-xl font-bold">My Location</h3>
             <div>
               <p>Bridge land Area, Calgary, Alberta</p>
