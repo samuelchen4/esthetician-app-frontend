@@ -115,7 +115,7 @@ const AestheticiansPage = ({}) => {
       </div>
       <div
         id='aesthetician-card'
-        className='relative -top-20 mx-6 flex flex-col mb-8'
+        className='relative -top-28 mx-6 flex flex-col'
       >
         <img
           src={userInfo.profile_picture}
@@ -136,7 +136,7 @@ const AestheticiansPage = ({}) => {
             {userInfo.city}, {userInfo.province} (4.2 km away)
           </p>
           <div id='aesthetician-social-links' className='flex space-x-2'>
-            <Instagram size='20' />
+            <Instagram size='24' />
           </div>
         </div>
       </div>
