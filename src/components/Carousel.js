@@ -1,7 +1,7 @@
-import React from "react";
-import { X } from "lucide-react";
-import Image from "src/components/Image";
-import { cn } from "src/lib/utils";
+import React from 'react';
+import { X } from 'lucide-react';
+import Image from 'src/components/Image';
+import { cn } from 'src/lib/utils';
 // import Image from 'src/components/Image';
 
 const Carousel = ({
@@ -16,7 +16,7 @@ const Carousel = ({
   // return error if remove true but no state and setState
   if (remove === true && (!state || !setState)) {
     throw new Error(
-      "Remove property needs to have valid state and setState props!"
+      'Remove property needs to have valid state and setState props!'
     );
   }
 
@@ -32,22 +32,22 @@ const Carousel = ({
 
   return (
     <div
-      id="carousel-container"
+      id='carousel-container'
       className={cn(
-        "p-2 flex overflow-x-scroll space-x-2 no-scrollbar",
+        `h-[${width}px] p-2 flex overflow-x-scroll space-x-2 no-scrollbar`,
         className
       )}
     >
       {state.map((image, idx) => (
-        <div className={cn("relative flex-shrink-0 shadow-sm", imageClassName)}>
+        <div className={cn('relative flex-shrink-0 shadow-sm', imageClassName)}>
           <Image src={image} alt={`image ${idx}`} width={width} />
           {remove && (
             <button
               data-src={image}
               onClick={removePicture}
-              className="absolute top-2 right-2 border p-1 rounded-full bg-blue-100"
+              className='absolute top-2 right-2 border p-1 rounded-full bg-blue-100'
             >
-              <X size="14" className="text-black font-bold" />
+              <X size='14' className='text-black font-bold' />
             </button>
           )}
         </div>

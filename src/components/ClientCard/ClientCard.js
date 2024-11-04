@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import useLikesStore from 'src/stores/useLikesStore';
+import React, { useState, useEffect } from 'react';
 import Carousel from 'src/components/Carousel';
-import { Dot, Heart, Star, StarHalf } from 'lucide-react';
-import { cn, truncateToOneDecimal } from 'src/lib/utils';
+import { Dot, Star } from 'lucide-react';
+import { truncateToOneDecimal } from 'src/lib/utils';
 import { useRouter } from 'src/hooks/useRouter';
+import { usePhotos } from 'src/hooks/usePhotos';
 import { Link } from 'react-router-dom';
 import LikeButton from 'src/components/LikeButton';
 
@@ -26,8 +26,7 @@ const ClientCard = ({
   photos,
 }) => {
   const { goToPage } = useRouter();
-
-  // Zustand Likes
+  const { imageUrls, profileUrl } = usePhotos(profilePicture, photos);
 
   return (
     <Link to={`/aestheticians/${aestheticianId}`}>
@@ -42,15 +41,14 @@ const ClientCard = ({
 
         <div className='relative'>
           <Carousel
-            state={images}
+            state={imageUrls}
             width={150}
             className='px-0 py-0 rounded-t-lg'
-            //   imageClassName="border-2 rounded-lg border-black"
           />
         </div>
         <div className=' relative mx-4 mt-5 mb-4 grow'>
           <img
-            src={profilePicture}
+            src={profileUrl}
             className='absolute top-[-70px] h-16 w-16 border-2 border-black rounded-full shadow-md object-cover'
           />
 
@@ -65,9 +63,6 @@ const ClientCard = ({
               <Dot size='20' />
               <div className=' flex items-center'>
                 <Star size='12' className='text-yellow-400 ' />
-                {/* <Star size='12' className='text-yellow-400 ' /> */}
-                {/* <Star size='12' className='text-yellow-400 ' /> */}
-                {/* <StarHalf size='12' className='text-yellow-400 ' /> */}
                 <p className='ml-0.5 font-semibold'>
                   {rating !== null ? rating : 3.0}
                 </p>
