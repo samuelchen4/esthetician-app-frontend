@@ -1,4 +1,4 @@
-import api from 'src/api/api-config';
+import api from "src/api/api-config";
 // All API calls for getting aetheticians
 
 // method: GET
@@ -24,13 +24,13 @@ export const getDataApi = async (
       },
     };
 
-    const { data } = await api.get('/api/aetheticians', config);
+    const { data } = await api.get("/api/aetheticians", config);
     // console.log('data response: ', data);
     return data.data;
   } catch (err) {
     console.log(err.message);
     throw new Error(
-      err.response?.data?.message || 'Frontend error in getDataApi method'
+      err.response?.data?.message || "Frontend error in getDataApi method"
     );
   }
 };
@@ -55,14 +55,14 @@ export const getTrendingDataApi = async (
       },
     };
 
-    const { data } = await api.get('/api/aetheticians/trending', config);
-    console.log('data response: ', data);
+    const { data } = await api.get("/api/aetheticians/trending", config);
+    console.log("data response: ", data);
     return data.data;
   } catch (err) {
     console.log(err.message);
     throw new Error(
       err.response?.data?.message ||
-        'Frontend error in getTrendingDataApi method'
+        "Frontend error in getTrendingDataApi method"
     );
   }
 };
@@ -87,14 +87,14 @@ export const getClosestDataApi = async (
       },
     };
 
-    const { data } = await api.get('/api/aetheticians/nearby', config);
-    console.log('data response: ', data);
+    const { data } = await api.get("/api/aetheticians/nearby", config);
+    console.log("data response: ", data);
     return data.data;
   } catch (err) {
     console.log(err.message);
     throw new Error(
       err.response?.data?.message ||
-        'Frontend error in getClosestDataApi method'
+        "Frontend error in getClosestDataApi method"
     );
   }
 };

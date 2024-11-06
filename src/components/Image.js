@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { Skeleton } from 'src/components/ui/skeleton';
+import React, { useState } from "react";
+import { Skeleton } from "src/components/ui/skeleton";
+import { cn } from "src/lib/utils";
 
-const Image = ({ src, alt, width, aspect = 1 }) => {
+const Image = ({ src, alt, width, aspect = 1, size }) => {
   const [loading, setLoading] = useState(true); // State to track loading
 
   return (
     <>
       {loading && (
         <Skeleton
+          className={cn("object-cover rounded-md border animate-fadeIn")}
           style={{
             width: `${width}px`,
             aspectRatio: aspect,
@@ -23,7 +25,7 @@ const Image = ({ src, alt, width, aspect = 1 }) => {
           width: `${width}px`,
           aspectRatio: aspect,
         }}
-        className='object-cover rounded-md border animate-fadeIn'
+        className={cn("object-cover rounded-md border animate-fadeIn")}
       />
     </>
   );

@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
-import { getUserInfoById } from 'src/api/usersApi';
-import { getServicesById } from 'src/api/servicesApi';
-import { getProductsApi } from 'src/api/productsApi';
-import { getReviewsApi } from 'src/api/reviewsApi';
-import { getPhotosById } from 'src/api/photosApi';
+import { useState, useEffect } from "react";
+import { getUserInfoById } from "src/api/usersApi";
+import { getServicesById } from "src/api/servicesApi";
+import { getProductsApi } from "src/api/productsApi";
+import { getReviewsApi } from "src/api/reviewsApi";
+import { getPhotosById } from "src/api/photosApi";
 
 export const useAestheticiansDataFetch = (id) => {
-  if (!id) throw new Error('aestheticianId required!');
+  if (!id) throw new Error("aestheticianId required!");
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const [userInfo, setUserInfo] = useState({});
   const [products, setProducts] = useState([]);
@@ -30,7 +30,7 @@ export const useAestheticiansDataFetch = (id) => {
         getPhotosById(id),
         getServicesById(id),
       ]);
-      console.log('results: ', results);
+      console.log("results: ", results);
 
       const [
         userInfoResults,
@@ -41,27 +41,27 @@ export const useAestheticiansDataFetch = (id) => {
       ] = results;
 
       try {
-        if (userInfoResults.status === 'fulfilled') {
+        if (userInfoResults.status === "fulfilled") {
           setUserInfo(userInfoResults.value);
         }
 
-        if (productResults.status === 'fulfilled') {
+        if (productResults.status === "fulfilled") {
           setProducts(productResults.value);
         }
 
-        if (reviewResults.status === 'fulfilled') {
+        if (reviewResults.status === "fulfilled") {
           setReviews(reviewResults.value);
         }
 
-        if (photoResults.status === 'fulfilled') {
-          setPhotos(photoResults.value);
+        if (photoResults.status === "fulfilled") {
+          setPhotos([...photoResults.value]);
         }
 
-        if (serviceResults.status === 'fulfilled') {
+        if (serviceResults.status === "fulfilled") {
           setServices(serviceResults.value);
         }
       } catch (err) {
-        setError('Error fetching data');
+        setError("Error fetching data");
       } finally {
         setIsLoading(false);
       }

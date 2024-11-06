@@ -7,6 +7,7 @@ import { cn, renderStars } from "src/lib/utils";
 import { useAestheticiansDataFetch } from "src/hooks/useAestheticiansDataFetch";
 import PageLoader from "src/components/PageLoader";
 import Map from "src/components/Map/Map";
+import { usePhotos } from "src/hooks/usePhotos";
 
 const AestheticiansPage = ({}) => {
   // controls UI so leave in component
@@ -23,8 +24,11 @@ const AestheticiansPage = ({}) => {
   const { goPreviousPage, params } = useRouter();
   const { userInfo, products, reviews, photos, services, isLoading, error } =
     useAestheticiansDataFetch(params.userId);
-
-  console.log(userInfo);
+  // // once I change backend for photos, just pass in photos
+  const { profileUrl, imageUrls } = usePhotos(
+    params.userId,
+    userInfo?.profile_picture
+  );
 
   // make calls to render products ui
   const renderProducts = () => {
@@ -103,14 +107,14 @@ const AestheticiansPage = ({}) => {
             className="p-2 bg-neutral-100 rounded-full border border-neutral-300"
             onClick={goPreviousPage}
           >
-            <MoveLeft size="24" />
+            <MoveLeft size="20" className="stroke-1" />
           </div>
           <div className="flex space-x-6">
             <div className="p-2 bg-neutral-100 rounded-full border border-neutral-300">
-              <Share size="24" />
+              <Share size="20" className="stroke-1" />
             </div>
             <div className="p-2 bg-neutral-100 rounded-full border border-neutral-300">
-              <Heart size="24" />
+              <Heart size="20" className="stroke-1" />
             </div>
           </div>
         </div>
@@ -125,7 +129,7 @@ const AestheticiansPage = ({}) => {
         className="relative -top-28 mx-6 flex flex-col"
       >
         <img
-          src={userInfo.profile_picture}
+          src={profileUrl}
           className="rounded-full w-24 h-24 object-cover border-2 border-black"
         />
         <div className="my-4 space-y-2 text-base">
@@ -136,10 +140,10 @@ const AestheticiansPage = ({}) => {
             {services.map((serviceObj) => serviceObj.service_name).join(', ')}
           </p> */}
           <div className="flex space-x-2 items-center">
-            <p className="font-bold">{userInfo.rating}</p>
+            <p className="font-medium text-neutral-400">{userInfo.rating}</p>
             <div className="flex space-x-1">{renderStars(userInfo.rating)}</div>
           </div>
-          <p className="font-bold">
+          <p className="font-medium text-neutral-400">
             Sandstone, {userInfo.city}, {userInfo.province} (4.2 km)
           </p>
           <div id="aesthetician-social-links" className="flex space-x-2">
@@ -167,11 +171,7 @@ const AestheticiansPage = ({}) => {
         <div id="aesthetician-body" className="space-y-10">
           <div className="space-y-4">
             <h3 className="text-xl font-bold">My Portfolio</h3>
-            <Carousel
-              width="200"
-              state={photos.map((photoObj) => photoObj.image_url_local)}
-              className="p-0"
-            />
+            <Carousel width={200} state={imageUrls} className="p-0" />
           </div>
           <div className="space-y-4">
             <h3 className="text-xl font-bold">My Services</h3>
